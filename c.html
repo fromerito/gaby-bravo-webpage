@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Tu cotización · Gaby Bravo</title>
+<meta name="description" content="Tu cotización de peinado y maquillaje con Gaby Bravo, maquilladora profesional y especialista en peinado en Lechería.">
+<meta property="og:title" content="Tu cotización · Gaby Bravo">
+<meta property="og:description" content="Servicios, total, qué incluye y cómo reservar tu fecha.">
+<meta property="og:image" content="img/og.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/icono.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Lato:wght@300;400;700&family=Mrs+Saint+Delafield&display=swap">
+<style>
+@font-face { font-family: "Bodoni Moda"; src: url(fonts/bodoni-moda-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Bodoni Moda"; src: url(fonts/bodoni-moda-latin-400-italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Mrs Saint Delafield"; src: url(fonts/mrs-saint-delafield-latin-400-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Lato"; src: url(fonts/lato-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Lato"; src: url(fonts/lato-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+:root { --hueso: #F5EBE1; --hueso-claro: #FBF6F0; --tinta: #222222; --tinta-suave: #6B5A52; --vino: #4F161E; --vino-hondo: #3A0F16; --arena: #B79D83; --piedra: #DCCFC3; --f-display: "Bodoni Moda", Didot, "Times New Roman", serif; --f-script: "Mrs Saint Delafield", cursive; --f-texto: Lato, "Helvetica Neue", Arial, sans-serif; color-scheme: light; }
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); }
+body { margin: 0; background: var(--hueso); color: var(--tinta); font: 400 16px/1.55 var(--f-texto); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
+.hoja { max-width: 640px; margin: 0 auto; padding: 22px max(18px, env(safe-area-inset-right, 0px)) calc(110px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); }
+.cab { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 12px; letter-spacing: .06em; color: var(--tinta-suave); }
+.cab img { height: 46px; width: auto; }
+.cab span { text-align: right; max-width: 22ch; }
+.titulo { display: grid; justify-items: center; text-align: center; margin: 30px 0 6px; line-height: 1; }
+.titulo .s { font-family: var(--f-script); font-size: 76px; color: var(--vino); line-height: .9; }
+.titulo .c { font-family: var(--f-display); font-size: 34px; text-transform: uppercase; margin-top: -4px; text-wrap: balance; }
+.datos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; margin: 26px 0 0; padding: 18px 0; border-block: 1px solid var(--tinta); }
+.datos div { min-width: 0; }
+.datos dt { font-size: 13px; color: var(--tinta-suave); }
+.datos dd { margin: 2px 0 0; font-family: var(--f-display); font-size: 18px; line-height: 1.3; overflow-wrap: anywhere; }
+.aviso { margin: 18px 0 0; padding: 14px 16px; background: var(--hueso-claro); border-left: 3px solid var(--vino); font-size: 15px; }
+.items { list-style: none; margin: 26px 0 0; padding: 0; }
+.items li { padding: 16px 0; border-bottom: 1px solid var(--piedra); }
+.fila { display: flex; align-items: baseline; gap: 12px; }
+.fila h2 { font: 400 20px/1.3 var(--f-display); margin: 0; min-width: 0; }
+.fila .p { margin-left: auto; font: 400 20px var(--f-display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sub { font-size: 14px; color: var(--tinta-suave); margin: 2px 0 0; font-variant-numeric: tabular-nums; }
+details { margin-top: 8px; font-size: 14px; }
+summary { cursor: pointer; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+details ul { margin: 8px 0 0; padding-left: 18px; color: var(--tinta-suave); }
+.total { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 22px; padding: 18px 20px; background: var(--vino); color: var(--hueso); }
+.total span { font: 400 15px var(--f-display); letter-spacing: .14em; }
+.total b { font: 400 34px var(--f-display); font-variant-numeric: tabular-nums; }
+.divisas { margin: 12px 0 0; display: flex; justify-content: space-between; gap: 16px; font-weight: 700; color: var(--vino); }
+.nota-bcv { font-size: 13px; color: var(--tinta-suave); margin: 8px 0 0; }
+.nota { margin: 22px 0 0; font-family: var(--f-display); font-style: italic; font-size: 18px; line-height: 1.45; }
+h3 { font: 400 22px var(--f-display); margin: 36px 0 0; }
+.metodos { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 12px 0 0; }
+.metodos li { padding: 8px 14px; border: 1px solid var(--tinta); font-size: 14px; font-weight: 700; }
+.lista { margin: 10px 0 0; padding-left: 18px; font-size: 15px; color: var(--tinta-suave); }
+.lista li { margin-bottom: 6px; }
+.lista b { color: var(--tinta); }
+.acciones { position: fixed; left: 0; right: 0; bottom: 0; background: var(--hueso); border-top: 1px solid var(--piedra); padding: 10px max(18px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); }
+.acciones div { max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 10px; }
+.btn { display: flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 14px; border-radius: 9999px; text-decoration: none; font: 700 15px var(--f-texto); background: var(--vino); color: var(--hueso); text-align: center; }
+.btn.linea { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
+.pie { text-align: center; margin-top: 44px; color: var(--tinta-suave); font-size: 14px; }
+.pie .s { font-family: var(--f-script); font-size: 46px; color: var(--vino); display: block; line-height: 1; }
+.vacia { text-align: center; padding: 60px 0; }
+@media (max-width: 380px) { .titulo .s { font-size: 62px; } .titulo .c { font-size: 28px; } .datos { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<main class="hoja" id="hoja">
+  <header class="cab"><img src="img/gb.png" alt="Gaby Bravo"><span>Maquilladora profesional y especialista en peinado</span></header>
+  <div id="contenido"></div>
+</main>
+<nav class="acciones" id="acciones" hidden><div>
+  <a class="btn" id="reservar" target="_blank" rel="noopener" href="#">Reservar mi fecha</a>
+  <a class="btn linea" id="preguntar" target="_blank" rel="noopener" href="#">Preguntar</a>
+</div></nav>
+<script src="datos.js"></script>
+<script src="cotizacion.js"></script>
+<script>
+(function () {
+  const G = window.GB, Q = window.GBQ;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  async function pintar() {
+    const code = location.hash.slice(1);
+    let q = null; try { q = await Q.leer(code); } catch (e) { q = null; }
+    const box = document.getElementById("contenido");
+    if (!q) {
+      document.getElementById("acciones").hidden = true;
+      box.innerHTML = `<div class="vacia"><h1 class="titulo"><span class="s">Cotización</span><span class="c">No encontrada</span></h1>
+        <p>El enlace está incompleto. Pídele a Gaby que te lo vuelva a enviar.</p>
+        <p><a class="btn" style="display:inline-flex" target="_blank" rel="noopener" href="${Q.wa("Hola Gaby, el enlace de mi cotización no abre. ¿Me lo reenvías?", G.contacto.whatsapp)}">Escribir a Gaby</a></p></div>`;
+      return;
+    }
+    const folio = Q.folio(code), tot = Q.total(q);
+    const vencida = q.vigencia && q.vigencia < Q.hoyISO();
+    const primerNombre = (q.nombre || "ti").trim().split(/\s+/)[0];
+    document.title = `Cotización para ${primerNombre} · Gaby Bravo`;
+    box.innerHTML = `
+      <h1 class="titulo"><span class="s">Cotización</span><span class="c">Para ${esc(primerNombre)}</span></h1>
+      <dl class="datos">
+        ${q.evento ? `<div><dt>Fecha del evento</dt><dd>${Q.fechaLarga(q.evento)}</dd></div>` : ""}
+        ${q.lugar ? `<div><dt>Lugar</dt><dd>${esc(q.lugar)}</dd></div>` : ""}
+        <div><dt>Cotización</dt><dd>${folio}</dd></div>
+        ${q.vigencia ? `<div><dt>Válida hasta</dt><dd>${Q.fechaLarga(q.vigencia)}</dd></div>` : ""}
+      </dl>
+      ${vencida ? `<p class="aviso">Esta cotización venció el ${Q.fechaLarga(q.vigencia)}. Escríbeme y te la actualizo.</p>` : ""}
+      <ul class="items">${q.items.map(it => {
+        const s = Q.catalogo[it.cod];
+        const inc = s && s.incluye && s.incluye.length ? `<details><summary>Qué incluye</summary><ul>${s.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : "";
+        return `<li><div class="fila"><h2>${esc(it.nombre)}</h2><span class="p">${Q.dinero(it.cant * it.precio)}</span></div>
+          ${it.cant > 1 ? `<p class="sub">${it.cant} × ${Q.dinero(it.precio)}</p>` : ""}${s && s.duracion ? `<p class="sub">${esc(s.duracion)}</p>` : ""}${inc}</li>`;
+      }).join("")}</ul>
+      <div class="total"><span>TOTAL</span><b>${Q.dinero(tot)}</b></div>
+      ${q.divisas ? `<p class="divisas"><span>Pagando en divisas, Zelle o Binance</span><span>${Q.dinero(q.divisas)}</span></p>` : ""}
+      <p class="nota-bcv">Bolívares a tasa BCV del día.</p>
+      ${q.nota ? `<p class="nota">${esc(q.nota)}</p>` : ""}
+      <h3>Para reservar</h3>
+      <p style="margin:8px 0 0">${esc(G.pagos.abono)}</p>
+      <ul class="metodos">${G.pagos.metodos.map(m => `<li>${esc(m)}</li>`).join("")}</ul>
+      <h3>Políticas de servicio</h3>
+      <ul class="lista">${G.politicas.map(p => `<li><b>${esc(p.t)}.</b> ${esc(p.d)}</li>`).join("")}</ul>
+      <h3>Antes de tu cita</h3>
+      <ul class="lista">${G.indicaciones.rostro.slice(0, 2).concat(G.indicaciones.cabello.slice(0, 2)).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      <p class="pie"><span class="s">Gracias</span>por preferir mis servicios.<br>Gabriela Bravo · @${esc(G.contacto.instagram)}</p>`;
+    const n = G.contacto.whatsapp;
+    document.getElementById("reservar").href = Q.wa(`Hola Gaby, quiero reservar con la cotización ${folio} (total ${Q.dinero(tot)}). ¿Cómo hago el abono?`, n);
+    document.getElementById("preguntar").href = Q.wa(`Hola Gaby, tengo una pregunta sobre la cotización ${folio}.`, n);
+    document.getElementById("reservar").textContent = vencida ? "Actualizar cotización" : "Reservar mi fecha";
+    if (vencida) document.getElementById("reservar").href = Q.wa(`Hola Gaby, mi cotización ${folio} venció. ¿Me la actualizas?`, n);
+    document.getElementById("acciones").hidden = false;
+  }
+  addEventListener("hashchange", pintar);
+  pintar();
+})();
+</script>
+</body>
+</html>

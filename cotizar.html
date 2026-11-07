@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Cotizador Gaby Bravo</title>
+<link rel="icon" href="img/icono.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Lato:wght@400;700&family=Mrs+Saint+Delafield&display=swap">
+<style>
+@font-face { font-family: "Bodoni Moda"; src: url(fonts/bodoni-moda-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Mrs Saint Delafield"; src: url(fonts/mrs-saint-delafield-latin-400-normal.woff2) format("woff2"); font-display: swap; }
+@font-face { font-family: "Lato"; src: url(fonts/lato-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Lato"; src: url(fonts/lato-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+/* Layout: herramienta de una columna en el teléfono (clienta → servicios → totales → enviar), dos columnas en escritorio con el resultado fijo a la derecha. */
+:root { --hueso: #F5EBE1; --hueso-claro: #FBF6F0; --tinta: #222222; --tinta-suave: #6B5A52; --vino: #4F161E; --vino-hondo: #3A0F16; --arena: #B79D83; --piedra: #DCCFC3; --ok: #2E6B47; --f-display: "Bodoni Moda", Didot, serif; --f-script: "Mrs Saint Delafield", cursive; --f-texto: Lato, "Helvetica Neue", Arial, sans-serif; color-scheme: light; }
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); }
+body { margin: 0; background: var(--hueso); color: var(--tinta); font: 400 16px/1.5 var(--f-texto); -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid var(--tinta); outline-offset: 2px; }
+.app { max-width: 1120px; margin: 0 auto; padding: 16px max(16px, env(safe-area-inset-right, 0px)) calc(150px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 28px; align-items: start; }
+header.top { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--tinta); }
+header.top .marca { display: flex; align-items: center; gap: 12px; }
+header.top img { height: 40px; width: auto; }
+header.top h1 { margin: 0; font: 400 26px var(--f-display); }
+.col { min-width: 0; display: grid; gap: 22px; }
+section.bloque { background: var(--hueso-claro); border: 1px solid var(--piedra); padding: 18px; display: grid; gap: 14px; }
+section.bloque h2 { margin: 0; font: 400 21px var(--f-display); display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+section.bloque h2 small { font: 400 13px var(--f-texto); color: var(--tinta-suave); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.campo { display: grid; gap: 5px; min-width: 0; }
+.campo.ancho { grid-column: 1 / -1; }
+label { font-size: 13px; font-weight: 700; }
+input, textarea, select { width: 100%; min-height: 48px; padding: 10px 12px; font: 400 16px var(--f-texto); color: var(--tinta); background: #fff; border: 1px solid var(--arena); border-radius: 0; }
+textarea { min-height: 72px; resize: vertical; }
+input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0; }
+.ayuda { font-size: 13px; color: var(--tinta-suave); margin: 0; }
+.grupo { display: grid; gap: 8px; }
+.grupo h3 { margin: 4px 0 0; font: 700 13px var(--f-texto); color: var(--tinta-suave); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 42px; padding: 0 14px; border: 1px solid var(--arena); background: #fff; font: 400 14px var(--f-texto); color: var(--tinta); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.chip b { font-weight: 700; color: var(--vino); }
+.chip:hover { border-color: var(--vino); }
+.chip.en { border-color: var(--vino); box-shadow: inset 0 0 0 1px var(--vino); }
+.lineas { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--tinta); }
+.lineas li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--piedra); }
+.lineas .n { font-family: var(--f-display); font-size: 17px; line-height: 1.25; min-width: 0; }
+.lineas .n input { font-family: var(--f-texto); }
+.paso { display: inline-flex; border: 1px solid var(--arena); background: #fff; }
+.paso button { width: 36px; min-height: 40px; border: 0; background: transparent; font: 700 18px var(--f-texto); cursor: pointer; color: var(--tinta); }
+.paso span { min-width: 26px; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.lineas .pr { width: 84px; min-height: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+.quitar { width: 40px; min-height: 40px; border: 0; background: transparent; color: var(--vino); font: 400 22px var(--f-texto); cursor: pointer; }
+.vacio { color: var(--tinta-suave); font-size: 14px; padding: 14px 0; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 9999px; border: 0; font: 700 15px var(--f-texto); cursor: pointer; text-decoration: none; background: var(--vino); color: var(--hueso); }
+.btn:hover { background: var(--vino-hondo); }
+.btn.linea { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
+.btn.chico { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+.resultado { position: sticky; top: calc(16px + env(safe-area-inset-top, 0px)); display: grid; gap: 14px; }
+.tarjeta { background: var(--vino); color: var(--hueso); padding: 20px; display: grid; gap: 12px; }
+.tarjeta .t { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.tarjeta .t span { font: 400 13px var(--f-display); letter-spacing: .14em; }
+.tarjeta .t b { font: 400 34px var(--f-display); font-variant-numeric: tabular-nums; }
+.tarjeta .d { font-size: 14px; color: #D9C2A7; margin: 0; }
+.enlace-caja { background: var(--hueso-claro); color: var(--tinta); padding: 10px 12px; font-size: 13px; word-break: break-all; border: 1px solid var(--piedra); user-select: all; }
+.tarjeta .btn { background: var(--hueso); color: var(--vino); }
+.tarjeta .btn.linea { background: transparent; color: var(--hueso); box-shadow: inset 0 0 0 1.5px var(--hueso); }
+.fila-btn { display: flex; flex-wrap: wrap; gap: 8px; }
+.fila-btn .btn { flex: 1 1 auto; }
+.estado { font-size: 13px; min-height: 18px; margin: 0; color: #D9C2A7; }
+.ejemplo { background: #fff; border-left: 3px solid var(--arena); padding: 10px 14px; font-size: 14px; display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+.recientes { list-style: none; margin: 0; padding: 0; }
+.recientes li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--piedra); font-size: 14px; }
+.recientes li div { min-width: 0; }
+.recientes b { font-family: var(--f-display); font-weight: 400; font-size: 16px; display: block; }
+.recientes span { color: var(--tinta-suave); }
+.recientes .acc { display: flex; gap: 6px; flex: none; }
+.barra { display: none; }
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .resultado { position: static; }
+  .barra { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; gap: 10px; align-items: center; justify-content: space-between; background: var(--vino); color: var(--hueso); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .barra b { font: 400 26px var(--f-display); font-variant-numeric: tabular-nums; }
+  .barra .btn { background: var(--hueso); color: var(--vino); }
+}
+@media (max-width: 420px) { .grid2 { grid-template-columns: minmax(0, 1fr); } .lineas li { grid-template-columns: minmax(0, 1fr) auto auto; } .lineas .n { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="marca"><img src="img/gb.png" alt="Gaby Bravo"><h1>Cotizador</h1></div>
+    <button class="btn linea chico" type="button" id="nueva">Nueva cotización</button>
+  </header>
+
+  <div class="col">
+    <div class="ejemplo" id="aviso-ejemplo" hidden><span>Estás viendo una cotización de ejemplo.</span><button class="btn chico" type="button" id="empezar">Empezar una en blanco</button></div>
+
+    <section class="bloque" aria-labelledby="h-clienta">
+      <h2 id="h-clienta">Clienta</h2>
+      <div class="grid2">
+        <div class="campo"><label for="q-nombre">Nombre</label><input id="q-nombre" autocomplete="off" placeholder="María Pérez"></div>
+        <div class="campo"><label for="q-tel">WhatsApp de la clienta</label><input id="q-tel" inputmode="tel" autocomplete="off" placeholder="0414-1234567"></div>
+        <div class="campo"><label for="q-evento">Fecha del evento</label><input id="q-evento" type="date"></div>
+        <div class="campo"><label for="q-lugar">Lugar</label><input id="q-lugar" placeholder="Estudio, casa u hotel"></div>
+      </div>
+      <p class="ayuda">El número de la clienta es opcional: con él, WhatsApp abre directo su chat. No viaja dentro del enlace.</p>
+    </section>
+
+    <section class="bloque" aria-labelledby="h-serv">
+      <h2 id="h-serv">Servicios <small>Toca para agregar</small></h2>
+      <div id="catalogo" class="grupo"></div>
+      <ul class="lineas" id="lineas"></ul>
+      <div class="grid2">
+        <div class="campo"><label for="x-nombre">Otro concepto</label><input id="x-nombre" placeholder="Ej.: Maquillaje por Antonietta Yanez"></div>
+        <div class="campo"><label for="x-precio">Precio ($)</label><input id="x-precio" type="number" min="0" step="1" inputmode="decimal" placeholder="60"></div>
+      </div>
+      <div><button class="btn linea chico" type="button" id="x-agregar">Agregar concepto</button></div>
+    </section>
+
+    <section class="bloque" aria-labelledby="h-cierre">
+      <h2 id="h-cierre">Precio y vigencia</h2>
+      <div class="grid2">
+        <div class="campo"><label for="q-divisas">Total pagando en divisas, Zelle o Binance ($)</label><input id="q-divisas" type="number" min="0" step="1" inputmode="decimal" placeholder="Opcional"></div>
+        <div class="campo"><label for="q-vigencia">Válida hasta</label><input id="q-vigencia" type="date"></div>
+        <div class="campo ancho"><label for="q-nota">Nota para la clienta (opcional)</label><textarea id="q-nota" placeholder="Ej.: Incluye peinado para tu mamá con 10% de descuento."></textarea></div>
+      </div>
+    </section>
+
+    <section class="bloque" aria-labelledby="h-rec">
+      <h2 id="h-rec">Enviadas desde este teléfono</h2>
+      <ul class="recientes" id="recientes"></ul>
+    </section>
+  </div>
+
+  <aside class="resultado" aria-labelledby="h-res">
+    <div class="tarjeta">
+      <div class="t"><span id="h-res">TOTAL</span><b id="r-total">$0</b></div>
+      <p class="d" id="r-divisas"></p>
+      <div class="enlace-caja" id="r-enlace">Agrega al menos un servicio.</div>
+      <div class="fila-btn" id="fila-crear" hidden>
+        <button class="btn" type="button" id="r-crear">Crear enlace corto</button>
+      </div>
+      <div class="fila-btn">
+        <a class="btn" id="r-enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar por WhatsApp</a>
+      </div>
+      <div class="fila-btn">
+        <button class="btn linea chico" type="button" id="r-copiar">Copiar enlace</button>
+        <a class="btn linea chico" id="r-ver" href="#" target="_blank" rel="noopener" aria-disabled="true">Ver como la clienta</a>
+      </div>
+      <p class="estado" id="r-estado" aria-live="polite"></p>
+    </div>
+  </aside>
+</div>
+<div class="barra"><b id="b-total">$0</b><a class="btn" id="b-enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar por WhatsApp</a></div>
+
+<script src="datos.js"></script>
+<script src="cotizacion.js"></script>
+<script>
+(function () {
+  const G = window.GB, Q = window.GBQ, $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const LS = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} } };
+
+  const vacia = () => ({ nombre: "", tel: "", evento: "", lugar: "", items: [], divisas: "", vigencia: Q.sumarDias(Q.hoyISO(), 7), nota: "" });
+  const ejemplo = () => ({ nombre: "María Pérez (ejemplo)", tel: "", evento: Q.sumarDias(Q.hoyISO(), 40), lugar: "Hotel Eurobuilding, Lechería", divisas: 380,
+    items: [{ cod: "PNOV", nombre: "Peinado de novia", cant: 1, precio: 140 }, { cod: "MNOV", nombre: "Maquillaje de novia", cant: 1, precio: 140 }, { cod: "PRP", nombre: "Prueba de peinado", cant: 1, precio: 70 }, { cod: "DOM", nombre: "Domicilio u hotel", cant: 1, precio: 30 }],
+    vigencia: Q.sumarDias(Q.hoyISO(), 7), nota: "", ejemplo: true });
+
+  let q = LS.get("gb-borrador", null) || ejemplo();
+
+  // Catálogo como botones
+  $("#catalogo").innerHTML = G.categorias.map(c => `<div class="grupo"><h3>${esc(c.nombre)}</h3><div class="chips">${c.servicios.filter(s => s.precio != null).map(s =>
+    `<button type="button" class="chip" data-cod="${s.cod}">${esc(s.nombre)} <b>$${s.precio}</b></button>`).join("")}</div></div>`).join("");
+  $("#catalogo").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    const s = Q.catalogo[b.dataset.cod];
+    const ya = q.items.find(it => it.cod === s.cod);
+    if (ya) ya.cant++; else q.items.push({ cod: s.cod, nombre: s.nombre, cant: 1, precio: s.precio });
+    salir(); pintar();
+  });
+  $("#x-agregar").addEventListener("click", () => {
+    const n = $("#x-nombre").value.trim(), p = parseFloat($("#x-precio").value);
+    if (!n || isNaN(p)) { $("#x-nombre").focus(); return; }
+    q.items.push({ cod: "", nombre: n, cant: 1, precio: p });
+    $("#x-nombre").value = ""; $("#x-precio").value = "";
+    salir(); pintar();
+  });
+  $("#lineas").addEventListener("click", e => {
+    const li = e.target.closest("li[data-i]"); if (!li) return; const it = q.items[+li.dataset.i];
+    if (e.target.matches("[data-mas]")) it.cant++;
+    else if (e.target.matches("[data-menos]")) it.cant = Math.max(1, it.cant - 1);
+    else if (e.target.matches(".quitar")) q.items.splice(+li.dataset.i, 1);
+    else return;
+    pintar();
+  });
+  $("#lineas").addEventListener("input", e => {
+    const li = e.target.closest("li[data-i]"); if (!li || !e.target.matches(".pr")) return;
+    q.items[+li.dataset.i].precio = parseFloat(e.target.value) || 0; resultado();
+  });
+
+  const campos = { "#q-nombre": "nombre", "#q-tel": "tel", "#q-evento": "evento", "#q-lugar": "lugar", "#q-divisas": "divisas", "#q-vigencia": "vigencia", "#q-nota": "nota" };
+  Object.entries(campos).forEach(([sel, k]) => $(sel).addEventListener("input", e => { q[k] = e.target.value; if (k === "nombre") salir(); resultado(); }));
+
+  function salir() { if (q.ejemplo) { q.ejemplo = false; } }
+  function pintarLineas() {
+    $("#lineas").innerHTML = q.items.length ? q.items.map((it, i) => `<li data-i="${i}">
+      <span class="n">${esc(it.nombre)}</span>
+      <span class="paso" aria-label="Cantidad"><button type="button" data-menos aria-label="Quitar uno">−</button><span>${it.cant}</span><button type="button" data-mas aria-label="Agregar uno">+</button></span>
+      <input class="pr" type="number" min="0" step="1" inputmode="decimal" value="${it.precio}" aria-label="Precio de ${esc(it.nombre)}">
+      <button type="button" class="quitar" aria-label="Quitar ${esc(it.nombre)}">×</button></li>`).join("")
+      : `<li class="vacio" style="display:block">Todavía no hay servicios. Toca uno de arriba.</li>`;
+    document.querySelectorAll(".chip").forEach(b => b.classList.toggle("en", q.items.some(it => it.cod === b.dataset.cod)));
+  }
+  function telefono(t) {
+    let d = String(t || "").replace(/\D/g, "");
+    if (!d) return "";
+    if (d.startsWith("0")) d = "58" + d.slice(1);
+    else if (d.length === 10 && d.startsWith("4")) d = "58" + d;
+    return d;
+  }
+  let creado = null; // { firma, code } en modo corto
+  function mensajePara(url, folio) {
+    const tot = Q.total(q);
+    const nombre = (q.nombre || "").replace(/\(ejemplo\)/i, "").trim().split(/\s+/)[0];
+    return [`Hola${nombre ? " " + nombre : ""}, aquí tienes tu cotización (${folio}):`, url, "",
+      `Total: ${Q.dinero(tot)}${q.divisas ? ` (o ${Q.dinero(+q.divisas)} pagando en divisas, Zelle o Binance)` : ""}.`,
+      q.vigencia ? `Válida hasta el ${Q.fechaLarga(q.vigencia)}.` : "",
+      "Para apartar tu fecha solo necesito el 50%. Cualquier duda, me escribes por aquí."].filter(x => x !== "").join("\n");
+  }
+  function activar(code) {
+    const url = Q.enlace(code), folio = Q.folio(code);
+    $("#r-enlace").textContent = url;
+    $("#r-ver").href = url;
+    $("#r-enviar").href = $("#b-enviar").href = Q.wa(mensajePara(url, folio), telefono(q.tel));
+    $("#r-enviar").dataset.url = url; $("#r-enviar").dataset.folio = folio;
+    ["#r-enviar", "#r-ver", "#b-enviar"].forEach(s => $(s).setAttribute("aria-disabled", "false"));
+  }
+  function desactivar(texto) {
+    $("#r-enlace").textContent = texto;
+    delete $("#r-enviar").dataset.url;
+    ["#r-enviar", "#r-ver", "#b-enviar"].forEach(s => $(s).setAttribute("aria-disabled", "true"));
+  }
+  function resultado() {
+    $("#aviso-ejemplo").hidden = !q.ejemplo;
+    const tot = Q.total(q);
+    $("#r-total").textContent = $("#b-total").textContent = Q.dinero(tot);
+    $("#r-divisas").textContent = q.divisas ? `Pagando en divisas, Zelle o Binance: ${Q.dinero(+q.divisas)}` : "Sin precio especial en divisas.";
+    LS.set("gb-borrador", q);
+    $("#fila-crear").hidden = !Q.corto;
+    if (!q.items.length) { desactivar("Agrega al menos un servicio."); return; }
+    const sello = Object.assign({}, q, { emitida: Q.hoyISO() });
+    if (!Q.corto) { activar(Q.codificar(sello)); return; }
+    const firma = JSON.stringify([sello.nombre, sello.evento, sello.lugar, sello.vigencia, sello.items, sello.divisas, sello.nota]);
+    if (creado && creado.firma === firma) activar(creado.code);
+    else { creado = null; desactivar("Toca «Crear enlace corto» cuando la cotización esté lista."); }
+  }
+  $("#r-crear").addEventListener("click", async () => {
+    if (!q.items.length) return;
+    const b = $("#r-crear"); b.disabled = true; b.textContent = "Creando…";
+    const sello = Object.assign({}, q, { emitida: Q.hoyISO() });
+    try {
+      const code = await Q.guardarCorto(sello);
+      creado = { firma: JSON.stringify([sello.nombre, sello.evento, sello.lugar, sello.vigencia, sello.items, sello.divisas, sello.nota]), code };
+      resultado(); $("#r-estado").textContent = "Enlace listo. Ya puedes enviarlo.";
+    } catch (e) { $("#r-estado").textContent = e.message + " Mientras tanto, revisa la conexión."; }
+    b.disabled = false; b.textContent = "Crear enlace corto";
+  });
+  function pintar() {
+    Object.entries(campos).forEach(([sel, k]) => { if (document.activeElement !== $(sel)) $(sel).value = q[k] == null ? "" : q[k]; });
+    pintarLineas(); resultado();
+  }
+
+  // Historial local
+  function guardarHistorial() {
+    const h = LS.get("gb-historial", []);
+    const url = $("#r-enviar").dataset.url; if (!url) return;
+    h.unshift({ nombre: q.nombre, evento: q.evento, total: Q.total(q), folio: $("#r-enviar").dataset.folio, url, q: JSON.parse(JSON.stringify(q)), fecha: Q.hoyISO() });
+    LS.set("gb-historial", h.filter((x, i, a) => a.findIndex(y => y.url === x.url) === i).slice(0, 30));
+    pintarHistorial();
+  }
+  function pintarHistorial() {
+    const h = LS.get("gb-historial", []);
+    $("#recientes").innerHTML = h.length ? h.map((x, i) => `<li><div><b>${esc(x.nombre || "Sin nombre")}</b><span>${x.folio} · ${Q.dinero(x.total)}${x.evento ? " · evento " + Q.fechaLarga(x.evento) : ""}</span></div>
+      <span class="acc"><a class="btn linea chico" href="${esc(x.url)}" target="_blank" rel="noopener">Abrir</a><button class="btn linea chico" type="button" data-usar="${i}">Usar de base</button></span></li>`).join("")
+      : `<li><span>Aquí aparecen las cotizaciones que envíes desde este teléfono.</span></li>`;
+  }
+  $("#recientes").addEventListener("click", e => {
+    const b = e.target.closest("[data-usar]"); if (!b) return;
+    const x = LS.get("gb-historial", [])[+b.dataset.usar]; if (!x) return;
+    q = Object.assign(vacia(), x.q, { vigencia: Q.sumarDias(Q.hoyISO(), 7), ejemplo: false }); pintar(); scrollTo({ top: 0, behavior: "smooth" });
+  });
+  ["#r-enviar", "#b-enviar"].forEach(s => $(s).addEventListener("click", () => { if (!q.ejemplo) guardarHistorial(); }));
+
+  $("#r-copiar").addEventListener("click", async () => {
+    const url = $("#r-enviar").dataset.url; if (!url || !q.items.length) return;
+    try { await navigator.clipboard.writeText(url); $("#r-estado").textContent = "Enlace copiado."; }
+    catch { const r = document.createRange(); r.selectNodeContents($("#r-enlace")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#r-estado").textContent = "Enlace seleccionado: cópialo con el menú del teléfono."; }
+    if (!q.ejemplo) guardarHistorial();
+    setTimeout(() => $("#r-estado").textContent = "", 3000);
+  });
+  const reiniciar = () => { q = vacia(); pintar(); $("#q-nombre").focus(); };
+  $("#nueva").addEventListener("click", reiniciar);
+  $("#empezar").addEventListener("click", reiniciar);
+
+  pintar(); pintarHistorial();
+})();
+</script>
+</body>
+</html>
