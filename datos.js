@@ -24,11 +24,11 @@ window.GB = {
     whatsapp: "584248454819",           // formato internacional, solo números
     whatsappVisible: "0424-845 4819",
     instagram: "gabybravoartist",
-    estudio: "Studio Valles Makeup",
-    direccion: "C. C. Plaza Mayor, Lechería, Anzoátegui",
-    // Punto del estudio para medir la distancia del domicilio (C. C. Plaza Mayor). Ajústalo si hace falta.
-    coordenadas: [10.18029, -64.68392],
-    mapa: "https://www.google.com/maps/search/?api=1&query=Studio+Valles+Makeup+Centro+Comercial+Plaza+Mayor+Lecheria",
+    estudio: "Estefania Valles Makeup Studio",
+    direccion: "C. C. Costanera, Plaza 1, piso 3, local P3-02, Av. El Ejército, Barcelona, Anzoátegui",
+    // Punto del estudio para medir la distancia del domicilio (C. C. Costanera, Barcelona).
+    coordenadas: [10.16093, -64.69238],
+    mapa: "https://maps.app.goo.gl/hY5GYC6g1P1t3pZL8",
     atencion: "Con cita previa, en el estudio o a domicilio"
   },
 
