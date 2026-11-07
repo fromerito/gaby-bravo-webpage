@@ -208,6 +208,23 @@ fieldset.campo legend { padding: 0; margin-bottom: 8px; font-size: 13px; font-we
 .revela { display: grid; grid-template-rows: 0fr; margin-bottom: -16px; opacity: 0; transition: grid-template-rows .4s ease, margin .4s ease, opacity .3s; }
 .revela > div { min-height: 0; overflow: hidden; padding: 4px; margin: -4px; }
 .agenda:has(#f-lugar-domicilio:checked) .revela { grid-template-rows: 1fr; margin-bottom: 0; opacity: 1; }
+/* Mapa del domicilio */
+.ubicacion { display: grid; gap: 12px; }
+.buscador .control { padding-right: 64px; }
+.paso.lupa { right: 9px; }
+.paso.lupa svg { width: 18px; height: 18px; }
+.mapa-caja { position: relative; border: 1px solid rgba(251,246,240,.22); box-shadow: 0 18px 40px -22px rgba(0,0,0,.7); }
+.mapa { height: clamp(240px, 34vw, 320px); background: rgba(251,246,240,.08); }
+.mapa .leaflet-tile-pane { filter: grayscale(.55) sepia(.18) brightness(.97); }
+.mapa .leaflet-control-attribution { font: 10px var(--f-texto); background: rgba(251,246,240,.8); }
+.mapa .leaflet-control-zoom a { border-radius: 0 !important; color: var(--vino-hondo); }
+.mi-ubicacion { position: absolute; left: 10px; bottom: 10px; z-index: 500; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 0; border-radius: 9999px; background: var(--hueso); color: var(--vino-hondo); font: 700 14px var(--f-texto); cursor: pointer; box-shadow: 0 8px 20px -8px rgba(0,0,0,.6); transition: background-color .2s; }
+.mi-ubicacion:hover { background: #fff; }
+.mi-ubicacion svg { width: 18px; height: 18px; }
+.mapa-estado { margin: 0; font-size: 14px; color: rgba(245,235,225,.75); }
+.mapa-estado b { color: var(--sobre-vino); }
+.pin { width: 30px; height: 30px; margin: -30px 0 0 -15px; background: var(--vino); border: 3px solid var(--hueso); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 6px 14px rgba(0,0,0,.45); }
+.pin-estudio { width: 34px; height: 34px; margin: -17px 0 0 -17px; display: grid; place-items: center; border-radius: 9999px; background: var(--hueso); border: 2px solid var(--vino); font: 400 13px var(--f-display); color: var(--vino); box-shadow: 0 4px 12px rgba(0,0,0,.35); }
 /* Personas: contador */
 .contador .control { padding-right: 112px; -moz-appearance: textfield; }
 .contador .control::-webkit-inner-spin-button, .contador .control::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
@@ -379,9 +396,17 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
           </div>
         </fieldset>
         <div class="revela ancho" id="c-zona" inert>
-          <div><div class="campo">
-            <input class="control" id="f-zona" type="text" placeholder="Ej.: Hotel Eurobuilding, Lechería">
-            <label for="f-zona">Zona u hotel</label>
+          <div><div class="ubicacion">
+            <div class="campo buscador">
+              <input class="control" id="f-zona" type="text" placeholder="Ej.: Hotel Eurobuilding, Lechería" enterkeyhint="search" autocomplete="street-address">
+              <label for="f-zona">Dirección, urbanización u hotel</label>
+              <button type="button" class="paso lupa" id="m-buscar" aria-label="Buscar en el mapa"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+            </div>
+            <div class="mapa-caja">
+              <div class="mapa" id="mapa" role="application" aria-label="Mapa para marcar el punto del servicio"></div>
+              <button type="button" class="mi-ubicacion" id="m-yo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7.5"/></svg>Usar mi ubicación</button>
+            </div>
+            <p class="mapa-estado" id="m-estado" aria-live="polite">Toca el mapa para marcar el punto exacto. Puedes arrastrar el marcador.</p>
           </div></div>
         </div>
         <div class="campo fijo contador">
@@ -528,6 +553,7 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
       $("#f-fecha").value ? `Fecha: ${fechaTxt($("#f-fecha").value)}` : "",
       $("#f-hora").value ? `Debo estar lista a las: ${$("#f-hora").value}` : "",
       `Lugar: ${lugar}${lugar !== "En el estudio" && zona ? " (" + zona + ")" : ""}`,
+      lugar !== "En el estudio" && punto ? `Ubicación: https://maps.google.com/?q=${punto.lat.toFixed(6)},${punto.lng.toFixed(6)} (a ${kmTxt(distancia(punto))} del estudio en línea recta)` : "",
       +$("#f-personas").value > 1 ? `Personas: ${$("#f-personas").value}` : "",
       $("#f-nota").value.trim() ? `Nota: ${$("#f-nota").value.trim()}` : ""
     ].filter(Boolean);
@@ -538,6 +564,78 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
   $("#p-menos").addEventListener("click", () => fijarPersonas(+personas.value - 1));
   $("#p-mas").addEventListener("click", () => fijarPersonas(+personas.value + 1));
   $("#p-menos").disabled = true;
+  // Mapa del domicilio (Leaflet + OpenStreetMap, sin clave). Se carga solo al elegir domicilio.
+  const ESTUDIO = C.coordenadas || [10.18029, -64.68392];
+  let punto = null, mapa = null, marcador = null, cargando = null, zonaAuto = false;
+  const rad = x => x * Math.PI / 180;
+  const distancia = p => { const R = 6371, dLat = rad(p.lat - ESTUDIO[0]), dLng = rad(p.lng - ESTUDIO[1]); const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(ESTUDIO[0])) * Math.cos(rad(p.lat)) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+  const kmTxt = km => km < 1 ? `${Math.round(km * 1000)} m` : `${km.toLocaleString("es-VE", { maximumFractionDigits: 1 })} km`;
+  const estado = html => { $("#m-estado").innerHTML = html; };
+  function cargarLeaflet() {
+    if (window.L) return Promise.resolve();
+    if (cargando) return cargando;
+    cargando = new Promise((ok, mal) => {
+      const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"; document.head.appendChild(css);
+      const js = document.createElement("script"); js.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"; js.onload = ok; js.onerror = mal; document.head.appendChild(js);
+    });
+    return cargando;
+  }
+  function marcar(lat, lng, centrar) {
+    punto = { lat, lng };
+    if (!marcador) {
+      marcador = L.marker([lat, lng], { draggable: true, keyboard: true, title: "Punto del servicio", icon: L.divIcon({ className: "", html: '<div class="pin"></div>', iconSize: [0, 0] }) }).addTo(mapa);
+      marcador.on("dragend", () => { const p = marcador.getLatLng(); marcar(p.lat, p.lng, false); });
+    } else marcador.setLatLng([lat, lng]);
+    if (centrar) mapa.setView([lat, lng], Math.max(mapa.getZoom(), 16));
+    estado(`Punto marcado a <b>${kmTxt(distancia(punto))}</b> del estudio en línea recta. Puedes arrastrarlo para ajustarlo.`);
+    rellenarZona(lat, lng);
+    actualizar();
+  }
+  async function rellenarZona(lat, lng) {
+    const z = $("#f-zona");
+    if (z.value.trim() && !zonaAuto) return;
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&zoom=17&accept-language=es&lat=${lat}&lon=${lng}`).then(r => r.json());
+      const a = r.address || {};
+      const txt = [a.road, a.neighbourhood || a.suburb || a.quarter, a.city || a.town || a.village].filter(Boolean).join(", ");
+      if (txt && (!z.value.trim() || zonaAuto)) { z.value = txt; zonaAuto = true; actualizar(); }
+    } catch (e) {}
+  }
+  async function abrirMapa() {
+    if (mapa) { setTimeout(() => mapa.invalidateSize(), 420); return; }
+    try { await cargarLeaflet(); } catch (e) { estado("No se pudo cargar el mapa. Escribe la dirección y Gaby la ubica."); return; }
+    if (mapa) return;
+    mapa = L.map("mapa", { zoomControl: true, scrollWheelZoom: false, tap: true }).setView(ESTUDIO, 14);
+    mapa.attributionControl.setPrefix(false);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mapa);
+    L.marker(ESTUDIO, { interactive: false, keyboard: false, icon: L.divIcon({ className: "", html: '<div class="pin-estudio">GB</div>', iconSize: [0, 0] }) }).addTo(mapa);
+    mapa.on("click", e => marcar(e.latlng.lat, e.latlng.lng, false));
+    setTimeout(() => mapa.invalidateSize(), 420);
+  }
+  async function buscar() {
+    const q = $("#f-zona").value.trim();
+    if (!q) { $("#f-zona").focus(); return; }
+    zonaAuto = false;
+    estado("Buscando…");
+    try {
+      await abrirMapa();
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=ve&accept-language=es&viewbox=-65.1,10.45,-64.3,9.95&q=${encodeURIComponent(q)}`).then(r => r.json());
+      if (!r.length) { estado("No encontré esa dirección. Toca el mapa para marcar el punto."); return; }
+      const z = $("#f-zona").value; marcar(+r[0].lat, +r[0].lon, true); $("#f-zona").value = z;
+    } catch (e) { estado("No pude buscar ahora. Toca el mapa para marcar el punto."); }
+  }
+  $("#m-buscar").addEventListener("click", buscar);
+  $("#f-zona").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); buscar(); } });
+  $("#f-zona").addEventListener("input", () => { zonaAuto = false; });
+  $("#m-yo").addEventListener("click", () => {
+    if (!navigator.geolocation) { estado("Tu teléfono no permite compartir la ubicación. Toca el mapa para marcar el punto."); return; }
+    estado("Buscando tu ubicación…");
+    navigator.geolocation.getCurrentPosition(
+      async pos => { await abrirMapa(); marcar(pos.coords.latitude, pos.coords.longitude, true); },
+      () => estado("No pude obtener tu ubicación. Revisa el permiso del navegador o toca el mapa."),
+      { enableHighAccuracy: true, timeout: 12000 }
+    );
+  });
   let pulso;
   function actualizar() {
     const m = mensaje();
@@ -546,7 +644,8 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
     const d = new Date(); $("#vista-hora").textContent = d.toLocaleTimeString("es-VE", { hour: "numeric", minute: "2-digit" });
     const domicilio = $("#f-lugar-domicilio").checked;
     zona.inert = !domicilio;
-    const faltan = [!$("#f-fecha").value && "la fecha", !$("#f-nombre").value.trim() && "tu nombre", domicilio && !$("#f-zona").value.trim() && "la zona"].filter(Boolean);
+    if (domicilio) abrirMapa();
+    const faltan = [!$("#f-fecha").value && "la fecha", !$("#f-nombre").value.trim() && "tu nombre", domicilio && !punto && "el punto en el mapa"].filter(Boolean);
     $("#f-ayuda").innerHTML = faltan.length ? `Para responderte más rápido, agrega <b>${faltan.join(", ").replace(/, ([^,]*)$/, " y $1")}</b>.` : "Se abre WhatsApp con tu mensaje listo. Solo tienes que tocar enviar.";
     clearTimeout(pulso); burbuja.classList.add("late"); pulso = setTimeout(() => burbuja.classList.remove("late"), 450);
   }

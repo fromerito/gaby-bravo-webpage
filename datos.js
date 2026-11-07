@@ -26,6 +26,8 @@ window.GB = {
     instagram: "gabybravoartist",
     estudio: "Studio Valles Makeup",
     direccion: "C. C. Plaza Mayor, Lechería, Anzoátegui",
+    // Punto del estudio para medir la distancia del domicilio (C. C. Plaza Mayor). Ajústalo si hace falta.
+    coordenadas: [10.18029, -64.68392],
     mapa: "https://www.google.com/maps/search/?api=1&query=Studio+Valles+Makeup+Centro+Comercial+Plaza+Mayor+Lecheria",
     atencion: "Con cita previa, en el estudio o a domicilio"
   },
