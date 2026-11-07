@@ -84,6 +84,29 @@ h3 { font: 400 22px var(--f-display); margin: 36px 0 0; }
 (function () {
   const G = window.GB, Q = window.GBQ;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Mensaje que recibe Gaby cuando la clienta toca "Reservar mi fecha":
+  // trae el desglose completo para que no tenga que abrir la cotización.
+  function mensajeReserva(q, folio, tot) {
+    const nombre = (q.nombre || "").trim();
+    const lineas = q.items.map(it => it.cant > 1
+      ? `• ${it.nombre} (${it.cant} × ${Q.dinero(it.precio)}): ${Q.dinero(it.cant * it.precio)}`
+      : `• ${it.nombre}: ${Q.dinero(it.precio)}`);
+    const abono = tot / 2;
+    const m = [
+      `Hola Gaby${nombre ? `, soy ${nombre}` : ""}. Quiero reservar con la cotización ${folio}:`,
+      "",
+      ...lineas,
+      "",
+      `*Total: ${Q.dinero(tot)}* (bolívares a tasa BCV)`
+    ];
+    if (q.divisas) m.push(`En divisas, Zelle o Binance: ${Q.dinero(q.divisas)}`);
+    m.push(`Abono del 50% para apartar: *${Q.dinero(abono)}*${q.divisas ? ` (${Q.dinero(q.divisas / 2)} en divisas)` : ""}`);
+    if (q.evento || q.lugar) m.push("");
+    if (q.evento) m.push(`Fecha: ${Q.fechaLarga(q.evento)}`);
+    if (q.lugar) m.push(`Lugar: ${q.lugar}`);
+    m.push("", "¿Me pasas los datos para hacer el abono?", "", `Mi cotización: ${location.href}`);
+    return m.join("\n");
+  }
   async function pintar() {
     const code = location.hash.slice(1);
     let q = null; try { q = await Q.leer(code); } catch (e) { q = null; }
@@ -127,7 +150,7 @@ h3 { font: 400 22px var(--f-display); margin: 36px 0 0; }
       <ul class="lista">${G.indicaciones.rostro.slice(0, 2).concat(G.indicaciones.cabello.slice(0, 2)).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="pie"><span class="s">Gracias</span>por preferir mis servicios.<br>Gabriela Bravo · @${esc(G.contacto.instagram)}</p>`;
     const n = G.contacto.whatsapp;
-    document.getElementById("reservar").href = Q.wa(`Hola Gaby, quiero reservar con la cotización ${folio} (total ${Q.dinero(tot)}). ¿Cómo hago el abono?`, n);
+    document.getElementById("reservar").href = Q.wa(mensajeReserva(q, folio, tot), n);
     document.getElementById("preguntar").href = Q.wa(`Hola Gaby, tengo una pregunta sobre la cotización ${folio}.`, n);
     document.getElementById("reservar").textContent = vencida ? "Actualizar cotización" : "Reservar mi fecha";
     if (vencida) document.getElementById("reservar").href = Q.wa(`Hola Gaby, mi cotización ${folio} venció. ¿Me la actualizas?`, n);
