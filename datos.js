@@ -45,8 +45,8 @@ window.GB = {
       script: "Novias",
       titulo2: "Tu gran día",
       intro: "Peinado de alta durabilidad y maquillaje que aguanta toda la celebración. Antes del día hay una cita de asesoría para definir tu look.",
-      foto: "fotos/novia-recogido-trenza.webp",
-      fotoAlt: "Novia de perfil con recogido trenzado y tocado",
+      foto: "fotos/gaby-colocando-tocado.webp",
+      fotoAlt: "Gaby colocando el tocado a una novia",
       servicios: [
         { cod: "PNOV", nombre: "Peinado de novia", precio: 140, duracion: "",
           incluye: ["Cita presencial de asesoría", "Secado de cabello", "Relleno para moños", "Peinado de alta durabilidad, el estilo que desees", "Malla para ondas", "Fijación de tiara y tocado", "Colocación de velo", "Colocación de extensiones tipo cortina (las traes tú, opcional)"] },
@@ -109,6 +109,12 @@ window.GB = {
   /* Galería: agrega aquí cada foto que subas a la carpeta "fotos".
      ancho: "doble" para que ocupe dos columnas en escritorio. */
   galeria: [
+    { src: "fotos/novia-perfil-laca.webp", alt: "Novia de perfil con ondas y tocado, fijación final con laca", texto: "Fijación final: ondas y tocado", ancho: "doble" },
+    { src: "fotos/novia-tocado-detalle.webp", alt: "Detalle de tocado de cristales sobre un semirrecogido", texto: "Tocado fijado para toda la noche" },
+    { src: "fotos/novia-espejo.webp", alt: "Novia sonriendo frente al espejo después del peinado", texto: "El momento del espejo" },
+    { src: "fotos/gaby-colocando-tocado.webp", alt: "Gaby colocando el tocado a una novia", texto: "Colocación del tocado" },
+    { src: "fotos/gaby-semirrecogido.webp", alt: "Gaby armando un semirrecogido trenzado", texto: "Semirrecogido trenzado" },
+    { src: "fotos/novia-ondas-tenaza.webp", alt: "Ondas con tenaza en el cabello de una novia con bata Bride", texto: "Ondas de alta duración" },
     { src: "fotos/novia-recogido-trenza.webp", alt: "Recogido trenzado con tocado de novia", texto: "Recogido trenzado con tocado", ancho: "doble" },
     { src: "fotos/novia-tiara-proceso.webp", alt: "Colocación de tiara a una novia", texto: "Fijación de tiara, día de la boda" },
     { src: "fotos/gaby-peinando.webp", alt: "Gaby dando el toque final a un peinado", texto: "Toque final antes de salir" }
