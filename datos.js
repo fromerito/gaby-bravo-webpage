@@ -57,6 +57,22 @@ window.GB = {
       ]
     },
     {
+      id: "quince",
+      nombre: "Quinceañeras",
+      script: "Quince",
+      titulo2: "Tu gran noche",
+      intro: "Peinado y maquillaje para la quinceañera, pensados para durar toda la fiesta y lucir en las fotos.",
+      foto: "fotos/quince-ondas.webp",
+      fotoAlt: "Quinceañera con ondas laterales y tiara",
+      servicios: [
+        { cod: "PQUI", nombre: "Peinado de quinceañera", precio: 90,
+          detalle: "Ondas, semirrecogido, recogido o trenzas, con tiara o tocado.",
+          incluye: ["Preparación del cabello con protector térmico", "Espuma fijadora para la durabilidad", "Pulido con secado express", "Fijación de tiara y tocado", "Extensiones de clip (las traes tú)", "Fijación con laca líquida y sellado en aerosol"] },
+        { cod: "MQUI", nombre: "Maquillaje de quinceañera", precio: 90,
+          incluye: ["Preparación de la piel", "Corrección de ojeras y manchas", "Base resistente", "Contorno y blush en crema y polvo", "Sellado y fijación", "Diseño y fijación de cejas", "Ojos soft o glam, según su estilo", "Delineador, rímel y pestañas postizas corridas", "Labial de larga duración"] }
+      ]
+    },
+    {
       id: "social",
       nombre: "Eventos",
       script: "Social",
