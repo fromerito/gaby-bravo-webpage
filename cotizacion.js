@@ -50,25 +50,33 @@
     return null;
   }
 
-  // Enlace corto (Supabase)
+  // Enlace corto e historial (Supabase).
+  // La clienta lee UNA cotización con la función pública ver_cotizacion (sin sesión).
+  // Crear y listar exige la sesión de Gaby (cotizar.html carga supabase-js).
   const A = G.acortador || {};
   const corto = !!(A.supabaseUrl && A.supabaseKey);
-  const cab = () => ({ apikey: A.supabaseKey, Authorization: "Bearer " + A.supabaseKey, "Content-Type": "application/json" });
-  const idNuevo = () => { const a = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s = ""; const r = crypto.getRandomValues(new Uint8Array(6)); r.forEach(n => s += a[n % a.length]); return s; };
-  async function guardarCorto(q) {
-    const datos = texto(q);
+  let cliente = null;
+  const sb = () => {
+    if (!cliente && corto && window.supabase) cliente = window.supabase.createClient(A.supabaseUrl, A.supabaseKey, { auth: { persistSession: true, autoRefreshToken: true, storageKey: "gb-sesion" } });
+    return cliente;
+  };
+  const idNuevo = () => { const a = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s = ""; const r = crypto.getRandomValues(new Uint8Array(8)); r.forEach(n => s += a[n % a.length]); return s; };
+  async function guardarCorto(q, extra) {
+    const c = sb(); if (!c) throw new Error("Falta iniciar sesión.");
+    const fila = Object.assign({ datos: texto(q), cliente: String(q.nombre || "").slice(0, 120), evento: q.evento || null, total: total(q) }, extra || {});
     for (let i = 0; i < 3; i++) {
       const id = idNuevo();
-      const r = await fetch(`${A.supabaseUrl}/rest/v1/cotizaciones`, { method: "POST", headers: Object.assign(cab(), { Prefer: "return=minimal" }), body: JSON.stringify({ id, datos }) });
-      if (r.ok) return "k" + id;
-      if (r.status !== 409) throw new Error("No se pudo guardar la cotización (" + r.status + ").");
+      const { error } = await c.from("cotizaciones").insert(Object.assign({ id }, fila));
+      if (!error) return "k" + id;
+      if (error.code !== "23505") throw new Error(error.code === "42501" ? "Tu usuario no tiene permiso para guardar cotizaciones." : "No se pudo guardar la cotización.");
     }
     throw new Error("No se pudo crear el enlace. Intenta de nuevo.");
   }
   async function leer(hash) {
     const raw = String(hash || "").replace(/^#/, "");
-    if (raw.startsWith("k") && corto) {
-      const r = await fetch(`${A.supabaseUrl}/rest/v1/rpc/ver_cotizacion`, { method: "POST", headers: cab(), body: JSON.stringify({ p_id: raw.slice(1) }) });
+    if (raw.startsWith("k")) {
+      if (!corto) return null;
+      const r = await fetch(`${A.supabaseUrl}/rest/v1/rpc/ver_cotizacion`, { method: "POST", headers: { apikey: A.supabaseKey, "Content-Type": "application/json" }, body: JSON.stringify({ p_id: raw.slice(1) }) });
       if (!r.ok) return null;
       const d = await r.json();
       return d ? leerTexto(d) : null;
@@ -98,5 +106,5 @@
   const enlace = code => `${baseSitio()}/c.html#${code}`;
   const wa = (t, numero) => `https://wa.me/${numero || ""}?text=${encodeURIComponent(t)}`;
 
-  window.GBQ = { catalogo, codificar, decodificar, leer, corto, guardarCorto, folio, total, dinero, fechaLarga, hoyISO, sumarDias, enlace, wa };
+  window.GBQ = { catalogo, codificar, decodificar, leer, leerTexto, corto, sb, guardarCorto, folio, total, dinero, fechaLarga, hoyISO, sumarDias, enlace, wa };
 })();

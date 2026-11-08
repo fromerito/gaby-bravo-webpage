@@ -14,7 +14,8 @@ window.GB = {
   // Enlaces cortos de cotización (opcional). Con estos dos datos de Supabase
   // el enlace queda como  .../c.html#kAB12CD . Vacíos = enlace largo.
   // Instrucciones y SQL en LEEME.md.
-  acortador: { supabaseUrl: "", supabaseKey: "" },
+  // Supabase: enlaces cortos e historial. La clave es la publicable (pública por diseño; las reglas de la base deciden qué puede hacer).
+  acortador: { supabaseUrl: "https://innaconhuyiyufxifhst.supabase.co", supabaseKey: "sb_publishable_gbNbX--sJLD_S_vAFZIMcg_ElNfsOp3" },
 
   marca: "Gaby Bravo",
   nombreLegal: "Gabriela Bravo",

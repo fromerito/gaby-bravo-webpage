@@ -33,42 +33,23 @@ Edita `datos.js` → `categorias`. Cada servicio tiene un `cod` (código corto).
 
 Pendiente: hoy la web tiene solo 3 fotos reales. Las mejores candidatas están en la carpeta "Fotos" de OneDrive y en las cotizaciones de Canva (novias, retrato con blazer vino).
 
-## Enlaces de cotización cortos (recomendado, 10 minutos)
+## Enlaces cortos e historial (Supabase, ya configurado)
 
-Sin configurar nada, el cotizador genera un enlace largo (unos 170 caracteres) que funciona igual. Para que quede como `gabybravoartist.com/c.html#kAB12CD`:
-
-1. En Supabase (puede ser el mismo proyecto de la Caja de Gabriela), abre *SQL Editor* y ejecuta:
-
-```sql
-create table if not exists public.cotizaciones (
-  id text primary key,
-  datos text not null check (length(datos) < 4000),
-  creada timestamptz not null default now()
-);
-alter table public.cotizaciones enable row level security;
-
--- Cualquiera con la clave pública puede CREAR una cotización…
-create policy "crear cotizaciones" on public.cotizaciones
-  for insert to anon with check (true);
--- …pero nadie puede listarlas. Solo se lee una por su código exacto:
-create or replace function public.ver_cotizacion(p_id text)
-returns text language sql security definer set search_path = public as $$
-  select datos from public.cotizaciones where id = p_id
-$$;
-grant execute on function public.ver_cotizacion(text) to anon;
-```
-
-2. Copia la *Project URL* y la *anon public key* (Settings → API) en `datos.js` → `acortador`.
-3. Listo: el cotizador muestra el botón **Crear enlace corto** y luego **Enviar por WhatsApp**.
-
-La clave anon es pública por diseño; con estas reglas solo permite crear cotizaciones y leer una cuando se conoce su código de 6 caracteres. No permite listar las de otras clientas.
+- Proyecto: `innaconhuyiyufxifhst` (datos en `datos.js` → `acortador`). La clave es la **publicable**: va en la web a propósito.
+- Tabla `cotizaciones`: solo los usuarios con `app_metadata.rol = "cotiza"` (Gaby y Fernando) pueden crear, listar y borrar. Nadie más puede leer la lista.
+- La clienta abre **una** cotización con su código de 8 caracteres mediante la función `ver_cotizacion`. No puede listar ni crear.
+- Para dar acceso a otra persona: créale un usuario en *Authentication → Users* y ejecuta en el SQL Editor
+  `update auth.users set raw_app_meta_data = raw_app_meta_data || '{"rol":"cotiza"}' where email = 'correo@ejemplo.com';`
+- **Pausa por inactividad:** el plan gratis pausa el proyecto tras 7 días sin uso y los enlaces cortos dejan de abrir. La tarea `.github/workflows/mantener-supabase.yml` hace una consulta diaria para evitarlo. Si alguna vez falla, GitHub te avisa por correo. Si el proyecto se pausa igual, reactívalo en el panel de Supabase (*Resume project*).
+- Sin sesión, el cotizador sigue funcionando con enlaces largos, que no dependen de Supabase.
 
 ## Cómo la usa Gaby (todos los días)
 
-1. Abre `cotizar.html` desde el ícono en su teléfono.
+1. Abre `cotizar.html` desde el ícono en su teléfono. La primera vez inicia sesión con su correo y contraseña de Supabase; después queda dentro.
 2. Escribe el nombre de la clienta y, si quiere, su WhatsApp.
 3. Toca los servicios (se suman solos; toca dos veces para 2 personas) y ajusta precios si hace falta.
 4. Escribe el total en divisas si aplica.
-5. Toca **Enviar por WhatsApp**: se abre el chat de la clienta con el mensaje y el enlace listos.
+5. Toca **Crear enlace corto** y luego **Enviar por WhatsApp**: se abre el chat de la clienta con el mensaje y el enlace listos.
+6. Para encontrar una cotización vieja: sección **Historial**, busca por nombre o folio (GB-…). Desde ahí puede abrirla, reenviarla o usarla de base para una nueva.
 
 La clienta ve su cotización con la marca, el total, qué incluye cada servicio, cómo pagar y las políticas, y tiene un botón para reservar que le escribe a Gaby con el código de la cotización.

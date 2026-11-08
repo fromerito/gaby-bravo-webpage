@@ -15,6 +15,7 @@
 /* Layout: herramienta de una columna en el teléfono (clienta → servicios → totales → enviar), dos columnas en escritorio con el resultado fijo a la derecha. */
 :root { --hueso: #F5EBE1; --hueso-claro: #FBF6F0; --tinta: #222222; --tinta-suave: #6B5A52; --vino: #4F161E; --vino-hondo: #3A0F16; --arena: #B79D83; --piedra: #DCCFC3; --ok: #2E6B47; --f-display: "Bodoni Moda", Didot, serif; --f-script: "Mrs Saint Delafield", cursive; --f-texto: Lato, "Helvetica Neue", Arial, sans-serif; color-scheme: light; }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { padding-top: env(safe-area-inset-top, 0px); }
 body { margin: 0; background: var(--hueso); color: var(--tinta); font: 400 16px/1.5 var(--f-texto); -webkit-font-smoothing: antialiased; }
 :focus-visible { outline: 2px solid var(--tinta); outline-offset: 2px; }
@@ -77,6 +78,13 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 .recientes span { color: var(--tinta-suave); }
 .recientes .acc { display: flex; gap: 6px; flex: none; }
 .barra { display: none; }
+.sesion { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--tinta-suave); }
+.sesion b { color: var(--tinta); font-weight: 700; }
+.top-der { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.buscar { display: flex; gap: 8px; }
+.buscar input { flex: 1; }
+.recientes .meta { display: block; font-size: 13px; }
+.nube { font-size: 12px; font-weight: 700; color: var(--ok); }
 @media (max-width: 860px) {
   .app { grid-template-columns: minmax(0, 1fr); }
   .resultado { position: static; }
@@ -91,11 +99,24 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 <div class="app">
   <header class="top">
     <div class="marca"><img src="img/gb.png" alt="Gaby Bravo"><h1>Cotizador</h1></div>
-    <button class="btn linea chico" type="button" id="nueva">Nueva cotización</button>
+    <div class="top-der">
+      <span class="sesion" id="quien" hidden><span>Sesión: <b id="quien-correo"></b></span><button class="btn linea chico" type="button" id="salir">Salir</button></span>
+      <button class="btn linea chico" type="button" id="nueva">Nueva cotización</button>
+    </div>
   </header>
 
   <div class="col">
     <div class="ejemplo" id="aviso-ejemplo" hidden><span>Estás viendo una cotización de ejemplo.</span><button class="btn chico" type="button" id="empezar">Empezar una en blanco</button></div>
+
+    <section class="bloque" id="b-login" hidden aria-labelledby="h-login">
+      <h2 id="h-login">Inicia sesión <small>Una sola vez en este teléfono</small></h2>
+      <form id="f-login" class="grid2">
+        <div class="campo"><label for="l-correo">Correo</label><input id="l-correo" type="email" autocomplete="username" required></div>
+        <div class="campo"><label for="l-clave">Contraseña</label><input id="l-clave" type="password" autocomplete="current-password" required></div>
+        <div class="campo ancho"><button class="btn" type="submit" id="l-entrar">Entrar</button></div>
+      </form>
+      <p class="ayuda" id="l-estado">Con la sesión iniciada, los enlaces salen cortos y cada cotización queda guardada para buscarla después. Sin sesión, el cotizador sigue funcionando con enlaces largos.</p>
+    </section>
 
     <section class="bloque" aria-labelledby="h-clienta">
       <h2 id="h-clienta">Clienta</h2>
@@ -129,7 +150,8 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     </section>
 
     <section class="bloque" aria-labelledby="h-rec">
-      <h2 id="h-rec">Enviadas desde este teléfono</h2>
+      <h2 id="h-rec"><span id="h-rec-t">Enviadas desde este teléfono</span><small class="nube" id="h-nube" hidden>Guardadas en la nube</small></h2>
+      <div class="buscar" id="h-buscar-caja" hidden><input id="h-buscar" type="search" placeholder="Buscar por nombre o folio (GB-…)" aria-label="Buscar cotización" autocomplete="off"></div>
       <ul class="recientes" id="recientes"></ul>
     </section>
   </div>
@@ -155,6 +177,7 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 </div>
 <div class="barra"><b id="b-total">$0</b><a class="btn" id="b-enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar por WhatsApp</a></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
 <script src="datos.js"></script>
 <script src="cotizacion.js"></script>
 <script>
@@ -221,12 +244,13 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     return d;
   }
   let creado = null; // { firma, code } en modo corto
-  function mensajePara(url, folio) {
-    const tot = Q.total(q);
-    const nombre = (q.nombre || "").replace(/\(ejemplo\)/i, "").trim().split(/\s+/)[0];
+  function mensajePara(url, folio, qx) {
+    qx = qx || q;
+    const tot = Q.total(qx);
+    const nombre = (qx.nombre || "").replace(/\(ejemplo\)/i, "").trim().split(/\s+/)[0];
     return [`Hola${nombre ? " " + nombre : ""}, aquí tienes tu cotización (${folio}):`, url, "",
-      `Total: ${Q.dinero(tot)}${q.divisas ? ` (o ${Q.dinero(+q.divisas)} pagando en divisas, Zelle o Binance)` : ""}.`,
-      q.vigencia ? `Válida hasta el ${Q.fechaLarga(q.vigencia)}.` : "",
+      `Total: ${Q.dinero(tot)}${qx.divisas ? ` (o ${Q.dinero(+qx.divisas)} pagando en divisas, Zelle o Binance)` : ""}.`,
+      qx.vigencia ? `Válida hasta el ${Q.fechaLarga(qx.vigencia)}.` : "",
       "Para apartar tu fecha solo necesito el 50%. Cualquier duda, me escribes por aquí."].filter(x => x !== "").join("\n");
   }
   function activar(code) {
@@ -248,10 +272,10 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     $("#r-total").textContent = $("#b-total").textContent = Q.dinero(tot);
     $("#r-divisas").textContent = q.divisas ? `Pagando en divisas, Zelle o Binance: ${Q.dinero(+q.divisas)}` : "Sin precio especial en divisas.";
     LS.set("gb-borrador", q);
-    $("#fila-crear").hidden = !Q.corto;
+    $("#fila-crear").hidden = !nube();
     if (!q.items.length) { desactivar("Agrega al menos un servicio."); return; }
     const sello = Object.assign({}, q, { emitida: Q.hoyISO() });
-    if (!Q.corto) { activar(Q.codificar(sello)); return; }
+    if (!nube()) { activar(Q.codificar(sello)); return; }
     const firma = JSON.stringify([sello.nombre, sello.evento, sello.lugar, sello.vigencia, sello.items, sello.divisas, sello.nota]);
     if (creado && creado.firma === firma) activar(creado.code);
     else { creado = null; desactivar("Toca «Crear enlace corto» cuando la cotización esté lista."); }
@@ -261,9 +285,9 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     const b = $("#r-crear"); b.disabled = true; b.textContent = "Creando…";
     const sello = Object.assign({}, q, { emitida: Q.hoyISO() });
     try {
-      const code = await Q.guardarCorto(sello);
+      const code = await Q.guardarCorto(sello, { telefono: telefono(q.tel) });
       creado = { firma: JSON.stringify([sello.nombre, sello.evento, sello.lugar, sello.vigencia, sello.items, sello.divisas, sello.nota]), code };
-      resultado(); $("#r-estado").textContent = "Enlace listo. Ya puedes enviarlo.";
+      resultado(); $("#r-estado").textContent = "Enlace listo y guardado. Ya puedes enviarlo."; cargarHistorial();
     } catch (e) { $("#r-estado").textContent = e.message + " Mientras tanto, revisa la conexión."; }
     b.disabled = false; b.textContent = "Crear enlace corto";
   });
@@ -278,7 +302,7 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     const url = $("#r-enviar").dataset.url; if (!url) return;
     h.unshift({ nombre: q.nombre, evento: q.evento, total: Q.total(q), folio: $("#r-enviar").dataset.folio, url, q: JSON.parse(JSON.stringify(q)), fecha: Q.hoyISO() });
     LS.set("gb-historial", h.filter((x, i, a) => a.findIndex(y => y.url === x.url) === i).slice(0, 30));
-    pintarHistorial();
+    if (!nube()) pintarHistorial();
   }
   function pintarHistorial() {
     const h = LS.get("gb-historial", []);
@@ -286,7 +310,32 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
       <span class="acc"><a class="btn linea chico" href="${esc(x.url)}" target="_blank" rel="noopener">Abrir</a><button class="btn linea chico" type="button" data-usar="${i}">Usar de base</button></span></li>`).join("")
       : `<li><span>Aquí aparecen las cotizaciones que envíes desde este teléfono.</span></li>`;
   }
+  // Historial en la nube (Supabase): todas las cotizaciones, con búsqueda
+  let filas = [], tBuscar;
+  const fechaCorta = iso => { const d = new Date(iso); return d.toLocaleDateString("es-VE", { day: "numeric", month: "short", year: "numeric" }); };
+  async function cargarHistorial() {
+    if (!nube()) { pintarHistorial(); return; }
+    const t = $("#h-buscar").value.trim().replace(/^gb-?/i, "").replace(/[%,()"*\\]/g, " ").trim();
+    let consulta = Q.sb().from("cotizaciones").select("id,cliente,telefono,evento,total,creada,datos").order("creada", { ascending: false }).limit(40);
+    if (t) consulta = consulta.or(`cliente.ilike."%${t}%",id.ilike."${t.toUpperCase()}%"`);
+    const { data, error } = await consulta;
+    if (error) { $("#recientes").innerHTML = `<li><span>No pude cargar el historial. Revisa la conexión.</span></li>`; return; }
+    filas = data || [];
+    $("#recientes").innerHTML = filas.length ? filas.map((f, i) => {
+      const qx = Q.leerTexto(f.datos) || { items: [] }, code = "k" + f.id, url = Q.enlace(code), folio = Q.folio(code);
+      return `<li><div><b>${esc(f.cliente || "Sin nombre")}</b><span class="meta">${folio} · ${Q.dinero(+f.total)}${f.evento ? " · evento " + Q.fechaLarga(f.evento) : ""} · enviada ${fechaCorta(f.creada)}</span></div>
+      <span class="acc"><a class="btn linea chico" href="${esc(url)}" target="_blank" rel="noopener">Abrir</a><a class="btn linea chico" href="${esc(Q.wa(mensajePara(url, folio, qx), f.telefono))}" target="_blank" rel="noopener">Reenviar</a><button class="btn linea chico" type="button" data-base="${i}">Usar de base</button></span></li>`;
+    }).join("") : `<li><span>${t ? "No hay cotizaciones con esa búsqueda." : "Aquí aparecen todas las cotizaciones que envíes, desde cualquier teléfono."}</span></li>`;
+  }
+  $("#h-buscar").addEventListener("input", () => { clearTimeout(tBuscar); tBuscar = setTimeout(cargarHistorial, 300); });
+
   $("#recientes").addEventListener("click", e => {
+    const fb = e.target.closest("[data-base]");
+    if (fb) {
+      const f = filas[+fb.dataset.base]; const x = f && Q.leerTexto(f.datos); if (!x) return;
+      q = Object.assign(vacia(), x, { tel: f.telefono || "", divisas: x.divisas == null ? "" : x.divisas, vigencia: Q.sumarDias(Q.hoyISO(), 7), ejemplo: false }); delete q.emitida;
+      pintar(); scrollTo({ top: 0, behavior: "smooth" }); return;
+    }
     const b = e.target.closest("[data-usar]"); if (!b) return;
     const x = LS.get("gb-historial", [])[+b.dataset.usar]; if (!x) return;
     q = Object.assign(vacia(), x.q, { vigencia: Q.sumarDias(Q.hoyISO(), 7), ejemplo: false }); pintar(); scrollTo({ top: 0, behavior: "smooth" });
@@ -304,7 +353,33 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
   $("#nueva").addEventListener("click", reiniciar);
   $("#empezar").addEventListener("click", reiniciar);
 
+  // Sesión de Gaby
+  let sesion = null;
+  function nube() { return Q.corto && !!sesion; }
+  function pintarSesion() {
+    $("#b-login").hidden = !Q.corto || !!sesion;
+    $("#quien").hidden = !sesion;
+    $("#quien-correo").textContent = sesion ? sesion.user.email : "";
+    $("#h-rec-t").textContent = nube() ? "Historial" : "Enviadas desde este teléfono";
+    $("#h-nube").hidden = $("#h-buscar-caja").hidden = !nube();
+    creado = null; resultado(); cargarHistorial();
+  }
+  $("#f-login").addEventListener("submit", async e => {
+    e.preventDefault();
+    const b = $("#l-entrar"); b.disabled = true; b.textContent = "Entrando…";
+    const { error } = await Q.sb().auth.signInWithPassword({ email: $("#l-correo").value.trim(), password: $("#l-clave").value });
+    b.disabled = false; b.textContent = "Entrar";
+    if (error) { $("#l-estado").textContent = /invalid/i.test(error.message) ? "Correo o contraseña incorrectos." : "No pude iniciar sesión. Revisa la conexión e intenta de nuevo."; return; }
+    $("#l-clave").value = "";
+  });
+  $("#salir").addEventListener("click", () => Q.sb().auth.signOut());
+
   pintar(); pintarHistorial();
+  const cli = Q.sb();
+  if (cli) {
+    cli.auth.getSession().then(({ data }) => { sesion = data.session; pintarSesion(); });
+    cli.auth.onAuthStateChange((evento, s) => { const antes = !!sesion; sesion = s; if (antes !== !!s) pintarSesion(); });
+  } else pintarSesion();
 })();
 </script>
 </body>
