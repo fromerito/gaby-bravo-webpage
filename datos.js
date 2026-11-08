@@ -62,8 +62,8 @@ window.GB = {
       script: "Social",
       titulo2: "Eventos y sesiones",
       intro: "Para invitadas, graduaciones, sesiones de fotos y cualquier noche que quieras recordar.",
-      foto: "fotos/gaby-peinando.webp",
-      fotoAlt: "Gaby terminando un peinado recogido",
+      foto: "fotos/maquillaje-glam.webp",
+      fotoAlt: "Maquillaje de noche con sombra dorada y ondas",
       servicios: [
         { cod: "PSOC", nombre: "Peinado social", precio: 70, duracion: "1 h 30 min a 2 h",
           detalle: "Ondas glam, semirrecogido, moño, cola o trenza.",
@@ -110,13 +110,16 @@ window.GB = {
      ancho: "doble" para que ocupe dos columnas en escritorio. */
   galeria: [
     { src: "fotos/novia-perfil-laca.webp", alt: "Novia de perfil con ondas y tocado, fijación final con laca", texto: "Fijación final: ondas y tocado", ancho: "doble" },
+    { src: "fotos/novia-espalda-mar.webp", alt: "Novia de espalda con recogido bajo y tiara frente al mar", texto: "Recogido bajo con tiara" },
+    { src: "fotos/novia-bata-tiara.webp", alt: "Novia en bata con semirrecogido, mechones sueltos y tiara", texto: "Preparación de novia" },
+    { src: "fotos/ondas-retro.webp", alt: "Peinado de ondas al agua estilo retro con maquillaje de noche", texto: "Ondas retro" },
+    { src: "fotos/maquillaje-glam.webp", alt: "Maquillaje de noche con sombra dorada brillante y labios gloss", texto: "Maquillaje glam" },
     { src: "fotos/novia-tocado-detalle.webp", alt: "Detalle de tocado de cristales sobre un semirrecogido", texto: "Tocado fijado para toda la noche" },
+    { src: "fotos/trenza-rosa.webp", alt: "Semirrecogido con trenzas y una rosa trenzada sobre ondas largas", texto: "Trenzas con rosa", ancho: "doble" },
+    { src: "fotos/quince-ondas.webp", alt: "Quinceañera con ondas laterales y tiara", texto: "Quince años: ondas laterales" },
     { src: "fotos/novia-espejo.webp", alt: "Novia sonriendo frente al espejo después del peinado", texto: "El momento del espejo" },
     { src: "fotos/gaby-colocando-tocado.webp", alt: "Gaby colocando el tocado a una novia", texto: "Colocación del tocado" },
-    { src: "fotos/gaby-semirrecogido.webp", alt: "Gaby armando un semirrecogido trenzado", texto: "Semirrecogido trenzado" },
-    { src: "fotos/novia-ondas-tenaza.webp", alt: "Ondas con tenaza en el cabello de una novia con bata Bride", texto: "Ondas de alta duración" },
-    { src: "fotos/novia-recogido-trenza.webp", alt: "Recogido trenzado con tocado de novia", texto: "Recogido trenzado con tocado", ancho: "doble" },
-    { src: "fotos/novia-tiara-proceso.webp", alt: "Colocación de tiara a una novia", texto: "Fijación de tiara, día de la boda" },
+    { src: "fotos/novia-recogido-trenza.webp", alt: "Recogido trenzado con tocado de novia", texto: "Recogido trenzado con tocado" },
     { src: "fotos/gaby-peinando.webp", alt: "Gaby dando el toque final a un peinado", texto: "Toque final antes de salir" }
   ],
 
