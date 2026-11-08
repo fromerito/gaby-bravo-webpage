@@ -47,10 +47,21 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 .grupo { display: grid; gap: 8px; }
 .grupo h3 { margin: 4px 0 0; font: 700 13px var(--f-texto); color: var(--tinta-suave); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { min-height: 42px; padding: 0 14px; border: 1px solid var(--arena); background: #fff; font: 400 14px var(--f-texto); color: var(--tinta); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
-.chip b { font-weight: 700; color: var(--vino); }
+.chip { display: inline-flex; align-items: stretch; border: 1px solid var(--arena); background: #fff; transition: border-color .2s, background-color .2s, box-shadow .2s; }
 .chip:hover { border-color: var(--vino); }
-.chip.en { border-color: var(--vino); box-shadow: inset 0 0 0 1px var(--vino); }
+.chip-n { min-height: 44px; padding: 0 14px; border: 0; background: transparent; font: 400 14px var(--f-texto); color: var(--tinta); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-align: left; }
+.chip-n b { font-weight: 700; color: var(--vino); }
+.chip-q { display: none; align-items: center; border-left: 1px solid rgba(245,235,225,.35); }
+.chip-q button { width: 40px; min-height: 44px; border: 0; background: transparent; color: var(--hueso); font: 700 18px/1 var(--f-texto); cursor: pointer; display: grid; place-items: center; }
+.chip-q button:hover { background: rgba(255,255,255,.12); }
+.chip-q button svg { width: 16px; height: 16px; }
+.chip-q output { min-width: 22px; text-align: center; font: 700 15px var(--f-texto); color: var(--hueso); font-variant-numeric: tabular-nums; }
+.chip.en { background: var(--vino); border-color: var(--vino); box-shadow: 0 6px 16px -10px rgba(58,15,22,.8); }
+.chip.en .chip-n { color: var(--hueso); }
+.chip.en .chip-n b { color: #D9C2A7; }
+.chip.en .chip-q { display: inline-flex; }
+@keyframes pulso { 50% { transform: scale(1.18); } }
+.chip-q output.salta { animation: pulso .22s ease; }
 .lineas { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--tinta); }
 .lineas li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--piedra); }
 .lineas .n { font-family: var(--f-display); font-size: 17px; line-height: 1.25; min-width: 0; }
@@ -149,7 +160,7 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     </section>
 
     <section class="bloque" aria-labelledby="h-serv">
-      <h2 id="h-serv">Servicios <small>Toca para agregar</small></h2>
+      <h2 id="h-serv">Servicios <small>Toca para agregar; ajusta con − y +</small></h2>
       <div id="catalogo" class="grupo"></div>
       <ul class="lineas" id="lineas"></ul>
       <div class="grid2">
@@ -197,8 +208,8 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 <div class="barra"><b id="b-total">$0</b><a class="btn" id="b-enviar" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar por WhatsApp</a></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
-<script src="datos.js?v=20261108c"></script>
-<script src="cotizacion.js?v=20261108c"></script>
+<script src="datos.js?v=20261108d"></script>
+<script src="cotizacion.js?v=20261108d"></script>
 <script>
 (function () {
   const G = window.GB, Q = window.GBQ, $ = s => document.querySelector(s);
@@ -214,13 +225,21 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 
   // Catálogo como botones
   $("#catalogo").innerHTML = G.categorias.map(c => `<div class="grupo"><h3>${esc(c.nombre)}</h3><div class="chips">${c.servicios.filter(s => s.precio != null).map(s =>
-    `<button type="button" class="chip" data-cod="${s.cod}">${esc(s.nombre)} <b>$${s.precio}</b></button>`).join("")}</div></div>`).join("");
+    `<span class="chip" data-cod="${s.cod}"><button type="button" class="chip-n">${esc(s.nombre)} <b>$${s.precio}</b></button><span class="chip-q"><button type="button" data-q="-1" aria-label="Quitar uno de ${esc(s.nombre)}"></button><output aria-live="polite">0</output><button type="button" data-q="1" aria-label="Agregar uno de ${esc(s.nombre)}">+</button></span></span>`).join("")}</div></div>`).join("");
+  // Tocar el servicio lo agrega; el contador aparece en el mismo botón (− / +). Con 1, el − es una papelera.
   $("#catalogo").addEventListener("click", e => {
-    const b = e.target.closest(".chip"); if (!b) return;
-    const s = Q.catalogo[b.dataset.cod];
-    const ya = q.items.find(it => it.cod === s.cod);
-    if (ya) ya.cant++; else q.items.push({ cod: s.cod, nombre: s.nombre, cant: 1, precio: s.precio });
+    const chip = e.target.closest(".chip"); if (!chip) return;
+    const s = Q.catalogo[chip.dataset.cod];
+    const i = q.items.findIndex(it => it.cod === s.cod);
+    const paso = e.target.closest("[data-q]");
+    if (paso) {
+      if (i < 0) return;
+      const d = +paso.dataset.q;
+      if (d < 0 && q.items[i].cant <= 1) q.items.splice(i, 1); else q.items[i].cant += d;
+    } else if (i < 0) q.items.push({ cod: s.cod, nombre: s.nombre, cant: 1, precio: s.precio });
+    else return;
     salir(); pintar();
+    const o = chip.querySelector("output"); o.classList.remove("salta"); void o.offsetWidth; o.classList.add("salta");
   });
   $("#x-agregar").addEventListener("click", () => {
     const n = $("#x-nombre").value.trim(), p = parseFloat($("#x-precio").value);
@@ -253,7 +272,15 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
       <input class="pr" type="number" min="0" step="1" inputmode="decimal" value="${it.precio}" aria-label="Precio de ${esc(it.nombre)}">
       <button type="button" class="quitar" aria-label="Quitar ${esc(it.nombre)}">×</button></li>`).join("")
       : `<li class="vacio" style="display:block">Todavía no hay servicios. Toca uno de arriba.</li>`;
-    document.querySelectorAll(".chip").forEach(b => b.classList.toggle("en", q.items.some(it => it.cod === b.dataset.cod)));
+    const papelera = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>';
+    document.querySelectorAll(".chip").forEach(c => {
+      const it = q.items.find(x => x.cod === c.dataset.cod);
+      c.classList.toggle("en", !!it);
+      c.querySelector("output").textContent = it ? it.cant : 0;
+      const menos = c.querySelector('[data-q="-1"]');
+      menos.innerHTML = it && it.cant > 1 ? "−" : papelera;
+      menos.setAttribute("aria-label", (it && it.cant > 1 ? "Quitar uno de " : "Eliminar ") + Q.catalogo[c.dataset.cod].nombre);
+    });
   }
   function telefono(t) {
     let d = String(t || "").replace(/\D/g, "");

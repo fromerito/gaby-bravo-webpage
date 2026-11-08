@@ -77,14 +77,43 @@ h1, h2, h3 { font-weight: 400; margin: 0; text-wrap: balance; }
 .enlace { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 
 /* Cabecera */
-.cab { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--hueso) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--piedra); }
-.cab .envoltura { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
-.cab .logo img { height: 40px; width: auto; }
-.cab nav { display: flex; gap: 26px; font-size: 15px; }
-.cab nav a { text-decoration: none; }
-.cab nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
-.cab .btn { min-height: 42px; padding: 0 20px; font-size: 14px; }
-@media (max-width: 900px) { .cab nav { display: none; } }
+/* Barra superior: transparente sobre la portada; al bajar se vuelve una barra flotante de vidrio */
+.cab { position: sticky; top: 0; z-index: 30; padding: max(10px, env(safe-area-inset-top, 0px)) var(--gutter-r) 0 var(--gutter); transition: padding .35s ease; }
+.cab .envoltura { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 64px; padding: 0 10px 0 18px; max-width: calc(var(--ancho) + 32px); border: 1px solid transparent; transition: background-color .35s ease, border-color .35s ease, box-shadow .35s ease, min-height .35s ease; }
+.cab.flota .envoltura { min-height: 58px; background: color-mix(in srgb, var(--hueso-claro) 78%, transparent); -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%); border-color: color-mix(in srgb, var(--arena) 45%, transparent); box-shadow: 0 18px 40px -24px rgba(58,15,22,.45); }
+.cab .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.cab .logo img { height: 38px; width: auto; transition: height .35s ease; }
+.cab.flota .logo img { height: 34px; }
+.cab .logo span { font-family: var(--f-display); font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta); padding-left: 12px; border-left: 1px solid var(--arena); line-height: 1.1; }
+.cab nav { display: flex; gap: 4px; }
+.cab nav a { position: relative; padding: 10px 12px; font-size: 15px; text-decoration: none; color: var(--tinta); transition: color .2s; }
+.cab nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 1.5px; background: var(--vino); transform: scaleX(0); transform-origin: center; transition: transform .3s cubic-bezier(.2,.8,.2,1); }
+.cab nav a:hover::after, .cab nav a[aria-current="true"]::after { transform: scaleX(1); }
+.cab nav a[aria-current="true"] { color: var(--vino); }
+.cab .acciones { display: flex; align-items: center; gap: 8px; }
+.cab .btn { min-height: 44px; padding: 0 20px; font-size: 14px; }
+.cab .btn svg { width: 17px; height: 17px; }
+.menu-btn { display: none; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border: 1px solid var(--tinta); border-radius: 9999px; background: transparent; color: var(--tinta); font: 700 14px var(--f-texto); cursor: pointer; }
+.menu-btn i { position: relative; width: 16px; height: 10px; }
+.menu-btn i::before, .menu-btn i::after { content: ""; position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor; }
+.menu-btn i::before { top: 0; } .menu-btn i::after { bottom: 0; }
+/* Hoja de menú en el teléfono */
+.hoja { position: fixed; inset: 0; z-index: 40; display: grid; grid-template-rows: auto 1fr auto; padding: max(18px, env(safe-area-inset-top, 0px)) var(--gutter-r) max(24px, env(safe-area-inset-bottom, 0px)) var(--gutter); background: var(--vino-hondo); color: var(--sobre-vino); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s; }
+.hoja.abierta { opacity: 1; visibility: visible; transition: opacity .3s ease; }
+.hoja .arriba { display: flex; justify-content: space-between; align-items: center; min-height: 52px; }
+.hoja .marca-hoja { font-family: var(--f-display); font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: var(--sobre-vino); }
+.hoja .cerrar { min-height: 44px; padding: 0 16px; border: 1px solid rgba(245,235,225,.4); border-radius: 9999px; background: transparent; color: var(--sobre-vino); font: 700 14px var(--f-texto); cursor: pointer; }
+.hoja nav { display: grid; align-content: center; gap: 4px; }
+.hoja nav a { font-family: var(--f-display); font-size: clamp(32px, 9vw, 44px); line-height: 1.25; text-decoration: none; color: var(--sobre-vino); padding: 6px 0; border-bottom: 1px solid rgba(245,235,225,.12); transform: translateY(12px); opacity: 0; transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s; }
+.hoja.abierta nav a { transform: none; opacity: 1; }
+.hoja.abierta nav a:nth-child(2) { transition-delay: .04s; } .hoja.abierta nav a:nth-child(3) { transition-delay: .08s; } .hoja.abierta nav a:nth-child(4) { transition-delay: .12s; } .hoja.abierta nav a:nth-child(5) { transition-delay: .16s; } .hoja.abierta nav a:nth-child(6) { transition-delay: .2s; }
+.hoja .s { font-family: var(--f-script); font-size: 54px; color: var(--sobre-vino-suave); line-height: 1; margin-bottom: 8px; }
+.hoja .pie-hoja { display: grid; gap: 10px; }
+.hoja .pie-hoja .btn { background: var(--hueso); color: var(--vino-hondo); min-height: 54px; }
+.hoja .pie-hoja small { text-align: center; color: var(--sobre-vino-suave); font-size: 13px; }
+body.sin-scroll { overflow: hidden; }
+@media (max-width: 1080px) { .cab .logo span { display: none; } }
+@media (max-width: 900px) { .cab nav, .cab .acciones .btn { display: none; } .menu-btn { display: inline-flex; } .cab .envoltura { padding-left: 14px; padding-right: 8px; } }
 
 /* Portada */
 .portada { position: relative; }
@@ -311,9 +340,9 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
 
 </head>
 <body>
-<header class="cab">
+<header class="cab" id="cab">
   <div class="envoltura">
-    <a class="logo" href="#inicio" aria-label="Gaby Bravo, inicio"><img src="img/gb.png" alt="Gaby Bravo"></a>
+    <a class="logo" href="#inicio" aria-label="Gaby Bravo, inicio"><img src="img/gb.png" alt=""><span>Gaby Bravo</span></a>
     <nav aria-label="Secciones">
       <a href="#servicios">Servicios</a>
       <a href="#galeria">Trabajos</a>
@@ -322,9 +351,25 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
       <a href="#politicas">Políticas</a>
       <a href="#ubicacion">Ubicación</a>
     </nav>
-    <a class="btn js-wa" data-msg="Hola Gaby, quiero información sobre tus servicios." href="#reservar">Escríbeme</a>
+    <div class="acciones">
+      <a class="btn js-wa" data-msg="Hola Gaby, quiero información sobre tus servicios." href="#reservar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Escríbeme</a>
+      <button class="menu-btn" type="button" id="menu-abrir" aria-expanded="false" aria-controls="hoja"><i aria-hidden="true"></i>Menú</button>
+    </div>
   </div>
 </header>
+<div class="hoja" id="hoja" role="dialog" aria-modal="true" aria-label="Menú" inert>
+  <div class="arriba"><span class="marca-hoja">Gaby Bravo</span><button class="cerrar" type="button" id="menu-cerrar">Cerrar</button></div>
+  <nav aria-label="Secciones">
+    <span class="s" aria-hidden="true">Menú</span>
+    <a href="#servicios">Servicios y precios</a>
+    <a href="#galeria">Trabajos</a>
+    <a href="#reservar">Reservar</a>
+    <a href="#pagos">Pagos</a>
+    <a href="#politicas">Políticas</a>
+    <a href="#ubicacion">Ubicación</a>
+  </nav>
+  <div class="pie-hoja"><a class="btn js-wa" data-msg="Hola Gaby, quiero información sobre tus servicios." href="#reservar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Escríbeme por WhatsApp</a><small>Respondo con disponibilidad y tu cotización.</small></div>
+</div>
 
 <main id="inicio">
   <section class="portada">
@@ -496,7 +541,7 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
 
 <dialog class="visor" id="visor"><button type="button" id="visor-cerrar">Cerrar</button><img id="visor-img" alt=""><p id="visor-txt"></p></dialog>
 
-<script src="datos.js?v=20261108c"></script>
+<script src="datos.js?v=20261108d"></script>
 <script>
 (function () {
   const G = window.GB, C = G.contacto;
@@ -685,6 +730,20 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
     setTimeout(() => b.textContent = "Copiar número", 2200);
   });
   $("#anio").textContent = new Date().getFullYear();
+  // Barra superior: flotante al bajar, sección activa y menú del teléfono
+  const cab = $("#cab"), hoja = $("#hoja");
+  const alBajar = () => cab.classList.toggle("flota", scrollY > 24);
+  addEventListener("scroll", alBajar, { passive: true }); alBajar();
+  const enlaces = [...document.querySelectorAll(".cab nav a")];
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(ents => ents.forEach(en => { if (en.isIntersecting) enlaces.forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + en.target.id ? "true" : "false")); }), { rootMargin: "-45% 0px -50% 0px" });
+    enlaces.forEach(a => { const sec = document.querySelector(a.getAttribute("href")); if (sec) io.observe(sec); });
+  }
+  const abrirMenu = si => { hoja.classList.toggle("abierta", si); hoja.inert = !si; document.body.classList.toggle("sin-scroll", si); $("#menu-abrir").setAttribute("aria-expanded", si); if (si) $("#menu-cerrar").focus(); else $("#menu-abrir").focus(); };
+  $("#menu-abrir").addEventListener("click", () => abrirMenu(true));
+  $("#menu-cerrar").addEventListener("click", () => abrirMenu(false));
+  hoja.querySelectorAll("nav a, .pie-hoja a").forEach(a => a.addEventListener("click", () => { hoja.classList.remove("abierta"); hoja.inert = true; document.body.classList.remove("sin-scroll"); $("#menu-abrir").setAttribute("aria-expanded", "false"); }));
+  addEventListener("keydown", e => { if (e.key === "Escape" && hoja.classList.contains("abierta")) abrirMenu(false); });
 })();
 </script>
 
