@@ -9,7 +9,7 @@ window.GB = {
   // Dirección pública de la web, SIN barra final. Los enlaces de cotización
   // se arman con ella. Ejemplo: "https://gabybravoartist.com"
   // Si se deja vacía, el cotizador usa la dirección desde donde se abre.
-  sitio: "",
+  sitio: "https://gabybravoartist.com",
 
   // Enlaces cortos de cotización (opcional). Con estos dos datos de Supabase
   // el enlace queda como  .../c.html#kAB12CD . Vacíos = enlace largo.

@@ -11,6 +11,13 @@
 | `cotizacion.js` | Lógica del enlace de cotización. No hace falta tocarlo. |
 | `fotos/`, `img/`, `fonts/` | Fotos, logos y tipografías. Las fuentes van incluidas, así que la web no depende de Google Fonts. |
 
+## Dirección
+
+- Web: **https://gabybravoartist.com** (dominio en Cloudflare Registrar, a nombre de Gabriela Bravo).
+- DNS en Cloudflare, todos en "Solo DNS" (nube gris): 4 registros A de `@` a 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153 y un CNAME `www` → `fromerito.github.io`.
+- El archivo `CNAME` de esta carpeta le dice a GitHub Pages cuál es el dominio. No lo borres.
+- Supabase (Authentication → URL Configuration): Site URL `https://gabybravoartist.com/cotizar.html`.
+
 ## Publicar (GitHub Pages, igual que Bellas)
 
 1. Crea un repositorio, por ejemplo `gabybravoartist`, y sube todo el contenido de esta carpeta a la raíz.
