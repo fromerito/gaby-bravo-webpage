@@ -1,0 +1,16 @@
+{
+  "name": "Gaby Bravo",
+  "short_name": "Gaby Bravo",
+  "description": "Maquilladora profesional y especialista en peinado. Reserva por WhatsApp.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#F5EBE1",
+  "theme_color": "#4F161E",
+  "lang": "es",
+  "icons": [
+    { "src": "img/icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icono-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "img/icono-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
