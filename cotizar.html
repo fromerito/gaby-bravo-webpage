@@ -115,7 +115,18 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
         <div class="campo"><label for="l-clave">Contraseña</label><input id="l-clave" type="password" autocomplete="current-password" required></div>
         <div class="campo ancho"><button class="btn" type="submit" id="l-entrar">Entrar</button></div>
       </form>
+      <div><button class="btn linea chico" type="button" id="l-olvide">Olvidé mi contraseña</button></div>
       <p class="ayuda" id="l-estado">Con la sesión iniciada, los enlaces salen cortos y cada cotización queda guardada para buscarla después. Sin sesión, el cotizador sigue funcionando con enlaces largos.</p>
+    </section>
+
+    <section class="bloque" id="b-nueva" hidden aria-labelledby="h-nueva">
+      <h2 id="h-nueva">Crea tu contraseña nueva</h2>
+      <form id="f-nueva" class="grid2">
+        <div class="campo"><label for="n-clave">Contraseña nueva</label><input id="n-clave" type="password" autocomplete="new-password" minlength="8" required></div>
+        <div class="campo"><label for="n-clave2">Repítela</label><input id="n-clave2" type="password" autocomplete="new-password" minlength="8" required></div>
+        <div class="campo ancho"><button class="btn" type="submit" id="n-guardar">Guardar contraseña</button></div>
+      </form>
+      <p class="ayuda" id="n-estado">Mínimo 8 caracteres. Después de guardarla quedas con la sesión iniciada.</p>
     </section>
 
     <section class="bloque" aria-labelledby="h-clienta">
@@ -373,12 +384,36 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     $("#l-clave").value = "";
   });
   $("#salir").addEventListener("click", () => Q.sb().auth.signOut());
+  // Recuperar contraseña: el correo trae de vuelta a esta misma página.
+  $("#l-olvide").addEventListener("click", async () => {
+    const correo = $("#l-correo").value.trim();
+    if (!correo) { $("#l-estado").textContent = "Escribe tu correo arriba y vuelve a tocar «Olvidé mi contraseña»."; $("#l-correo").focus(); return; }
+    const { error } = await Q.sb().auth.resetPasswordForEmail(correo, { redirectTo: location.origin + location.pathname });
+    $("#l-estado").textContent = error ? (/rate|seconds/i.test(error.message) ? "Espera un minuto antes de pedir otro correo." : "No pude enviar el correo. Intenta de nuevo.")
+      : "Listo. Abre el correo de Supabase en este mismo teléfono y toca el enlace (una sola vez).";
+  });
+  $("#f-nueva").addEventListener("submit", async e => {
+    e.preventDefault();
+    const a = $("#n-clave").value, b2 = $("#n-clave2").value;
+    if (a.length < 8) { $("#n-estado").textContent = "Usa al menos 8 caracteres."; return; }
+    if (a !== b2) { $("#n-estado").textContent = "Las dos contraseñas no coinciden."; return; }
+    const b = $("#n-guardar"); b.disabled = true; b.textContent = "Guardando…";
+    const { error } = await Q.sb().auth.updateUser({ password: a });
+    b.disabled = false; b.textContent = "Guardar contraseña";
+    if (error) { $("#n-estado").textContent = /same|different/i.test(error.message) ? "Debe ser distinta a la anterior." : "No pude guardarla. Pide otro correo e intenta de nuevo."; return; }
+    $("#n-clave").value = $("#n-clave2").value = "";
+    $("#b-nueva").hidden = true; $("#r-estado").textContent = "Contraseña guardada.";
+  });
 
   pintar(); pintarHistorial();
   const cli = Q.sb();
   if (cli) {
     cli.auth.getSession().then(({ data }) => { sesion = data.session; pintarSesion(); });
-    cli.auth.onAuthStateChange((evento, s) => { const antes = !!sesion; sesion = s; if (antes !== !!s) pintarSesion(); });
+    cli.auth.onAuthStateChange((evento, s) => {
+      const antes = !!sesion; sesion = s; if (antes !== !!s) pintarSesion();
+      if (evento === "PASSWORD_RECOVERY") { $("#b-nueva").hidden = false; history.replaceState(null, "", location.pathname); setTimeout(() => $("#n-clave").focus(), 50); }
+      if (!s) $("#b-nueva").hidden = true;
+    });
   } else pintarSesion();
 })();
 </script>
