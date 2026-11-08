@@ -45,6 +45,18 @@ textarea { min-height: 72px; resize: vertical; }
 input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0; }
 .ayuda { font-size: 13px; color: var(--tinta-suave); margin: 0; }
 .grupo { display: grid; gap: 8px; }
+/* Categorías desplegables (una abierta a la vez) */
+.cat { border: 1px solid var(--piedra); background: #fff; }
+.cat + .cat { margin-top: -9px; }
+.cat summary { list-style: none; display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 14px; cursor: pointer; }
+.cat summary::-webkit-details-marker { display: none; }
+.cat-n { font: 400 18px var(--f-display); flex: 1; }
+.cat-c { min-width: 24px; height: 24px; padding: 0 7px; display: inline-grid; place-items: center; border-radius: 9999px; background: var(--vino); color: var(--hueso); font: 700 12px var(--f-texto); }
+.cat-f { width: 9px; height: 9px; border-right: 1.6px solid var(--tinta-suave); border-bottom: 1.6px solid var(--tinta-suave); transform: rotate(45deg) translateY(-3px); transition: transform .25s; }
+.cat[open] .cat-f { transform: rotate(-135deg) translateY(-2px); }
+.cat[open] summary { border-bottom: 1px solid var(--piedra); }
+.cat .chips { padding: 12px; }
+.cat[open] .chips { animation: entra .25s ease; }
 .grupo h3 { margin: 4px 0 0; font: 700 13px var(--f-texto); color: var(--tinta-suave); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { display: inline-flex; align-items: stretch; border: 1px solid var(--arena); background: #fff; transition: border-color .2s, background-color .2s, box-shadow .2s; }
@@ -251,8 +263,8 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
-<script src="datos.js?v=20261108e"></script>
-<script src="cotizacion.js?v=20261108e"></script>
+<script src="datos.js?v=20261108f"></script>
+<script src="cotizacion.js?v=20261108f"></script>
 <script>
 (function () {
   const G = window.GB, Q = window.GBQ, $ = s => document.querySelector(s);
@@ -267,8 +279,10 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
   let q = LS.get("gb-borrador", null) || ejemplo();
 
   // Catálogo como botones
-  $("#catalogo").innerHTML = G.categorias.map(c => `<div class="grupo"><h3>${esc(c.nombre)}</h3><div class="chips">${c.servicios.filter(s => s.precio != null).map(s =>
-    `<span class="chip" data-cod="${s.cod}"><button type="button" class="chip-n">${esc(s.nombre)} <b>$${s.precio}</b></button><span class="chip-q"><button type="button" data-q="-1" aria-label="Quitar uno de ${esc(s.nombre)}"></button><output aria-live="polite">0</output><button type="button" data-q="1" aria-label="Agregar uno de ${esc(s.nombre)}">+</button></span></span>`).join("")}</div></div>`).join("");
+  $("#catalogo").innerHTML = G.categorias.map((c, ci) => `<details class="cat" name="cat"${ci === 0 ? " open" : ""}><summary><span class="cat-n">${esc(c.nombre)}</span><span class="cat-c" hidden></span><span class="cat-f" aria-hidden="true"></span></summary><div class="chips">${c.servicios.filter(s => s.precio != null).map(s =>
+    `<span class="chip" data-cod="${s.cod}"><button type="button" class="chip-n">${esc(s.nombre)} <b>$${s.precio}</b></button><span class="chip-q"><button type="button" data-q="-1" aria-label="Quitar uno de ${esc(s.nombre)}"></button><output aria-live="polite">0</output><button type="button" data-q="1" aria-label="Agregar uno de ${esc(s.nombre)}">+</button></span></span>`).join("")}</div></details>`).join("");
+  // Una categoría abierta a la vez (respaldo para navegadores sin details[name])
+  $("#catalogo").addEventListener("toggle", e => { if (e.target.open) document.querySelectorAll("#catalogo .cat[open]").forEach(d => { if (d !== e.target) d.open = false; }); }, true);
   // Tocar el servicio lo agrega; el contador aparece en el mismo botón (− / +). Con 1, el − es una papelera.
   $("#catalogo").addEventListener("click", e => {
     const chip = e.target.closest(".chip"); if (!chip) return;
@@ -323,6 +337,10 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
       const menos = c.querySelector('[data-q="-1"]');
       menos.innerHTML = it && it.cant > 1 ? "−" : papelera;
       menos.setAttribute("aria-label", (it && it.cant > 1 ? "Quitar uno de " : "Eliminar ") + Q.catalogo[c.dataset.cod].nombre);
+    });
+    document.querySelectorAll("#catalogo .cat").forEach(d => {
+      const n = [...d.querySelectorAll(".chip")].reduce((t, c) => { const it = q.items.find(x => x.cod === c.dataset.cod); return t + (it ? it.cant : 0); }, 0);
+      const b = d.querySelector(".cat-c"); b.hidden = !n; b.textContent = n; b.setAttribute("aria-label", n + " elegidos");
     });
   }
   function telefono(t) {
