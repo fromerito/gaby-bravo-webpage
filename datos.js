@@ -33,6 +33,20 @@ window.GB = {
     atencion: "Con cita previa, en el estudio o a domicilio"
   },
 
+  /* Promoción vigente. Se muestra sola entre "desde" y "hasta" (hora de Venezuela)
+     y desaparece al terminar. Para apagarla antes: activa: false. */
+  promo: {
+    activa: true,
+    porcentaje: 10,
+    desde: "2026-11-01",
+    hasta: "2026-11-30",
+    codigo: "WEB10",
+    cinta: "Noviembre: 10% de descuento en todos los servicios reservando desde la web",
+    corto: "−10% reservando por la web",
+    excluir: ["extras"],                 // categorías sin descuento (traslados y complementos)
+    condiciones: "Válido para reservas enviadas desde esta web hasta el 30 de noviembre de 2026. El descuento aplica sobre el precio de lista de cada servicio; el traslado a domicilio u hotel no tiene descuento."
+  },
+
   notaPrecio: "Bolívares a tasa BCV del día. Pagando en divisas, Zelle o Binance tienes precio especial.",
 
   /* Catálogo. "cod" es el código corto que viaja en el enlace de la
@@ -41,6 +55,10 @@ window.GB = {
   categorias: [
     {
       id: "novias",
+      tarjeta: "fotos/novia-espalda-mar.webp",   // foto de la tarjeta en la portada
+      portada: "fotos/novia-perfil-laca.webp",   // foto grande de su página
+      pagina: "novias.html",
+      fotos: ["fotos/novia-espalda-mar.webp", "fotos/novia-perfil-laca.webp", "fotos/novia-tocado-detalle.webp", "fotos/gaby-colocando-tocado.webp", "fotos/novia-espejo.webp", "fotos/novia-bata-tiara.webp", "fotos/novia-recogido-trenza.webp"],
       nombre: "Novias",
       script: "Novias",
       titulo2: "Tu gran día",
@@ -58,6 +76,10 @@ window.GB = {
     },
     {
       id: "quince",
+      tarjeta: "fotos/quince-ondas.webp",   // foto de la tarjeta en la portada
+      portada: "fotos/quince-ondas.webp",   // foto grande de su página
+      pagina: "quinceaneras.html",
+      fotos: ["fotos/quince-ondas.webp", "fotos/trenza-rosa.webp", "fotos/ondas-retro.webp"],
       nombre: "Quinceañeras",
       script: "Quince",
       titulo2: "Tu gran noche",
@@ -74,6 +96,10 @@ window.GB = {
     },
     {
       id: "social",
+      tarjeta: "fotos/maquillaje-glam.webp",   // foto de la tarjeta en la portada
+      portada: "fotos/maquillaje-glam.webp",   // foto grande de su página
+      pagina: "eventos.html",
+      fotos: ["fotos/maquillaje-glam.webp", "fotos/ondas-retro.webp", "fotos/trenza-rosa.webp", "fotos/gaby-peinando.webp"],
       nombre: "Eventos",
       script: "Social",
       titulo2: "Eventos y sesiones",
@@ -94,6 +120,10 @@ window.GB = {
     },
     {
       id: "cursos",
+      tarjeta: "fotos/gaby-peinando.webp",   // foto de la tarjeta en la portada
+      portada: "fotos/gaby-colocando-tocado.webp",   // foto grande de su página
+      pagina: "cursos.html",
+      fotos: ["fotos/gaby-peinando.webp", "fotos/novia-tiara-proceso.webp", "fotos/gaby-colocando-tocado.webp"],
       nombre: "Cursos",
       script: "Cursos",
       titulo2: "Formación",

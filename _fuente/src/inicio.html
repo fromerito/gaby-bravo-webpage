@@ -1,0 +1,99 @@
+<main id="contenido">
+  <section class="portada">
+    <div class="envoltura">
+      <div class="texto">
+        <h1 class="nombre"><span class="g">Gaby</span><span class="b">Bravo</span></h1>
+        <p class="desc">Maquilladora profesional y especialista en peinado, en Barcelona y Lechería.</p>
+        <p class="lead">Peinados de alta durabilidad y maquillaje para novias, quinceañeras y eventos. En el estudio o a domicilio, con asesoría antes de tu día.</p>
+        <div class="acciones">
+          <a class="btn" href="#servicios" id="hero-cta">Ver servicios y precios</a>
+          <a class="enlace" href="reservar.html">Mi reserva</a>
+        </div>
+      </div>
+      <figure class="foto">
+        <div class="sello-promo" id="sello-promo" hidden></div>
+        <img src="fotos/gaby-peinando.webp" alt="Gaby Bravo dando el toque final a un peinado recogido" fetchpriority="high">
+        <figcaption>Gaby en el estudio</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="promesa" aria-label="Lo que puedes esperar">
+    <ul class="envoltura">
+      <li>Cabello intacto hasta el día siguiente<span>Técnicas de peinado de alta durabilidad.</span></li>
+      <li>Asesoría antes de tu evento<span>Definimos tu look con tu atuendo y tus referencias.</span></li>
+      <li>En el estudio o a domicilio<span>Estudio en Barcelona, tu casa u hotel.</span></li>
+    </ul>
+  </section>
+
+  <section class="seccion" id="servicios">
+    <div class="envoltura">
+      <div class="serv-cab-sec">
+        <h2 class="titulo"><span class="s">Servicios</span><span class="c">Elige el tuyo</span></h2>
+        <p class="lead" id="serv-lead">Entra a cada categoría, agrega los servicios que necesitas (pueden ser varios, y para varias personas) y envía tu reserva con todo el detalle.</p>
+      </div>
+      <div class="tarjetas-cat" id="tarjetas"></div>
+      <ol class="como" aria-label="Cómo reservar">
+        <li><b>Elige tus servicios</b><span>Peinado, maquillaje o los dos; para ti o para tu grupo.</span></li>
+        <li><b>Indica fecha y lugar</b><span>En el estudio o a domicilio, marcando el punto en el mapa.</span></li>
+        <li><b>Envía tu reserva</b><span id="como-3">Se abre WhatsApp con el detalle y el total, y Gaby te confirma.</span></li>
+      </ol>
+      <p class="promo-nota" id="promo-nota" hidden></p>
+    </div>
+  </section>
+
+  <section class="seccion" id="galeria" style="padding-top:0">
+    <div class="envoltura">
+      <div class="galeria-cab">
+        <h2 class="titulo"><span class="s">Trabajos</span><span class="c">Recientes</span></h2>
+        <a class="enlace" id="ig-link" href="#">Ver más en Instagram</a>
+      </div>
+      <div class="mosaico" id="mosaico"></div>
+    </div>
+  </section>
+
+  <section class="seccion" id="pagos">
+    <div class="envoltura dos">
+      <div>
+        <h2 class="titulo"><span class="s">Pagos</span><span class="c">Y reservas</span></h2>
+        <ul class="metodos" id="metodos"></ul>
+        <p class="texto-p" id="abono"></p>
+        <p class="texto-p" id="divisas"></p>
+      </div>
+      <div>
+        <h2 class="titulo"><span class="s">Indicaciones</span><span class="c">Para tu cita</span></h2>
+        <h3 class="sub">Para tu rostro</h3>
+        <ul class="lista-fina" id="ind-rostro"></ul>
+        <h3 class="sub">Para tu cabello</h3>
+        <ul class="lista-fina" id="ind-cabello"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion" id="politicas" style="padding-top:0">
+    <div class="envoltura">
+      <h2 class="titulo"><span class="s">Políticas</span><span class="c">De servicio</span></h2>
+      <p class="lead">Al hacer el abono de tu reserva, aceptas estas condiciones.</p>
+      <ol class="clausulas" id="clausulas"></ol>
+      <div class="faq" id="faq"></div>
+    </div>
+  </section>
+
+  <section class="seccion contacto" id="ubicacion">
+    <div class="envoltura contacto-grid">
+      <h2 class="titulo"><span class="s">Visítame</span><span class="c">O escríbeme</span></h2>
+      <div>
+        <dl class="datos">
+          <div><dt>Estudio</dt><dd id="d-estudio"></dd></div>
+          <div><dt>WhatsApp</dt><dd><span id="d-wa"></span><button class="copiar" id="copiar-wa" type="button">Copiar número</button></dd></div>
+          <div><dt>Instagram</dt><dd><a id="d-ig" href="#" target="_blank" rel="noopener"></a></dd></div>
+        </dl>
+        <div class="acciones" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px">
+          <a class="btn js-wa" data-msg="Hola Gaby, quiero información sobre tus servicios." href="#">Escribir por WhatsApp</a>
+          <a class="btn btn-linea" id="d-mapa" href="#" target="_blank" rel="noopener">Abrir en Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<dialog class="visor" id="visor"><button type="button" id="visor-cerrar">Cerrar</button><img id="visor-img" alt=""><p id="visor-txt"></p></dialog>

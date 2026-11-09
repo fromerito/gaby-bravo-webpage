@@ -3,404 +3,70 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Gaby Bravo, maquilladora profesional y especialista en peinado en Barcelona y Lechería. Peinados de alta durabilidad y maquillaje para novias y eventos, en el estudio o a domicilio. Reserva por WhatsApp.">
+<title>Gaby Bravo · Peinado y maquillaje en Barcelona y Lechería</title>
+<meta name="description" content="Maquilladora profesional y especialista en peinado. Novias, quinceañeras y eventos, en el estudio o a domicilio. Reserva desde la web.">
 <meta property="og:title" content="Gaby Bravo · Peinado y maquillaje en Barcelona y Lechería">
-<meta property="og:description" content="Novias, eventos y cursos de peinado. Reserva por WhatsApp.">
+<meta property="og:description" content="Maquilladora profesional y especialista en peinado. Novias, quinceañeras y eventos, en el estudio o a domicilio. Reserva desde la web.">
 <meta property="og:image" content="https://gabybravoartist.com/img/og.jpg">
 <meta property="og:type" content="website">
-<link rel="canonical" href="https://gabybravoartist.com/">
 <meta property="og:url" content="https://gabybravoartist.com/">
+<link rel="canonical" href="https://gabybravoartist.com/">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="apple-touch-icon" href="img/icono-180.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#F5EBE1">
 <meta name="apple-mobile-web-app-title" content="Gaby Bravo">
+<link rel="preload" href="fonts/bodoni-moda-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css?v=20261109c">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BeautySalon","name":"Gaby Bravo","description":"Maquilladora profesional y especialista en peinado","telephone":"+58 424-8454819","priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"C. C. Costanera, Plaza 1, piso 3, local P3-02, Av. El Ejército","addressLocality":"Barcelona","addressRegion":"Anzoátegui","addressCountry":"VE"},"geo":{"@type":"GeoCoordinates","latitude":10.16093,"longitude":-64.69238},"areaServed":["Barcelona","Lechería","Puerto La Cruz"],"sameAs":["https://instagram.com/gabybravoartist"]}</script>
-<title>Gaby Bravo</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Lato:wght@300;400;700&family=Mrs+Saint+Delafield&display=swap">
-<style>
-/* Layout: portada de revista (título grande a la izquierda que monta sobre la foto), luego un menú de servicios tipo carta con foto fija al lado, galería en mosaico, reserva y datos prácticos. Un solo mundo visual: hueso, tinta y vino. */
-@font-face { font-family: "Bodoni Moda"; src: url(fonts/bodoni-moda-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Bodoni Moda"; src: url(fonts/bodoni-moda-latin-500-normal.woff2) format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Bodoni Moda"; src: url(fonts/bodoni-moda-latin-400-italic.woff2) format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
-@font-face { font-family: "Mrs Saint Delafield"; src: url(fonts/mrs-saint-delafield-latin-400-normal.woff2) format("woff2"); font-display: swap; }
-@font-face { font-family: "Lato"; src: url(fonts/lato-latin-300-normal.woff2) format("woff2"); font-weight: 300; font-display: swap; }
-@font-face { font-family: "Lato"; src: url(fonts/lato-latin-400-normal.woff2) format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Lato"; src: url(fonts/lato-latin-700-normal.woff2) format("woff2"); font-weight: 700; font-display: swap; }
-
-:root {
-  --hueso: #F5EBE1;
-  --hueso-claro: #FBF6F0;
-  --tinta: #222222;
-  --tinta-suave: #6B5A52;
-  --vino: #4F161E;
-  --vino-hondo: #3A0F16;
-  --arena: #B79D83;
-  --piedra: #DCCFC3;
-  --sobre-vino: #F5EBE1;
-  --sobre-vino-suave: #D9C2A7;
-  --f-display: "Bodoni Moda", "Bodoni 72", Didot, "Times New Roman", serif;
-  --f-script: "Mrs Saint Delafield", "Snell Roundhand", cursive;
-  --f-texto: Lato, "Helvetica Neue", Arial, sans-serif;
-  --ancho: 1200px;
-  --gutter: max(16px, env(safe-area-inset-left, 0px));
-  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
-  color-scheme: light;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
-body { margin: 0; background: var(--hueso); color: var(--tinta); font-family: var(--f-texto); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--hueso); }
-img { max-width: 100%; display: block; }
-a { color: inherit; }
-:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
-.envoltura { max-width: var(--ancho); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter-r); }
-.seccion { padding-block: clamp(64px, 9vw, 120px); }
-h1, h2, h3 { font-weight: 400; margin: 0; text-wrap: balance; }
-
-/* Título en dos niveles: script + serif en mayúsculas (firma de la marca) */
-.titulo { display: grid; justify-items: start; line-height: 1; }
-.titulo .s { font-family: var(--f-script); font-size: clamp(56px, 7vw, 92px); color: var(--vino); line-height: .9; margin-left: -.04em; }
-.titulo .c { font-family: var(--f-display); font-size: clamp(30px, 4.2vw, 52px); text-transform: uppercase; letter-spacing: .01em; margin-top: -.12em; }
-.lead { font-size: clamp(17px, 1.6vw, 19px); color: var(--tinta-suave); max-width: 56ch; margin: 18px 0 0; }
-
-/* Botones */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 28px; font: 700 15px/1 var(--f-texto); letter-spacing: .02em; text-decoration: none; border: 0; border-radius: 9999px; cursor: pointer; background: var(--vino); color: var(--sobre-vino); transition: background .15s; }
-.btn:hover { background: var(--vino-hondo); }
-.btn svg { width: 18px; height: 18px; flex: none; }
-.btn-linea { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
-.btn-linea:hover { background: var(--tinta); color: var(--hueso); }
-.enlace { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-
-/* Cabecera */
-/* Barra superior: transparente sobre la portada; al bajar se vuelve una barra flotante de vidrio */
-.cab { position: sticky; top: 0; z-index: 30; padding: max(10px, env(safe-area-inset-top, 0px)) var(--gutter-r) 0 var(--gutter); transition: padding .35s ease; }
-.cab .envoltura { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 64px; padding: 0 10px 0 18px; max-width: calc(var(--ancho) + 32px); border: 1px solid transparent; transition: background-color .35s ease, border-color .35s ease, box-shadow .35s ease, min-height .35s ease; }
-.cab.flota .envoltura { min-height: 58px; background: color-mix(in srgb, var(--hueso-claro) 78%, transparent); -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%); border-color: color-mix(in srgb, var(--arena) 45%, transparent); box-shadow: 0 18px 40px -24px rgba(58,15,22,.45); }
-.cab .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.cab .logo img { height: 38px; width: auto; transition: height .35s ease; }
-.cab.flota .logo img { height: 34px; }
-.cab .logo span { font-family: var(--f-display); font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta); padding-left: 12px; border-left: 1px solid var(--arena); line-height: 1.1; }
-.cab nav { display: flex; gap: 4px; }
-.cab nav a { position: relative; padding: 10px 12px; font-size: 15px; text-decoration: none; color: var(--tinta); transition: color .2s; }
-.cab nav a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 1.5px; background: var(--vino); transform: scaleX(0); transform-origin: center; transition: transform .3s cubic-bezier(.2,.8,.2,1); }
-.cab nav a:hover::after, .cab nav a[aria-current="true"]::after { transform: scaleX(1); }
-.cab nav a[aria-current="true"] { color: var(--vino); }
-.cab .acciones { display: flex; align-items: center; gap: 8px; }
-.cab .btn { min-height: 44px; padding: 0 20px; font-size: 14px; }
-.cab .btn svg { width: 17px; height: 17px; }
-.menu-btn { display: none; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border: 1px solid var(--tinta); border-radius: 9999px; background: transparent; color: var(--tinta); font: 700 14px var(--f-texto); cursor: pointer; }
-.menu-btn i { position: relative; width: 16px; height: 10px; }
-.menu-btn i::before, .menu-btn i::after { content: ""; position: absolute; left: 0; right: 0; height: 1.5px; background: currentColor; }
-.menu-btn i::before { top: 0; } .menu-btn i::after { bottom: 0; }
-/* Hoja de menú en el teléfono */
-.hoja { position: fixed; inset: 0; z-index: 40; display: grid; grid-template-rows: auto 1fr auto; padding: max(18px, env(safe-area-inset-top, 0px)) var(--gutter-r) max(24px, env(safe-area-inset-bottom, 0px)) var(--gutter); background: var(--vino-hondo); color: var(--sobre-vino); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s linear .3s; }
-.hoja.abierta { opacity: 1; visibility: visible; transition: opacity .3s ease; }
-.hoja .arriba { display: flex; justify-content: space-between; align-items: center; min-height: 52px; }
-.hoja .marca-hoja { font-family: var(--f-display); font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: var(--sobre-vino); }
-.hoja .cerrar { min-height: 44px; padding: 0 16px; border: 1px solid rgba(245,235,225,.4); border-radius: 9999px; background: transparent; color: var(--sobre-vino); font: 700 14px var(--f-texto); cursor: pointer; }
-.hoja nav { display: grid; align-content: center; gap: 4px; }
-.hoja nav a { font-family: var(--f-display); font-size: clamp(32px, 9vw, 44px); line-height: 1.25; text-decoration: none; color: var(--sobre-vino); padding: 6px 0; border-bottom: 1px solid rgba(245,235,225,.12); transform: translateY(12px); opacity: 0; transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s; }
-.hoja.abierta nav a { transform: none; opacity: 1; }
-.hoja.abierta nav a:nth-child(2) { transition-delay: .04s; } .hoja.abierta nav a:nth-child(3) { transition-delay: .08s; } .hoja.abierta nav a:nth-child(4) { transition-delay: .12s; } .hoja.abierta nav a:nth-child(5) { transition-delay: .16s; } .hoja.abierta nav a:nth-child(6) { transition-delay: .2s; }
-.hoja .atajos { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0 12px; border-bottom: 1px solid rgba(245,235,225,.12); transform: translateY(12px); opacity: 0; transition: transform .45s cubic-bezier(.2,.8,.2,1) .06s, opacity .45s .06s; }
-.hoja.abierta .atajos { transform: none; opacity: 1; }
-.hoja .atajos a { font: 400 14px var(--f-texto); padding: 8px 14px; border: 1px solid rgba(245,235,225,.35); border-radius: 9999px; color: var(--sobre-vino); text-decoration: none; transform: none; opacity: 1; }
-.hoja .s { font-family: var(--f-script); font-size: 54px; color: var(--sobre-vino-suave); line-height: 1; margin-bottom: 8px; }
-.hoja .pie-hoja { display: grid; gap: 10px; }
-.hoja .pie-hoja .btn { background: var(--hueso); color: var(--vino-hondo); min-height: 54px; }
-.hoja .pie-hoja small { text-align: center; color: var(--sobre-vino-suave); font-size: 13px; }
-body.sin-scroll { overflow: hidden; }
-@media (max-width: 1080px) { .cab .logo span { display: none; } }
-@media (max-width: 900px) { .cab nav, .cab .acciones .btn { display: none; } .menu-btn { display: inline-flex; } .cab .envoltura { padding-left: 14px; padding-right: 8px; } }
-
-/* Portada */
-.portada { position: relative; }
-.portada .envoltura { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: end; gap: 0; padding-block: clamp(24px, 4vw, 56px) clamp(48px, 6vw, 88px); }
-.portada .texto { position: relative; z-index: 2; padding-bottom: clamp(8px, 3vw, 40px); }
-.nombre { display: grid; line-height: .82; margin: 0; }
-.nombre .g { font-family: var(--f-script); font-size: clamp(110px, 15vw, 210px); color: var(--vino); margin-left: -.06em; }
-.nombre .b { font-family: var(--f-display); font-size: clamp(64px, 10.4vw, 150px); letter-spacing: -.01em; text-transform: uppercase; margin-top: -.18em; margin-right: clamp(-200px, -14vw, -60px); position: relative; }
-.portada .desc { font-family: var(--f-display); font-style: italic; font-size: clamp(19px, 1.8vw, 23px); margin: 22px 0 0; max-width: 24ch; line-height: 1.35; }
-.portada .acciones { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; margin-top: 30px; }
-.portada .foto { position: relative; margin: 0; }
-.portada .foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; outline: 1px solid var(--tinta); outline-offset: 10px; }
-.portada .foto figcaption { font-size: 13px; color: var(--tinta-suave); margin-top: 22px; text-align: right; }
-@media (max-width: 760px) {
-  .portada .envoltura { grid-template-columns: minmax(0, 1fr); }
-  .portada .foto { order: -1; margin-inline: calc(-1 * var(--gutter)) calc(-1 * var(--gutter-r)); }
-  .portada .foto img { outline: none; aspect-ratio: 4 / 4.6; }
-  .portada .foto::after { content: ""; position: absolute; inset: 55% 0 0 0; background: linear-gradient(to bottom, rgba(245,235,225,0), var(--hueso) 92%); pointer-events: none; }
-  .portada .foto figcaption { display: none; }
-  .portada .texto { margin-top: -84px; }
-  .nombre .b { margin-right: 0; }
-}
-
-/* Franja de promesa */
-.promesa { border-block: 1px solid var(--piedra); }
-.promesa ul { list-style: none; margin: 0 auto; padding-block: 22px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.promesa li { font-family: var(--f-display); font-size: clamp(17px, 1.6vw, 20px); line-height: 1.3; }
-.promesa li span { display: block; font-family: var(--f-texto); font-size: 14px; color: var(--tinta-suave); margin-top: 4px; }
-@media (max-width: 760px) { .promesa ul { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
-
-/* Servicios */
-.cat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
-.cat + .cat { margin-top: clamp(72px, 10vw, 130px); }
-/* Pestañas de categorías: se ve una categoría a la vez */
-.pestanas { position: sticky; top: 84px; z-index: 20; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--gutter) * -1) clamp(28px, 4vw, 44px); padding: 10px var(--gutter); background: linear-gradient(var(--hueso) 70%, transparent); scroll-snap-type: x proximity; }
-.pestanas::-webkit-scrollbar { display: none; }
-.pestanas button { flex: none; scroll-snap-align: start; min-height: 44px; padding: 0 18px; border: 1px solid var(--arena); border-radius: 9999px; background: var(--hueso-claro); color: var(--tinta); font: 400 15px var(--f-texto); cursor: pointer; transition: background-color .25s, color .25s, border-color .25s; }
-.pestanas button:hover { border-color: var(--vino); }
-.pestanas button[aria-selected="true"] { background: var(--vino); border-color: var(--vino); color: var(--hueso); }
-.pestanas button span { margin-left: 6px; font-size: 13px; opacity: .75; }
-.pestanas-tit { margin: 0 0 6px; }
-.cat[hidden] { display: none; }
-.cat.entra { animation: entraCat .35s ease; }
-@keyframes entraCat { from { opacity: 0; transform: translateY(10px); } }
-.pestanas ~ .cat + .cat { margin-top: 0; }
-.cat.inv .cat-foto { order: 2; }
-.cat-foto { position: sticky; top: 96px; margin: 0; }
-.cat-foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.cat-foto figcaption { font-size: 13px; color: var(--tinta-suave); margin-top: 10px; }
-.cat-texto { min-width: 0; }
-.carta { list-style: none; margin: 34px 0 0; padding: 0; border-top: 1px solid var(--tinta); }
-.carta > li { padding-block: 20px; border-bottom: 1px solid var(--piedra); }
-.renglon { display: flex; align-items: baseline; gap: 12px; }
-.renglon h3 { font-family: var(--f-display); font-size: clamp(20px, 2vw, 24px); line-height: 1.25; min-width: 0; }
-.renglon .puntos { flex: 1; border-bottom: 1px dotted var(--arena); transform: translateY(-5px); min-width: 24px; }
-.renglon .precio { font-family: var(--f-display); font-size: clamp(20px, 2vw, 24px); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.renglon .precio.consultar { font-family: var(--f-texto); font-size: 15px; font-weight: 700; color: var(--vino); }
-.meta { color: var(--tinta-suave); font-size: 15px; margin: 4px 0 0; }
-.acciones-serv { display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: center; margin-top: 10px; font-size: 15px; }
-details.incluye summary { cursor: pointer; font-weight: 700; list-style: none; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-details.incluye summary::-webkit-details-marker { display: none; }
-details.incluye ul { margin: 10px 0 2px; padding-left: 18px; color: var(--tinta-suave); font-size: 15px; columns: 2 220px; column-gap: 28px; }
-details.incluye li { break-inside: avoid; margin-bottom: 4px; }
-.reservar-este { color: var(--vino); font-weight: 700; text-decoration: none; }
-.reservar-este:hover { text-decoration: underline; text-underline-offset: 4px; }
-.nota-precio { font-size: 14px; color: var(--tinta-suave); margin: 18px 0 0; max-width: 60ch; }
-@media (max-width: 760px) {
-  .cat, .cat.inv { grid-template-columns: minmax(0, 1fr); }
-  .cat .cat-foto, .cat.inv .cat-foto { order: 2; }
-  .cat-foto { position: static; }
-  .cat-foto img { aspect-ratio: 16 / 10; }
-  .pestanas { top: 76px; }
-}
-
-/* Galería */
-.galeria-cab { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 36px; }
-.mosaico { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: dense; gap: clamp(10px, 1.4vw, 18px); }
-.mosaico figure { margin: 0; position: relative; overflow: hidden; background: var(--piedra); }
-.mosaico .doble { grid-column: span 2; grid-row: span 2; }
-.mosaico button { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; }
-.mosaico button:focus-visible { outline: 2px solid var(--tinta); outline-offset: 3px; }
-.mosaico img { width: 100%; height: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .6s ease; }
-.mosaico .doble img { aspect-ratio: auto; min-height: 100%; }
-.mosaico figure:hover img { transform: scale(1.03); }
-.mosaico figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px; font-size: 14px; color: #FBF6F0; background: linear-gradient(to top, rgba(34,34,34,.72), rgba(34,34,34,0)); }
-.mosaico .ig { display: grid; place-content: center; text-align: center; gap: 10px; padding: 24px; background: var(--vino); color: var(--sobre-vino); aspect-ratio: 4 / 5; text-decoration: none; }
-.mosaico .ig .s { font-family: var(--f-script); font-size: clamp(44px, 5vw, 64px); line-height: 1; }
-.mosaico .ig span { font-size: 15px; color: var(--sobre-vino-suave); }
-@media (max-width: 760px) { .mosaico { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mosaico .doble { grid-row: span 1; } .mosaico .doble img { aspect-ratio: 8 / 5; } }
-dialog.visor { border: 0; padding: 0; background: transparent; max-width: min(92vw, 900px); max-height: 92vh; }
-dialog.visor::backdrop { background: rgba(34,34,34,.9); }
-dialog.visor img { max-height: 84vh; width: auto; margin: 0 auto; }
-dialog.visor p { color: #FBF6F0; text-align: center; margin: 12px 0 0; font-size: 15px; }
-dialog.visor button { position: fixed; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); min-height: 44px; padding: 0 18px; border: 0; border-radius: 9999px; background: #FBF6F0; color: var(--tinta); font: 700 14px var(--f-texto); cursor: pointer; }
-
-/* Reserva */
-.reserva { position: relative; isolation: isolate; overflow: hidden; background: var(--vino-hondo); color: var(--sobre-vino); }
-.reserva::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url(fotos/novia-tiara-proceso.webp) center 30% / cover; filter: grayscale(1); opacity: .32; }
-.reserva::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(55% 60% at 88% 18%, rgba(183,157,131,.30), transparent 70%), radial-gradient(45% 55% at 8% 92%, rgba(183,157,131,.18), transparent 70%), linear-gradient(180deg, rgba(58,15,22,.55), rgba(58,15,22,.92)); }
-.reserva .titulo .s { color: var(--sobre-vino-suave); }
-.reserva .lead, .reserva .pasos span { color: rgba(245,235,225,.74); }
-.reserva .pasos li::before { color: var(--sobre-vino-suave); }
-.reserva :focus-visible { outline-color: var(--sobre-vino-suave); }
-.reserva-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
-.pasos { list-style: none; counter-reset: p; margin: 34px 0 0; padding: 0; display: grid; gap: 22px; }
-.pasos li { counter-increment: p; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
-.pasos li::before { content: counter(p); font-family: var(--f-display); font-size: 30px; line-height: 1; color: var(--vino); }
-.pasos b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 20px; line-height: 1.3; }
-.pasos span { color: var(--tinta-suave); font-size: 15px; }
-/* Formulario: panel de vidrio sobre la foto */
-form.agenda { --mx: 80%; --my: 0%; position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: clamp(20px, 3vw, 36px); background: linear-gradient(140deg, rgba(251,246,240,.17), rgba(251,246,240,.05)); border: 1px solid rgba(251,246,240,.22); box-shadow: 0 40px 90px -40px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.2); -webkit-backdrop-filter: blur(22px) saturate(140%); backdrop-filter: blur(22px) saturate(140%); }
-form.agenda::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(440px circle at var(--mx) var(--my), rgba(251,246,240,.13), transparent 62%); }
-form.agenda > * { position: relative; }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { form.agenda { background: rgba(58,15,22,.88); } }
-.campo { position: relative; min-width: 0; }
-.campo.ancho, .agenda .ancho { grid-column: 1 / -1; }
-.control { display: block; width: 100%; min-height: 60px; margin: 0; padding: 26px 16px 9px; font: 400 16px/1.3 var(--f-texto); color: var(--sobre-vino); background: rgba(251,246,240,.08); border: 1px solid rgba(251,246,240,.2); border-radius: 0; outline: none; -webkit-appearance: none; appearance: none; color-scheme: dark; transition: border-color .2s, background-color .2s, box-shadow .25s; }
-.control:hover { background-color: rgba(251,246,240,.12); }
-.control:focus { border-color: var(--sobre-vino-suave); background-color: rgba(251,246,240,.15); box-shadow: 0 0 0 4px rgba(217,194,167,.2), 0 14px 34px -16px rgba(0,0,0,.6); }
-.control::placeholder { color: transparent; transition: color .2s; }
-.control:focus::placeholder { color: rgba(245,235,225,.45); }
-.control::-webkit-date-and-time-value { text-align: left; }
-.control::-webkit-calendar-picker-indicator { opacity: .7; cursor: pointer; }
-.campo > label { position: absolute; left: 17px; top: 19px; font-size: 16px; line-height: 1.3; color: rgba(245,235,225,.72); pointer-events: none; transform-origin: left top; white-space: nowrap; max-width: calc(100% - 34px); overflow: hidden; text-overflow: ellipsis; transition: transform .22s cubic-bezier(.2,.8,.2,1), color .2s; }
-.control:focus + label, .control:not(:placeholder-shown) + label, .campo.fijo > label { transform: translateY(-11px) scale(.76); color: var(--sobre-vino-suave); font-weight: 700; max-width: calc((100% - 34px) / .76); }
-select.control { padding-right: 46px; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23D9C2A7' stroke-width='1.6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
-select.control option, select.control optgroup { background: var(--vino-hondo); color: var(--sobre-vino); }
-textarea.control { min-height: 116px; padding-top: 30px; resize: vertical; }
-/* Dónde: selector con indicador que se desliza */
-fieldset.campo { border: 0; padding: 0; margin: 0; }
-fieldset.campo legend { padding: 0; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--sobre-vino-suave); }
-.seg { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 4px; background: rgba(251,246,240,.08); border: 1px solid rgba(251,246,240,.2); }
-.seg input { position: absolute; opacity: 0; pointer-events: none; }
-.seg label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 10px; text-align: center; font-size: 15px; line-height: 1.2; cursor: pointer; color: rgba(245,235,225,.78); transition: color .3s; }
-.seg label svg { width: 18px; height: 18px; flex: none; }
-.seg input:checked + label { color: var(--vino-hondo); font-weight: 700; }
-.seg input:focus-visible + label { outline: 2px solid var(--sobre-vino-suave); outline-offset: -2px; }
-.seg .indicador { position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); background: var(--hueso); box-shadow: 0 8px 22px -8px rgba(0,0,0,.6); transition: transform .4s cubic-bezier(.3,1.25,.5,1); }
-.seg:has(#f-lugar-domicilio:checked) .indicador { transform: translateX(100%); }
-/* Zona: aparece solo a domicilio */
-.revela { display: grid; grid-template-rows: 0fr; margin-bottom: -16px; opacity: 0; transition: grid-template-rows .4s ease, margin .4s ease, opacity .3s; }
-.revela > div { min-height: 0; overflow: hidden; padding: 4px; margin: -4px; }
-.agenda:has(#f-lugar-domicilio:checked) .revela { grid-template-rows: 1fr; margin-bottom: 0; opacity: 1; }
-/* Mapa del domicilio */
-.ubicacion { display: grid; gap: 12px; }
-.buscador .control { padding-right: 64px; }
-.paso.lupa { right: 9px; }
-.paso.lupa svg { width: 18px; height: 18px; }
-.mapa-caja { position: relative; border: 1px solid rgba(251,246,240,.22); box-shadow: 0 18px 40px -22px rgba(0,0,0,.7); }
-.mapa { height: clamp(240px, 34vw, 320px); background: rgba(251,246,240,.08); }
-.mapa .leaflet-tile-pane { filter: grayscale(.55) sepia(.18) brightness(.97); }
-.mapa .leaflet-control-attribution { font: 10px var(--f-texto); background: rgba(251,246,240,.8); }
-.mapa .leaflet-control-zoom a { border-radius: 0 !important; color: var(--vino-hondo); }
-.mi-ubicacion { position: absolute; left: 10px; bottom: 10px; z-index: 500; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 0; border-radius: 9999px; background: var(--hueso); color: var(--vino-hondo); font: 700 14px var(--f-texto); cursor: pointer; box-shadow: 0 8px 20px -8px rgba(0,0,0,.6); transition: background-color .2s; }
-.mi-ubicacion:hover { background: #fff; }
-.mi-ubicacion svg { width: 18px; height: 18px; }
-.mapa-estado { margin: 0; font-size: 14px; color: rgba(245,235,225,.75); }
-.mapa-estado b { color: var(--sobre-vino); }
-.pin { width: 30px; height: 30px; margin: -30px 0 0 -15px; background: var(--vino); border: 3px solid var(--hueso); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 6px 14px rgba(0,0,0,.45); }
-.pin-estudio { width: 34px; height: 34px; margin: -17px 0 0 -17px; display: grid; place-items: center; border-radius: 9999px; background: var(--hueso); border: 2px solid var(--vino); font: 400 13px var(--f-display); color: var(--vino); box-shadow: 0 4px 12px rgba(0,0,0,.35); }
-/* Personas: contador */
-.contador .control { padding-right: 112px; -moz-appearance: textfield; }
-.contador .control::-webkit-inner-spin-button, .contador .control::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-.paso { position: absolute; top: 50%; translate: 0 -50%; width: 42px; height: 42px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(251,246,240,.28); border-radius: 9999px; background: rgba(251,246,240,.1); color: var(--sobre-vino); font: 400 22px/1 var(--f-texto); cursor: pointer; transition: background-color .2s, scale .15s; }
-.paso:hover { background: rgba(251,246,240,.22); }
-.paso:active { scale: .9; }
-.paso.mas { right: 9px; } .paso.menos { right: 58px; }
-.paso:disabled { opacity: .35; cursor: default; }
-@keyframes salto { 40% { transform: translateY(-3px); } }
-.contador .control.salta { animation: salto .25s ease; }
-/* Vista previa como burbuja de chat */
-.chat { margin-top: 6px; }
-.chat-cab { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(245,235,225,.7); margin-bottom: 10px; }
-.chat-cab img { width: 34px; height: 34px; border-radius: 9999px; background: var(--hueso); padding: 5px; object-fit: contain; }
-.chat-cab b { display: block; color: var(--sobre-vino); font-size: 14px; }
-.burbuja { position: relative; margin: 0 0 0 auto; max-width: 92%; width: fit-content; padding: 12px 14px 22px; background: var(--hueso-claro); color: var(--tinta); font-size: 14.5px; line-height: 1.5; white-space: pre-line; box-shadow: 0 12px 30px -14px rgba(0,0,0,.6); transition: box-shadow .4s; }
-.burbuja::after { content: ""; position: absolute; top: 0; right: -9px; border-left: 10px solid var(--hueso-claro); border-bottom: 12px solid transparent; }
-.burbuja .hora { position: absolute; right: 10px; bottom: 5px; font-size: 11px; color: var(--tinta-suave); }
-.burbuja.late { box-shadow: 0 0 0 3px rgba(217,194,167,.55), 0 12px 30px -14px rgba(0,0,0,.6); }
-.agenda .enviar { grid-column: 1 / -1; justify-self: stretch; min-height: 58px; font-size: 16px; background: var(--hueso); color: var(--vino-hondo); box-shadow: 0 14px 34px -14px rgba(0,0,0,.7); transition: background-color .2s, translate .2s, box-shadow .2s; }
-.agenda .enviar:hover { background: #fff; translate: 0 -2px; box-shadow: 0 20px 40px -16px rgba(0,0,0,.75); }
-.agenda .enviar svg { width: 20px; height: 20px; }
-.ayuda { font-size: 14px; color: rgba(245,235,225,.7); grid-column: 1 / -1; margin: -4px 0 0; text-align: center; }
-.ayuda b { color: var(--sobre-vino-suave); }
-@media (max-width: 760px) { .reserva-grid, form.agenda { grid-template-columns: minmax(0, 1fr); } }
-
-/* Pagos, indicaciones, políticas */
-.dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 5vw, 80px); }
-.dos > * { min-width: 0; }
-@media (max-width: 760px) { .dos { grid-template-columns: minmax(0, 1fr); } }
-.metodos { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; margin: 26px 0 0; }
-.metodos li { padding: 10px 18px; border: 1px solid var(--tinta); font-weight: 700; font-size: 15px; }
-.texto-p { max-width: 58ch; margin: 18px 0 0; }
-.lista-fina { margin: 16px 0 0; padding-left: 18px; }
-.lista-fina li { margin-bottom: 8px; }
-h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
-.clausulas { margin: 34px 0 0; padding: 0; list-style: none; counter-reset: c; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(28px, 4vw, 64px); }
-.clausulas li { counter-increment: c; padding: 18px 0; border-top: 1px solid var(--piedra); display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 8px; }
-.clausulas li::before { content: counter(c) "."; font-family: var(--f-display); font-size: 20px; color: var(--vino); line-height: 1.3; }
-.clausulas b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 20px; line-height: 1.3; }
-.clausulas span { font-size: 15px; color: var(--tinta-suave); }
-@media (max-width: 760px) { .clausulas { grid-template-columns: minmax(0, 1fr); } }
-.faq { margin-top: 30px; border-top: 1px solid var(--tinta); }
-.faq details { border-bottom: 1px solid var(--piedra); padding-block: 18px; }
-.faq summary { cursor: pointer; font-family: var(--f-display); font-size: 20px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font-family: var(--f-texto); font-size: 22px; line-height: 1; color: var(--vino); }
-.faq details[open] summary::after { content: "–"; }
-.faq p { margin: 10px 0 0; color: var(--tinta-suave); max-width: 62ch; }
-
-/* Ubicación y contacto */
-.contacto { background: var(--vino); color: var(--sobre-vino); }
-.contacto .titulo .s { color: var(--sobre-vino-suave); }
-.contacto-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
-.datos { display: grid; gap: 26px; margin: 0; }
-.datos dt { font-size: 14px; color: var(--sobre-vino-suave); }
-.datos dd { margin: 4px 0 0; font-family: var(--f-display); font-size: clamp(20px, 2vw, 24px); line-height: 1.35; }
-.datos dd small { display: block; font-family: var(--f-texto); font-size: 15px; color: var(--sobre-vino-suave); margin-top: 4px; }
-.datos a { color: var(--sobre-vino); }
-.contacto .btn { background: var(--hueso); color: var(--vino); }
-.contacto .btn:hover { background: var(--sobre-vino-suave); }
-.contacto .btn-linea { background: transparent; color: var(--sobre-vino); box-shadow: inset 0 0 0 1.5px var(--sobre-vino); }
-.copiar { all: unset; cursor: pointer; font-family: var(--f-texto); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; color: var(--sobre-vino-suave); margin-left: 10px; }
-.copiar:focus-visible { outline: 2px solid var(--sobre-vino); outline-offset: 3px; }
-@media (max-width: 760px) { .contacto-grid { grid-template-columns: minmax(0, 1fr); } }
-
-.pie { padding-block: 40px calc(40px + 72px); font-size: 14px; color: var(--tinta-suave); }
-.pie .envoltura { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
-.pie img { height: 46px; width: auto; }
-@media (min-width: 761px) { .pie { padding-bottom: 40px; } }
-
-/* Barra fija de WhatsApp en móvil */
-.barra-wa { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: var(--hueso); border-top: 1px solid var(--piedra); display: none; }
-.barra-wa .btn { width: 100%; }
-@media (max-width: 760px) { .barra-wa { display: block; } }
-</style>
-
 </head>
-<body>
+<body data-pagina="index">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<div class="cinta" id="cinta" hidden><a href="index.html#servicios"><b>−10%</b><span id="cinta-txt"></span></a></div>
 <header class="cab" id="cab">
   <div class="envoltura">
-    <a class="logo" href="#inicio" aria-label="Gaby Bravo, inicio"><img src="img/gb.png" alt=""><span>Gaby Bravo</span></a>
-    <nav aria-label="Secciones">
-      <a href="#servicios">Servicios</a>
-      <a href="#galeria">Trabajos</a>
-      <a href="#reservar">Reservar</a>
-      <a href="#pagos">Pagos</a>
-      <a href="#politicas">Políticas</a>
-      <a href="#ubicacion">Ubicación</a>
+    <a class="logo" href="index.html" aria-label="Gaby Bravo, inicio"><img src="img/gb.png" alt=""><span>Gaby Bravo</span></a>
+    <nav aria-label="Páginas">
+      <a href="novias.html">Novias</a>
+      <a href="quinceaneras.html">Quinceañeras</a>
+      <a href="eventos.html">Eventos</a>
+      <a href="cursos.html">Cursos</a>
+      <a href="index.html#galeria">Trabajos</a>
+      <a href="index.html#ubicacion">Contacto</a>
     </nav>
     <div class="acciones">
-      <a class="btn js-wa" data-msg="Hola Gaby, quiero información sobre tus servicios." href="#reservar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Escríbeme</a>
+      <a class="btn btn-sel" href="reservar.html" aria-label="Mi reserva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="txt">Mi reserva</span><span class="cuenta" hidden>0</span></a>
       <button class="menu-btn" type="button" id="menu-abrir" aria-expanded="false" aria-controls="hoja"><i aria-hidden="true"></i>Menú</button>
     </div>
   </div>
 </header>
 <div class="hoja" id="hoja" role="dialog" aria-modal="true" aria-label="Menú" inert>
   <div class="arriba"><span class="marca-hoja">Gaby Bravo</span><button class="cerrar" type="button" id="menu-cerrar">Cerrar</button></div>
-  <nav aria-label="Secciones">
-    <span class="s" aria-hidden="true">Menú</span>
-    <a href="#servicios">Servicios y precios</a>
-    <div class="atajos" aria-label="Precios por categoría"><a href="#novias">Novias</a><a href="#quince">Quinceañeras</a><a href="#social">Eventos</a><a href="#cursos">Cursos</a></div>
-    <a href="#galeria">Trabajos</a>
-    <a href="#reservar">Reservar</a>
-    <a href="#pagos">Pagos</a>
-    <a href="#politicas">Políticas</a>
-    <a href="#ubicacion">Ubicación</a>
+  <nav aria-label="Páginas">
+    <span class="s" aria-hidden="true">Servicios</span>
+    <div class="hoja-precios" id="hoja-precios"></div>
+    <a class="hoja-l" href="index.html">Inicio</a>
+    <a class="hoja-l" href="index.html#galeria">Trabajos</a>
+    <a class="hoja-l" href="index.html#pagos">Pagos y políticas</a>
+    <a class="hoja-l" href="index.html#ubicacion">Contacto</a>
   </nav>
-  <div class="pie-hoja"><a class="btn js-wa" data-msg="Hola Gaby, quiero información sobre tus servicios." href="#reservar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Escríbeme por WhatsApp</a><small>Respondo con disponibilidad y tu cotización.</small></div>
+  <div class="pie-hoja"><a class="btn" href="reservar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Mi reserva<span class="cuenta" hidden>0</span></a><a class="js-wa enlace-claro" data-msg="Hola Gaby, tengo una pregunta.">¿Tienes una pregunta? Escríbeme</a></div>
 </div>
-
-<main id="inicio">
+<main id="contenido">
   <section class="portada">
     <div class="envoltura">
       <div class="texto">
         <h1 class="nombre"><span class="g">Gaby</span><span class="b">Bravo</span></h1>
         <p class="desc">Maquilladora profesional y especialista en peinado, en Barcelona y Lechería.</p>
-        <p class="lead">Peinados de alta durabilidad y maquillaje para novias y eventos. En el estudio o a domicilio, con asesoría antes de tu día.</p>
+        <p class="lead">Peinados de alta durabilidad y maquillaje para novias, quinceañeras y eventos. En el estudio o a domicilio, con asesoría antes de tu día.</p>
         <div class="acciones">
-          <a class="btn js-wa" data-msg="Hola Gaby, quiero reservar una cita." href="#reservar"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Reservar por WhatsApp</a>
-          <a class="enlace" href="#servicios">Ver servicios y precios</a>
+          <a class="btn" href="#servicios" id="hero-cta">Ver servicios y precios</a>
+          <a class="enlace" href="reservar.html">Mi reserva</a>
         </div>
       </div>
       <figure class="foto">
+        <div class="sello-promo" id="sello-promo" hidden></div>
         <img src="fotos/gaby-peinando.webp" alt="Gaby Bravo dando el toque final a un peinado recogido" fetchpriority="high">
         <figcaption>Gaby en el estudio</figcaption>
       </figure>
@@ -416,7 +82,19 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
   </section>
 
   <section class="seccion" id="servicios">
-    <div class="envoltura" id="lista-servicios"></div>
+    <div class="envoltura">
+      <div class="serv-cab-sec">
+        <h2 class="titulo"><span class="s">Servicios</span><span class="c">Elige el tuyo</span></h2>
+        <p class="lead" id="serv-lead">Entra a cada categoría, agrega los servicios que necesitas (pueden ser varios, y para varias personas) y envía tu reserva con todo el detalle.</p>
+      </div>
+      <div class="tarjetas-cat" id="tarjetas"></div>
+      <ol class="como" aria-label="Cómo reservar">
+        <li><b>Elige tus servicios</b><span>Peinado, maquillaje o los dos; para ti o para tu grupo.</span></li>
+        <li><b>Indica fecha y lugar</b><span>En el estudio o a domicilio, marcando el punto en el mapa.</span></li>
+        <li><b>Envía tu reserva</b><span id="como-3">Se abre WhatsApp con el detalle y el total, y Gaby te confirma.</span></li>
+      </ol>
+      <p class="promo-nota" id="promo-nota" hidden></p>
+    </div>
   </section>
 
   <section class="seccion" id="galeria" style="padding-top:0">
@@ -426,79 +104,6 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
         <a class="enlace" id="ig-link" href="#">Ver más en Instagram</a>
       </div>
       <div class="mosaico" id="mosaico"></div>
-    </div>
-  </section>
-
-  <section class="seccion reserva" id="reservar">
-    <div class="envoltura reserva-grid">
-      <div>
-        <h2 class="titulo"><span class="s">Reserva</span><span class="c">Tu fecha</span></h2>
-        <p class="lead">Cuéntame qué necesitas y te respondo por WhatsApp con disponibilidad y tu cotización.</p>
-        <ol class="pasos">
-          <li><div><b>Escríbeme</b><span>Con el formulario o directo por WhatsApp.</span></div></li>
-          <li><div><b>Recibe tu cotización</b><span>Te llega un enlace con los servicios, el total y lo que incluye.</span></div></li>
-          <li><div><b>Aparta con el 50%</b><span>El resto se paga el día de la cita.</span></div></li>
-          <li><div><b>Prepárate</b><span>Te envío las indicaciones para tu rostro y tu cabello.</span></div></li>
-        </ol>
-      </div>
-      <form class="agenda" id="agenda" novalidate>
-        <div class="campo ancho fijo">
-          <select class="control" id="f-servicio"></select>
-          <label for="f-servicio">Servicio</label>
-        </div>
-        <div class="campo fijo">
-          <input class="control" id="f-fecha" type="date">
-          <label for="f-fecha">Fecha del evento</label>
-        </div>
-        <div class="campo fijo">
-          <input class="control" id="f-hora" type="time">
-          <label for="f-hora">Hora en que debes estar lista</label>
-        </div>
-        <fieldset class="campo ancho">
-          <legend>Dónde</legend>
-          <div class="seg">
-            <span class="indicador" aria-hidden="true"></span>
-            <input type="radio" name="lugar" id="f-lugar-estudio" value="En el estudio" checked>
-            <label for="f-lugar-estudio"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="9" rx="5.5" ry="6.5"/><path d="M12 15.5V21M8 21h8"/></svg>En el estudio</label>
-            <input type="radio" name="lugar" id="f-lugar-domicilio" value="A domicilio u hotel">
-            <label for="f-lugar-domicilio"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6"/></svg>A domicilio u hotel</label>
-          </div>
-        </fieldset>
-        <div class="revela ancho" id="c-zona" inert>
-          <div><div class="ubicacion">
-            <div class="campo buscador">
-              <input class="control" id="f-zona" type="text" placeholder="Ej.: Hotel Eurobuilding, Lechería" enterkeyhint="search" autocomplete="street-address">
-              <label for="f-zona">Dirección, urbanización u hotel</label>
-              <button type="button" class="paso lupa" id="m-buscar" aria-label="Buscar en el mapa"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
-            </div>
-            <div class="mapa-caja">
-              <div class="mapa" id="mapa" role="application" aria-label="Mapa para marcar el punto del servicio"></div>
-              <button type="button" class="mi-ubicacion" id="m-yo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7.5"/></svg>Usar mi ubicación</button>
-            </div>
-            <p class="mapa-estado" id="m-estado" aria-live="polite">Toca el mapa para marcar el punto exacto. Puedes arrastrar el marcador.</p>
-          </div></div>
-        </div>
-        <div class="campo fijo contador">
-          <input class="control" id="f-personas" type="number" min="1" max="30" value="1" inputmode="numeric">
-          <label for="f-personas">Personas</label>
-          <button type="button" class="paso menos" id="p-menos" aria-label="Una persona menos">−</button>
-          <button type="button" class="paso mas" id="p-mas" aria-label="Una persona más">+</button>
-        </div>
-        <div class="campo">
-          <input class="control" id="f-nombre" type="text" autocomplete="name" placeholder="Nombre y apellido">
-          <label for="f-nombre">Tu nombre</label>
-        </div>
-        <div class="campo ancho">
-          <textarea class="control" id="f-nota" placeholder="Tipo de cabello, alergias, si traes extensiones o tiara…"></textarea>
-          <label for="f-nota">Algo más que deba saber (opcional)</label>
-        </div>
-        <div class="chat ancho">
-          <div class="chat-cab"><img src="img/gb.png" alt=""><div><b>Gaby Bravo</b>Así le llega tu mensaje</div></div>
-          <p class="burbuja" aria-live="polite"><span id="vista-msj"></span><span class="hora" id="vista-hora"></span></p>
-        </div>
-        <a class="btn enviar" id="f-enviar" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Enviar por WhatsApp</a>
-        <p class="ayuda" id="f-ayuda">Se abre WhatsApp con tu mensaje listo. Solo tienes que tocar enviar.</p>
-      </form>
     </div>
   </section>
 
@@ -546,238 +151,19 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
     </div>
   </section>
 </main>
-
+<dialog class="visor" id="visor"><button type="button" id="visor-cerrar">Cerrar</button><img id="visor-img" alt=""><p id="visor-txt"></p></dialog>
 <footer class="pie">
   <div class="envoltura">
     <img src="img/gb.png" alt="Gaby Bravo">
     <span>© <span id="anio"></span> Gabriela Bravo · Barcelona, Anzoátegui</span>
   </div>
 </footer>
-
-<div class="barra-wa"><a class="btn js-wa" data-msg="Hola Gaby, quiero reservar una cita." href="#reservar">Reservar por WhatsApp</a></div>
-
-<dialog class="visor" id="visor"><button type="button" id="visor-cerrar">Cerrar</button><img id="visor-img" alt=""><p id="visor-txt"></p></dialog>
-
-<script src="datos.js?v=20261109a"></script>
-<script>
-(function () {
-  const G = window.GB, C = G.contacto;
-  const wa = t => `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(t)}`;
-  const $ = s => document.querySelector(s);
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const precio = n => n == null ? "Consultar" : "$" + n;
-
-  document.querySelectorAll(".js-wa").forEach(a => { a.href = wa(a.dataset.msg); a.target = "_blank"; a.rel = "noopener"; });
-
-  // Servicios
-  const cats = G.categorias.filter(c => c.web !== false);
-  const desde = c => { const p = c.servicios.map(s => s.precio).filter(x => x != null); return p.length ? "desde $" + Math.min(...p) : ""; };
-  $("#lista-servicios").innerHTML = `<h2 class="titulo pestanas-tit"><span class="s">Servicios</span><span class="c">Y precios</span></h2>
-    <div class="pestanas" role="tablist" aria-label="Categorías de servicios">${cats.map((c, i) => `<button type="button" role="tab" id="tab-${c.id}" aria-controls="${c.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${esc(c.nombre)}<span>${desde(c)}</span></button>`).join("")}</div>` + cats.map((c, i) => `
-    <article class="cat" id="${c.id}" role="tabpanel" aria-labelledby="tab-${c.id}"${i ? " hidden" : ""}>
-      <figure class="cat-foto"><img src="${c.foto}" alt="${esc(c.fotoAlt)}" loading="lazy"></figure>
-      <div class="cat-texto">
-        <h2 class="titulo"><span class="s">${esc(c.script)}</span><span class="c">${esc(c.titulo2 || c.nombre)}</span></h2>
-        <p class="lead">${esc(c.intro)}</p>
-        <ul class="carta">${c.servicios.map(s => `
-          <li>
-            <div class="renglon"><h3>${esc(s.nombre)}</h3><span class="puntos" aria-hidden="true"></span><span class="precio${s.precio == null ? " consultar" : ""}">${precio(s.precio)}</span></div>
-            ${s.duracion || s.detalle ? `<p class="meta">${[s.detalle, s.duracion].filter(Boolean).map(esc).join(" ")}</p>` : ""}
-            <div class="acciones-serv">
-              ${s.incluye && s.incluye.length ? `<details class="incluye"><summary>Qué incluye</summary><ul>${s.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : ""}
-              <a class="reservar-este" target="_blank" rel="noopener" href="${wa(`Hola Gaby, quiero información sobre: ${s.nombre}.`)}">${c.id === "cursos" ? "Pedir información" : "Reservar este servicio"}</a>
-            </div>
-          </li>`).join("")}
-        </ul>
-        ${c.id !== "cursos" ? `<p class="nota-precio">${esc(G.notaPrecio)} El traslado a domicilio u hotel tiene costo adicional según la zona.</p>` : ""}
-      </div>
-    </article>`).join("");
-
-  const tabs = [...document.querySelectorAll(".pestanas [role=tab]")];
-  function verCat(id, mover) {
-    const t = tabs.find(x => x.getAttribute("aria-controls") === id); if (!t) return false;
-    tabs.forEach(x => { const si = x === t; x.setAttribute("aria-selected", si); x.tabIndex = si ? 0 : -1; const p = document.getElementById(x.getAttribute("aria-controls")); if (si && p.hidden) { p.hidden = false; p.classList.remove("entra"); void p.offsetWidth; p.classList.add("entra"); } else if (!si) p.hidden = true; });
-    t.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
-    if (mover) { const y = $("#servicios").getBoundingClientRect().top + scrollY - 70; if (scrollY > y + 10 || mover === "forzar") scrollTo({ top: y, behavior: "smooth" }); }
-    return true;
-  }
-  $(".pestanas").addEventListener("click", e => { const t = e.target.closest("[role=tab]"); if (t) { verCat(t.getAttribute("aria-controls"), true); history.replaceState(null, "", "#" + t.getAttribute("aria-controls")); } });
-  $(".pestanas").addEventListener("keydown", e => { const i = tabs.indexOf(document.activeElement); if (i < 0) return; const n = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : null; if (n == null) return; e.preventDefault(); const t = tabs[(n + tabs.length) % tabs.length]; t.focus(); verCat(t.getAttribute("aria-controls"), false); });
-  const porHash = () => { const id = location.hash.slice(1); if (cats.some(c => c.id === id)) { verCat(id, "forzar"); } };
-  addEventListener("hashchange", porHash); if (location.hash) setTimeout(porHash, 60);
-
-  // Galería
-  const ig = `https://instagram.com/${C.instagram}`;
-  $("#ig-link").href = ig; $("#ig-link").target = "_blank"; $("#ig-link").rel = "noopener";
-  $("#mosaico").innerHTML = G.galeria.map((f, i) => `
-    <figure class="${f.ancho === "doble" ? "doble" : ""}">
-      <button type="button" data-i="${i}" aria-label="Ampliar: ${esc(f.texto)}"><img src="${f.src}" alt="${esc(f.alt)}" loading="lazy"></button>
-      <figcaption>${esc(f.texto)}</figcaption>
-    </figure>`).join("");
-  const visor = $("#visor");
-  $("#mosaico").addEventListener("click", e => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    const f = G.galeria[+b.dataset.i];
-    $("#visor-img").src = f.src; $("#visor-img").alt = f.alt; $("#visor-txt").textContent = f.texto;
-    if (visor.showModal) visor.showModal();
-  });
-  $("#visor-cerrar").addEventListener("click", () => visor.close());
-  visor.addEventListener("click", e => { if (e.target === visor) visor.close(); });
-
-  // Formulario de reserva → WhatsApp
-  const sel = $("#f-servicio");
-  sel.innerHTML = cats.map(c => `<optgroup label="${esc(c.nombre)}">${c.servicios.map(s => `<option>${esc(s.nombre)}</option>`).join("")}</optgroup>`).join("") + `<option>Otro (lo explico en el mensaje)</option>`;
-  const fechaTxt = v => { if (!v) return ""; const [y, m, d] = v.split("-"); return `${d}/${m}/${y}`; };
-  function mensaje() {
-    const lugar = document.querySelector("input[name=lugar]:checked").value;
-    const zona = $("#f-zona").value.trim();
-    const lineas = [
-      `Hola Gaby${$("#f-nombre").value.trim() ? ", soy " + $("#f-nombre").value.trim() : ""}. Quiero una cotización.`,
-      `Servicio: ${sel.value}`,
-      $("#f-fecha").value ? `Fecha: ${fechaTxt($("#f-fecha").value)}` : "",
-      $("#f-hora").value ? `Debo estar lista a las: ${$("#f-hora").value}` : "",
-      `Lugar: ${lugar}${lugar !== "En el estudio" && zona ? " (" + zona + ")" : ""}`,
-      lugar !== "En el estudio" && punto ? `Ubicación: https://maps.google.com/?q=${punto.lat.toFixed(6)},${punto.lng.toFixed(6)} (a ${kmTxt(distancia(punto))} del estudio en línea recta)` : "",
-      +$("#f-personas").value > 1 ? `Personas: ${$("#f-personas").value}` : "",
-      $("#f-nota").value.trim() ? `Nota: ${$("#f-nota").value.trim()}` : ""
-    ].filter(Boolean);
-    return lineas.join("\n");
-  }
-  const form = $("#agenda"), personas = $("#f-personas"), zona = $("#c-zona"), burbuja = $(".burbuja");
-  const fijarPersonas = n => { n = Math.min(30, Math.max(1, n || 1)); personas.value = n; $("#p-menos").disabled = n <= 1; personas.classList.remove("salta"); void personas.offsetWidth; personas.classList.add("salta"); actualizar(); };
-  $("#p-menos").addEventListener("click", () => fijarPersonas(+personas.value - 1));
-  $("#p-mas").addEventListener("click", () => fijarPersonas(+personas.value + 1));
-  $("#p-menos").disabled = true;
-  // Mapa del domicilio (Leaflet + OpenStreetMap, sin clave). Se carga solo al elegir domicilio.
-  const ESTUDIO = C.coordenadas || [10.16093, -64.69238];
-  let punto = null, mapa = null, marcador = null, cargando = null, zonaAuto = false;
-  const rad = x => x * Math.PI / 180;
-  const distancia = p => { const R = 6371, dLat = rad(p.lat - ESTUDIO[0]), dLng = rad(p.lng - ESTUDIO[1]); const h = Math.sin(dLat / 2) ** 2 + Math.cos(rad(ESTUDIO[0])) * Math.cos(rad(p.lat)) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
-  const kmTxt = km => km < 1 ? `${Math.round(km * 1000)} m` : `${km.toLocaleString("es-VE", { maximumFractionDigits: 1 })} km`;
-  const estado = html => { $("#m-estado").innerHTML = html; };
-  function cargarLeaflet() {
-    if (window.L) return Promise.resolve();
-    if (cargando) return cargando;
-    cargando = new Promise((ok, mal) => {
-      const css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"; document.head.appendChild(css);
-      const js = document.createElement("script"); js.src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"; js.onload = ok; js.onerror = mal; document.head.appendChild(js);
-    });
-    return cargando;
-  }
-  function marcar(lat, lng, centrar) {
-    punto = { lat, lng };
-    if (!marcador) {
-      marcador = L.marker([lat, lng], { draggable: true, keyboard: true, title: "Punto del servicio", icon: L.divIcon({ className: "", html: '<div class="pin"></div>', iconSize: [0, 0] }) }).addTo(mapa);
-      marcador.on("dragend", () => { const p = marcador.getLatLng(); marcar(p.lat, p.lng, false); });
-    } else marcador.setLatLng([lat, lng]);
-    if (centrar) mapa.setView([lat, lng], Math.max(mapa.getZoom(), 16));
-    estado(`Punto marcado a <b>${kmTxt(distancia(punto))}</b> del estudio en línea recta. Puedes arrastrarlo para ajustarlo.`);
-    rellenarZona(lat, lng);
-    actualizar();
-  }
-  async function rellenarZona(lat, lng) {
-    const z = $("#f-zona");
-    if (z.value.trim() && !zonaAuto) return;
-    try {
-      const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&zoom=17&accept-language=es&lat=${lat}&lon=${lng}`).then(r => r.json());
-      const a = r.address || {};
-      const txt = [a.road, a.neighbourhood || a.suburb || a.quarter, a.city || a.town || a.village].filter(Boolean).join(", ");
-      if (txt && (!z.value.trim() || zonaAuto)) { z.value = txt; zonaAuto = true; actualizar(); }
-    } catch (e) {}
-  }
-  async function abrirMapa() {
-    if (mapa) { setTimeout(() => mapa.invalidateSize(), 420); return; }
-    try { await cargarLeaflet(); } catch (e) { estado("No se pudo cargar el mapa. Escribe la dirección y Gaby la ubica."); return; }
-    if (mapa) return;
-    mapa = L.map("mapa", { zoomControl: true, scrollWheelZoom: false, tap: true }).setView(ESTUDIO, 13);
-    mapa.attributionControl.setPrefix(false);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mapa);
-    L.marker(ESTUDIO, { interactive: false, keyboard: false, icon: L.divIcon({ className: "", html: '<div class="pin-estudio">GB</div>', iconSize: [0, 0] }) }).addTo(mapa);
-    mapa.on("click", e => marcar(e.latlng.lat, e.latlng.lng, false));
-    setTimeout(() => mapa.invalidateSize(), 420);
-  }
-  async function buscar() {
-    const q = $("#f-zona").value.trim();
-    if (!q) { $("#f-zona").focus(); return; }
-    zonaAuto = false;
-    estado("Buscando…");
-    try {
-      await abrirMapa();
-      const r = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=ve&accept-language=es&viewbox=-65.1,10.45,-64.3,9.95&q=${encodeURIComponent(q)}`).then(r => r.json());
-      if (!r.length) { estado("No encontré esa dirección. Toca el mapa para marcar el punto."); return; }
-      const z = $("#f-zona").value; marcar(+r[0].lat, +r[0].lon, true); $("#f-zona").value = z;
-    } catch (e) { estado("No pude buscar ahora. Toca el mapa para marcar el punto."); }
-  }
-  $("#m-buscar").addEventListener("click", buscar);
-  $("#f-zona").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); buscar(); } });
-  $("#f-zona").addEventListener("input", () => { zonaAuto = false; });
-  $("#m-yo").addEventListener("click", () => {
-    if (!navigator.geolocation) { estado("Tu teléfono no permite compartir la ubicación. Toca el mapa para marcar el punto."); return; }
-    estado("Buscando tu ubicación…");
-    navigator.geolocation.getCurrentPosition(
-      async pos => { await abrirMapa(); marcar(pos.coords.latitude, pos.coords.longitude, true); },
-      () => estado("No pude obtener tu ubicación. Revisa el permiso del navegador o toca el mapa."),
-      { enableHighAccuracy: true, timeout: 12000 }
-    );
-  });
-  let pulso;
-  function actualizar() {
-    const m = mensaje();
-    $("#vista-msj").textContent = m;
-    $("#f-enviar").href = wa(m);
-    const d = new Date(); $("#vista-hora").textContent = d.toLocaleTimeString("es-VE", { hour: "numeric", minute: "2-digit" });
-    const domicilio = $("#f-lugar-domicilio").checked;
-    zona.inert = !domicilio;
-    if (domicilio) abrirMapa();
-    const faltan = [!$("#f-fecha").value && "la fecha", !$("#f-nombre").value.trim() && "tu nombre", domicilio && !punto && "el punto en el mapa"].filter(Boolean);
-    $("#f-ayuda").innerHTML = faltan.length ? `Para responderte más rápido, agrega <b>${faltan.join(", ").replace(/, ([^,]*)$/, " y $1")}</b>.` : "Se abre WhatsApp con tu mensaje listo. Solo tienes que tocar enviar.";
-    clearTimeout(pulso); burbuja.classList.add("late"); pulso = setTimeout(() => burbuja.classList.remove("late"), 450);
-  }
-  form.addEventListener("input", actualizar);
-  form.addEventListener("change", actualizar);
-  form.addEventListener("submit", e => e.preventDefault());
-  if (matchMedia("(hover: hover) and (prefers-reduced-motion: no-preference)").matches) {
-    form.addEventListener("pointermove", e => { const r = form.getBoundingClientRect(); form.style.setProperty("--mx", (e.clientX - r.left) + "px"); form.style.setProperty("--my", (e.clientY - r.top) + "px"); });
-  }
-  actualizar();
-
-  // Pagos, indicaciones, políticas, FAQ
-  $("#metodos").innerHTML = G.pagos.metodos.map(m => `<li>${esc(m)}</li>`).join("");
-  $("#abono").textContent = G.pagos.abono;
-  $("#divisas").textContent = G.pagos.divisas;
-  $("#ind-rostro").innerHTML = G.indicaciones.rostro.map(x => `<li>${esc(x)}</li>`).join("");
-  $("#ind-cabello").innerHTML = G.indicaciones.cabello.map(x => `<li>${esc(x)}</li>`).join("");
-  $("#clausulas").innerHTML = G.politicas.map(p => `<li><div><b>${esc(p.t)}</b><span>${esc(p.d)}</span></div></li>`).join("");
-  $("#faq").innerHTML = G.faq.map(f => `<details><summary>${esc(f.p)}</summary><p>${esc(f.r)}</p></details>`).join("");
-
-  // Contacto
-  $("#d-estudio").innerHTML = `${esc(C.estudio)}<small>${esc(C.direccion)}. ${esc(C.atencion)}.</small>`;
-  $("#d-wa").textContent = C.whatsappVisible;
-  $("#d-ig").href = ig; $("#d-ig").textContent = "@" + C.instagram;
-  $("#d-mapa").href = C.mapa;
-  $("#copiar-wa").addEventListener("click", async e => {
-    const b = e.currentTarget;
-    try { await navigator.clipboard.writeText(C.whatsappVisible); b.textContent = "Copiado"; }
-    catch { const r = document.createRange(); r.selectNodeContents($("#d-wa")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Número seleccionado"; }
-    setTimeout(() => b.textContent = "Copiar número", 2200);
-  });
-  $("#anio").textContent = new Date().getFullYear();
-  // Barra superior: flotante al bajar, sección activa y menú del teléfono
-  const cab = $("#cab"), hoja = $("#hoja");
-  const alBajar = () => cab.classList.toggle("flota", scrollY > 24);
-  addEventListener("scroll", alBajar, { passive: true }); alBajar();
-  const enlaces = [...document.querySelectorAll(".cab nav a")];
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(ents => ents.forEach(en => { if (en.isIntersecting) enlaces.forEach(a => a.setAttribute("aria-current", a.getAttribute("href") === "#" + en.target.id ? "true" : "false")); }), { rootMargin: "-45% 0px -50% 0px" });
-    enlaces.forEach(a => { const sec = document.querySelector(a.getAttribute("href")); if (sec) io.observe(sec); });
-  }
-  const abrirMenu = si => { hoja.classList.toggle("abierta", si); hoja.inert = !si; document.body.classList.toggle("sin-scroll", si); $("#menu-abrir").setAttribute("aria-expanded", si); if (si) $("#menu-cerrar").focus(); else $("#menu-abrir").focus(); };
-  $("#menu-abrir").addEventListener("click", () => abrirMenu(true));
-  $("#menu-cerrar").addEventListener("click", () => abrirMenu(false));
-  hoja.querySelectorAll("nav a, .pie-hoja a, .atajos a").forEach(a => a.addEventListener("click", () => { hoja.classList.remove("abierta"); hoja.inert = true; document.body.classList.remove("sin-scroll"); $("#menu-abrir").setAttribute("aria-expanded", "false"); }));
-  addEventListener("keydown", e => { if (e.key === "Escape" && hoja.classList.contains("abierta")) abrirMenu(false); });
-})();
-</script>
-
+<div class="bolsa vacia" id="bolsa" data-siempre="1" data-vacio-href="#servicios" data-vacio-txt="Ver servicios">
+  <div class="bolsa-txt" id="bolsa-txt"></div>
+  <a class="btn" id="bolsa-ir" href="#servicios">Ver servicios</a>
+</div>
+<script src="datos.js?v=20261109c"></script>
+<script src="sitio.js?v=20261109c"></script>
+<script src="inicio.js?v=20261109c"></script>
 </body>
 </html>

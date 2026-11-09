@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi reserva · Gaby Bravo</title>
+<meta name="description" content="Revisa tus servicios, elige fecha y lugar, y envía tu reserva por WhatsApp.">
+<meta property="og:title" content="Mi reserva · Gaby Bravo">
+<meta property="og:description" content="Revisa tus servicios, elige fecha y lugar, y envía tu reserva por WhatsApp.">
+<meta property="og:image" content="https://gabybravoartist.com/img/og.jpg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gabybravoartist.com/reservar.html">
+<link rel="canonical" href="https://gabybravoartist.com/reservar.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/icono-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#F5EBE1">
+<meta name="apple-mobile-web-app-title" content="Gaby Bravo">
+<link rel="preload" href="fonts/bodoni-moda-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css?v=20261109c">
+<meta name="robots" content="noindex">
+</head>
+<body data-pagina="reservar">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<div class="cinta" id="cinta" hidden><a href="index.html#servicios"><b>−10%</b><span id="cinta-txt"></span></a></div>
+<header class="cab" id="cab">
+  <div class="envoltura">
+    <a class="logo" href="index.html" aria-label="Gaby Bravo, inicio"><img src="img/gb.png" alt=""><span>Gaby Bravo</span></a>
+    <nav aria-label="Páginas">
+      <a href="novias.html">Novias</a>
+      <a href="quinceaneras.html">Quinceañeras</a>
+      <a href="eventos.html">Eventos</a>
+      <a href="cursos.html">Cursos</a>
+      <a href="index.html#galeria">Trabajos</a>
+      <a href="index.html#ubicacion">Contacto</a>
+    </nav>
+    <div class="acciones">
+      <a class="btn btn-sel" href="reservar.html" aria-label="Mi reserva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="txt">Mi reserva</span><span class="cuenta" hidden>0</span></a>
+      <button class="menu-btn" type="button" id="menu-abrir" aria-expanded="false" aria-controls="hoja"><i aria-hidden="true"></i>Menú</button>
+    </div>
+  </div>
+</header>
+<div class="hoja" id="hoja" role="dialog" aria-modal="true" aria-label="Menú" inert>
+  <div class="arriba"><span class="marca-hoja">Gaby Bravo</span><button class="cerrar" type="button" id="menu-cerrar">Cerrar</button></div>
+  <nav aria-label="Páginas">
+    <span class="s" aria-hidden="true">Servicios</span>
+    <div class="hoja-precios" id="hoja-precios"></div>
+    <a class="hoja-l" href="index.html">Inicio</a>
+    <a class="hoja-l" href="index.html#galeria">Trabajos</a>
+    <a class="hoja-l" href="index.html#pagos">Pagos y políticas</a>
+    <a class="hoja-l" href="index.html#ubicacion">Contacto</a>
+  </nav>
+  <div class="pie-hoja"><a class="btn" href="reservar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Mi reserva<span class="cuenta" hidden>0</span></a><a class="js-wa enlace-claro" data-msg="Hola Gaby, tengo una pregunta.">¿Tienes una pregunta? Escríbeme</a></div>
+</div>
+<main id="contenido" class="preserva">
+  <section class="envoltura res-cab">
+    <nav class="migas" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span>Mi reserva</span></nav>
+    <h1 class="titulo"><span class="s">Tu reserva</span><span class="c">Revisa y envía</span></h1>
+    <p class="lead">Revisa tus servicios, dime la fecha y el lugar, y se abre WhatsApp con todo el detalle para que Gaby te confirme disponibilidad.</p>
+    <div class="promo-aviso" id="promo-aviso" hidden></div>
+  </section>
+  <div class="envoltura res-grid">
+    <section class="res-sel" aria-labelledby="h-sel">
+      <h2 class="mini-tit" id="h-sel"><span>1</span>Tus servicios</h2>
+      <ul class="res-items" id="res-items"></ul>
+      <div class="res-vacia" id="res-vacia" hidden>
+        <p>Todavía no elegiste servicios. Empieza por una categoría:</p>
+        <div class="tarjetas-cat chicas" id="res-cats"></div>
+      </div>
+      <p class="res-mas" id="res-mas"></p>
+      <dl class="res-tot" id="res-tot"></dl>
+      <p class="nota-precio" id="res-nota"></p>
+    </section>
+    <section class="res-form reserva" aria-label="Fecha, lugar y datos">
+      <form class="agenda" id="agenda" novalidate>
+        <h2 class="mini-tit claro"><span>2</span>Fecha y lugar</h2>
+        <div class="campo fijo">
+          <input class="control" id="f-fecha" type="date">
+          <label for="f-fecha">Fecha del evento</label>
+        </div>
+        <div class="campo fijo">
+          <input class="control" id="f-hora" type="time">
+          <label for="f-hora">Hora en que debes estar lista</label>
+        </div>
+        <fieldset class="campo ancho">
+          <legend>Dónde</legend>
+          <div class="seg">
+            <span class="indicador" aria-hidden="true"></span>
+            <input type="radio" name="lugar" id="f-lugar-estudio" value="En el estudio" checked>
+            <label for="f-lugar-estudio"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="9" rx="5.5" ry="6.5"/><path d="M12 15.5V21M8 21h8"/></svg>En el estudio</label>
+            <input type="radio" name="lugar" id="f-lugar-domicilio" value="A domicilio u hotel">
+            <label for="f-lugar-domicilio"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11 12 4l9 7M5 10v10h14V10M10 20v-6h4v6"/></svg>A domicilio u hotel</label>
+          </div>
+        </fieldset>
+        <div class="revela ancho" id="c-zona" inert>
+          <div><div class="ubicacion">
+            <div class="campo buscador">
+              <input class="control" id="f-zona" type="text" placeholder="Ej.: Hotel Eurobuilding, Lechería" enterkeyhint="search" autocomplete="street-address">
+              <label for="f-zona">Dirección, urbanización u hotel</label>
+              <button type="button" class="paso lupa" id="m-buscar" aria-label="Buscar en el mapa"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+            </div>
+            <div class="mapa-caja">
+              <div class="mapa" id="mapa" role="application" aria-label="Mapa para marcar el punto del servicio"></div>
+              <button type="button" class="mi-ubicacion" id="m-yo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="7.5"/></svg>Usar mi ubicación</button>
+            </div>
+            <p class="mapa-estado" id="m-estado" aria-live="polite">Toca el mapa para marcar el punto exacto. Puedes arrastrar el marcador.</p>
+          </div></div>
+        </div>
+        <h2 class="mini-tit claro"><span>3</span>Tus datos</h2>
+        <div class="campo ancho">
+          <input class="control" id="f-nombre" type="text" autocomplete="name" placeholder="Nombre y apellido">
+          <label for="f-nombre">Tu nombre</label>
+        </div>
+        <div class="campo ancho">
+          <textarea class="control" id="f-nota" placeholder="Tipo de cabello, alergias, si traes extensiones o tiara…"></textarea>
+          <label for="f-nota">Algo más que deba saber (opcional)</label>
+        </div>
+        <div class="chat ancho">
+          <div class="chat-cab"><img src="img/gb.png" alt=""><div><b>Gaby Bravo</b>Así le llega tu mensaje</div></div>
+          <p class="burbuja" aria-live="polite"><span id="vista-msj"></span><span class="hora" id="vista-hora"></span></p>
+        </div>
+        <a class="btn enviar" id="f-enviar" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.3-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3a.4.4 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>Enviar mi reserva por WhatsApp</a>
+        <p class="ayuda" id="f-ayuda"></p>
+      </form>
+    </section>
+  </div>
+</main>
+<footer class="pie">
+  <div class="envoltura">
+    <img src="img/gb.png" alt="Gaby Bravo">
+    <span>© <span id="anio"></span> Gabriela Bravo · Barcelona, Anzoátegui</span>
+  </div>
+</footer>
+<script src="datos.js?v=20261109c"></script>
+<script src="sitio.js?v=20261109c"></script>
+<script src="reservar.js?v=20261109c"></script>
+</body>
+</html>

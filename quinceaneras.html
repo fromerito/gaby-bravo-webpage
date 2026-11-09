@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quinceañeras · Gaby Bravo</title>
+<meta name="description" content="Peinado y maquillaje para la quinceañera, pensados para durar toda la fiesta y lucir en las fotos.">
+<meta property="og:title" content="Quinceañeras · Gaby Bravo">
+<meta property="og:description" content="Peinado y maquillaje para la quinceañera, pensados para durar toda la fiesta y lucir en las fotos.">
+<meta property="og:image" content="https://gabybravoartist.com/fotos/quince-ondas.webp">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gabybravoartist.com/quinceaneras.html">
+<link rel="canonical" href="https://gabybravoartist.com/quinceaneras.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/icono-180.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#F5EBE1">
+<meta name="apple-mobile-web-app-title" content="Gaby Bravo">
+<link rel="preload" href="fonts/bodoni-moda-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css?v=20261109c">
+<link rel="preload" as="image" href="fotos/quince-ondas.webp">
+</head>
+<body data-pagina="quinceaneras" data-cat="quince">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<div class="cinta" id="cinta" hidden><a href="index.html#servicios"><b>−10%</b><span id="cinta-txt"></span></a></div>
+<header class="cab" id="cab">
+  <div class="envoltura">
+    <a class="logo" href="index.html" aria-label="Gaby Bravo, inicio"><img src="img/gb.png" alt=""><span>Gaby Bravo</span></a>
+    <nav aria-label="Páginas">
+      <a href="novias.html">Novias</a>
+      <a href="quinceaneras.html">Quinceañeras</a>
+      <a href="eventos.html">Eventos</a>
+      <a href="cursos.html">Cursos</a>
+      <a href="index.html#galeria">Trabajos</a>
+      <a href="index.html#ubicacion">Contacto</a>
+    </nav>
+    <div class="acciones">
+      <a class="btn btn-sel" href="reservar.html" aria-label="Mi reserva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="txt">Mi reserva</span><span class="cuenta" hidden>0</span></a>
+      <button class="menu-btn" type="button" id="menu-abrir" aria-expanded="false" aria-controls="hoja"><i aria-hidden="true"></i>Menú</button>
+    </div>
+  </div>
+</header>
+<div class="hoja" id="hoja" role="dialog" aria-modal="true" aria-label="Menú" inert>
+  <div class="arriba"><span class="marca-hoja">Gaby Bravo</span><button class="cerrar" type="button" id="menu-cerrar">Cerrar</button></div>
+  <nav aria-label="Páginas">
+    <span class="s" aria-hidden="true">Servicios</span>
+    <div class="hoja-precios" id="hoja-precios"></div>
+    <a class="hoja-l" href="index.html">Inicio</a>
+    <a class="hoja-l" href="index.html#galeria">Trabajos</a>
+    <a class="hoja-l" href="index.html#pagos">Pagos y políticas</a>
+    <a class="hoja-l" href="index.html#ubicacion">Contacto</a>
+  </nav>
+  <div class="pie-hoja"><a class="btn" href="reservar.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Mi reserva<span class="cuenta" hidden>0</span></a><a class="js-wa enlace-claro" data-msg="Hola Gaby, tengo una pregunta.">¿Tienes una pregunta? Escríbeme</a></div>
+</div>
+<main id="contenido" class="pcat">
+  <div class="envoltura pcat-grid">
+    <figure class="pcat-foto"><img id="cat-portada" src="fotos/quince-ondas.webp" alt="Quinceañera con ondas laterales y tiara" fetchpriority="high"></figure>
+    <div class="pcat-cont">
+      <nav class="migas" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span id="cat-miga">Quinceañeras</span></nav>
+      <h1 class="titulo"><span class="s" id="cat-script">Quince</span><span class="c" id="cat-t2">Tu gran noche</span></h1>
+      <p class="lead" id="cat-intro"></p>
+      <p class="pcat-desde" id="cat-desde"></p>
+      <div class="promo-aviso" id="promo-aviso" hidden></div>
+      <h2 class="sr">Servicios y precios</h2>
+      <ul class="servs" id="servs"></ul>
+      <p class="nota-precio" id="nota-precio"></p>
+    </div>
+  </div>
+  <section class="tira-sec" aria-labelledby="h-tira">
+    <div class="envoltura"><h2 class="mini-tit" id="h-tira">Trabajos de Gaby</h2></div>
+    <div class="tira" id="tira"></div>
+  </section>
+  <section class="envoltura otras" aria-labelledby="h-otras">
+    <h2 class="mini-tit" id="h-otras">También te puede interesar</h2>
+    <div class="tarjetas-cat chicas" id="otras"></div>
+  </section>
+</main>
+<footer class="pie">
+  <div class="envoltura">
+    <img src="img/gb.png" alt="Gaby Bravo">
+    <span>© <span id="anio"></span> Gabriela Bravo · Barcelona, Anzoátegui</span>
+  </div>
+</footer>
+<div class="bolsa vacia" id="bolsa" data-siempre="0" data-vacio-href="reservar.html" data-vacio-txt="Continuar">
+  <div class="bolsa-txt" id="bolsa-txt"></div>
+  <a class="btn" id="bolsa-ir" href="reservar.html">Continuar</a>
+</div>
+<script src="datos.js?v=20261109c"></script>
+<script src="sitio.js?v=20261109c"></script>
+<script src="categoria.js?v=20261109c"></script>
+</body>
+</html>

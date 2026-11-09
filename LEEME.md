@@ -4,12 +4,28 @@
 
 | Archivo | Para qué |
 | --- | --- |
-| `index.html` | La web pública: servicios y precios, trabajos, reserva por WhatsApp, pagos, indicaciones, políticas, preguntas y ubicación. |
-| `cotizar.html` | El cotizador de Gaby. No está enlazado desde la web y no aparece en Google. Guárdalo en la pantalla de inicio de su teléfono. |
-| `c.html` | La página que abre la clienta al tocar el enlace de su cotización. |
-| `datos.js` | **El único archivo que hay que editar**: precios, servicios, fotos de la galería, políticas, teléfono, dirección. |
-| `cotizacion.js` | Lógica del enlace de cotización. No hace falta tocarlo. |
-| `fotos/`, `img/`, `fonts/` | Fotos, logos y tipografías. Las fuentes van incluidas, así que la web no depende de Google Fonts. |
+| `index.html` | Portada: promo, tarjetas de categorías, galería, pagos, políticas y contacto. |
+| `novias.html`, `quinceaneras.html`, `eventos.html`, `cursos.html` | Una página por categoría, con sus servicios, precios y botón **Agregar**. Sirven de destino para los anuncios. |
+| `reservar.html` | **Mi reserva**: la clienta revisa lo que eligió, pone fecha, lugar (con mapa) y nombre, y se abre WhatsApp con el detalle, los totales, el descuento y el abono. |
+| `cotizar.html` | El cotizador de Gaby (no enlazado ni indexado). |
+| `c.html` | La cotización que abre la clienta. |
+| `datos.js` | **El único archivo que hay que editar**: precios, servicios, promo, fotos, políticas, teléfono, dirección. |
+| `estilos.css`, `sitio.js`, `inicio.js`, `categoria.js`, `reservar.js`, `cotizacion.js` | Estilos y lógica. No hace falta tocarlos. |
+| `fotos/`, `fotos/sm/`, `img/`, `fonts/` | Fotos (`sm` = versión liviana para teléfonos), logos y tipografías. |
+
+## Promoción
+
+En `datos.js` → `promo`:
+- `activa`, `porcentaje`, `desde`, `hasta`: la promo aparece sola en esas fechas (hora de Venezuela) y desaparece al día siguiente de `hasta`. Para apagarla antes: `activa: false`.
+- `codigo`: viaja en el mensaje de WhatsApp para que Gaby reconozca las reservas de la web.
+- `excluir`: categorías sin descuento (por defecto, los complementos y traslados).
+- `cinta`, `condiciones`: textos que ve la clienta.
+
+## Anuncios
+
+Enlaza cada anuncio a su página y agrega etiquetas UTM, por ejemplo:
+`https://gabybravoartist.com/novias.html?utm_source=instagram&utm_campaign=promo-noviembre`
+El mensaje que llega a Gaby termina con "Te encontré por: instagram (promo-noviembre)". Así se cuentan las reservas de cada anuncio.
 
 ## Dirección
 
@@ -60,3 +76,7 @@ Pendiente: hoy la web tiene solo 3 fotos reales. Las mejores candidatas están e
 6. Para encontrar una cotización vieja: sección **Historial**, busca por nombre o folio (GB-…). Desde ahí puede abrirla, reenviarla o usarla de base para una nueva.
 
 La clienta ve su cotización con la marca, el total, qué incluye cada servicio, cómo pagar y las políticas, y tiene un botón para reservar que le escribe a Gaby con el código de la cotización.
+
+## Cambiar la estructura de las páginas
+
+Las páginas (`index.html`, `novias.html`… `reservar.html`) se arman con `python3 _fuente/build.py` a partir de las plantillas de `_fuente/src/` (cabecera, pie y el contenido de cada página). Solo hace falta para cambiar la estructura. Para precios, servicios, textos, fotos o la promo, basta con `datos.js`. La carpeta `_fuente/` no se publica en la web.
