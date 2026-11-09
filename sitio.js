@@ -20,16 +20,12 @@
   const cats = G.categorias.filter(c => c.web !== false);
   const catalogo = {};
   G.categorias.forEach(c => c.servicios.forEach(s => { catalogo[s.cod] = Object.assign({}, s, { cat: c }); }));
-  const conDesc = s => s.precio != null && promo && !(P.excluir || []).includes(s.cat.id);
-  const precioFinal = s => s.precio == null ? null : conDesc(s) ? Math.round(s.precio * (100 - P.porcentaje)) / 100 : s.precio;
-  const desde = c => { const v = c.servicios.filter(s => s.precio != null); if (!v.length) return null; const s = v.reduce((a, b) => (b.precio < a.precio ? b : a)); return { lista: s.precio, final: precioFinal(Object.assign({}, s, { cat: c })) }; };
-  // Precio con tachado cuando hay descuento
-  const precioHTML = (s, chico) => {
-    if (s.precio == null) return `<span class="pr consultar">Consultar</span>`;
-    return conDesc(s)
-      ? `<span class="pr"><s>${dinero(s.precio)}</s><b>${dinero(precioFinal(s))}</b>${chico ? "" : `<em>−${P.porcentaje}%</em>`}</span>`
-      : `<span class="pr"><b>${dinero(s.precio)}</b></span>`;
-  };
+  // El descuento NO va por servicio: se aplica al total, y solo si la fecha del evento cae en el rango.
+  const eventoEnPromo = fecha => !!(promo && fecha && fecha >= (P.eventoDesde || P.desde) && fecha <= (P.eventoHasta || P.hasta));
+  const conDesc = () => false;
+  const precioFinal = s => s.precio;
+  const desde = c => { const v = c.servicios.filter(s => s.precio != null); if (!v.length) return null; const s = v.reduce((a, b) => (b.precio < a.precio ? b : a)); return { lista: s.precio, final: s.precio }; };
+  const precioHTML = s => s.precio == null ? `<span class="pr consultar">Consultar</span>` : `<span class="pr"><b>${dinero(s.precio)}</b></span>`;
 
   // Selección (varias páginas, varios servicios)
   let sel = LS.get("gb-seleccion", []).filter(x => catalogo[x.cod] && x.cant > 0);
@@ -45,10 +41,13 @@
     guardar();
   };
   const vaciar = () => { sel = []; guardar(); };
-  const totales = () => {
-    const t = { lista: 0, final: 0, ahorro: 0, consultar: 0, n: 0 };
-    sel.forEach(x => { const s = catalogo[x.cod]; t.n += x.cant; if (s.precio == null) { t.consultar++; return; } t.lista += s.precio * x.cant; t.final += precioFinal(s) * x.cant; });
-    t.ahorro = Math.round((t.lista - t.final) * 100) / 100; return t;
+  // totales(fecha): con la fecha del evento dentro de la promo, descuenta el % del total en conjunto
+  const totales = fecha => {
+    const t = { lista: 0, final: 0, ahorro: 0, consultar: 0, n: 0, promo: false };
+    sel.forEach(x => { const s = catalogo[x.cod]; t.n += x.cant; if (s.precio == null) { t.consultar++; return; } t.lista += s.precio * x.cant; });
+    t.promo = eventoEnPromo(fecha) && t.lista > 0;
+    t.ahorro = t.promo ? Math.round(t.lista * P.porcentaje) / 100 : 0;
+    t.final = Math.round((t.lista - t.ahorro) * 100) / 100; return t;
   };
   addEventListener("storage", e => { if (e.key === "gb-seleccion") { sel = LS.get("gb-seleccion", []).filter(x => catalogo[x.cod] && x.cant > 0); avisar(); } });
 
@@ -118,23 +117,23 @@
     document.body.classList.toggle("con-bolsa", !!t.n || bolsa.dataset.siempre === "1");
     const ir = $("#bolsa-ir");
     if (t.n) { ir.href = "reservar.html"; ir.textContent = "Continuar"; } else { ir.href = bolsa.dataset.vacioHref; ir.textContent = bolsa.dataset.vacioTxt; }
-    if (!t.n) { $("#bolsa-txt").innerHTML = promo ? `<b>−${P.porcentaje}%</b> en todos los servicios reservando aquí` : "Elige tus servicios"; return; }
-    $("#bolsa-txt").innerHTML = `<small>${t.n} ${t.n === 1 ? "servicio" : "servicios"}${t.consultar ? " · " + t.consultar + " por consultar" : ""}</small><b>${dinero(t.final)}</b>${t.ahorro > 0 ? `<em>Ahorras ${dinero(t.ahorro)}</em>` : ""}`;
+    if (!t.n) { $("#bolsa-txt").innerHTML = promo ? `<b>−${P.porcentaje}%</b> en eventos de noviembre` : "Elige tus servicios"; return; }
+    $("#bolsa-txt").innerHTML = `<small>${t.n} ${t.n === 1 ? "servicio" : "servicios"}${t.consultar ? " · " + t.consultar + " por consultar" : ""}</small><b>${dinero(t.lista)}</b>${promo && t.lista ? `<em>−${P.porcentaje}% si tu evento es en noviembre</em>` : ""}`;
   };
   subs.push(pintarBolsa);
 
   const fechaLarga = iso => new Date(iso + "T12:00:00").toLocaleDateString("es-VE", { day: "numeric", month: "long" });
   const chica = src => String(src || "").replace("fotos/", "fotos/sm/");
-  const enPromo = c => promo && !(P.excluir || []).includes(c.id);
+  const enPromo = () => promo;
   const tarjeta = c => {
     const d = desde(c);
-    const p = !d ? "Consultar" : d.final < d.lista ? `desde <s>${dinero(d.lista)}</s> <b>${dinero(d.final)}</b>` : `desde <b>${dinero(d.lista)}</b>`;
+    const p = !d ? "Consultar" : `desde <b>${dinero(d.lista)}</b>`;
     return `<a class="tcat" href="${c.pagina}"><img src="${chica(c.tarjeta || c.foto)}" alt="" loading="lazy">
       <span class="tcat-txt"><span class="tcat-s">${esc(c.script)}</span><span class="tcat-n">${esc(c.titulo2 || c.nombre)}</span><span class="tcat-p">${p}</span></span>
       ${enPromo(c) && d ? `<span class="tcat-sello">−${P.porcentaje}%</span>` : ""}</a>`;
   };
   const anio = $("#anio"); if (anio) anio.textContent = new Date().getFullYear();
-  window.GBS = { G, C, P, $, $$, esc, dinero, wa, LS, promo, fechaLarga, chica, enPromo, tarjeta, cats, catalogo, conDesc, precioFinal, precioHTML, desde, cant, fijar, vaciar, totales, sel: () => sel, alCambiar: f => subs.push(f), avisar, botonAgregar, pintarBotones, toast, origen };
+  window.GBS = { G, C, P, $, $$, esc, dinero, wa, LS, promo, fechaLarga, chica, enPromo, tarjeta, cats, catalogo, conDesc, precioFinal, precioHTML, eventoEnPromo, desde, cant, fijar, vaciar, totales, sel: () => sel, alCambiar: f => subs.push(f), avisar, botonAgregar, pintarBotones, toast, origen };
   document.addEventListener("DOMContentLoaded", avisar);
   if (document.readyState !== "loading") setTimeout(avisar);
 })();

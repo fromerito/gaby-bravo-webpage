@@ -498,6 +498,7 @@ body.con-bolsa { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); 
 .res-tot .tot { font: 400 30px var(--f-display); color: var(--tinta); align-self: end; }
 .res-tot dt.tot-l { color: var(--tinta); font-weight: 700; align-self: end; }
 .res-tot .abono { font-size: 15px; }
+.res-tot .tot-aviso { grid-column: 1 / -1; margin-top: 6px; padding: 10px 12px; background: var(--hueso-claro); border-left: 2px solid var(--vino); color: var(--tinta); font-size: 14px; line-height: 1.45; }
 .res-vacia { padding: 22px; background: var(--hueso-claro); border: 1px dashed var(--arena); }
 .res-vacia p { margin: 0 0 16px; }
 .res-form.reserva { padding: clamp(22px, 3vw, 36px); }

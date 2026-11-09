@@ -9,10 +9,10 @@
 
   // Promo
   if (S.promo) {
-    $("#sello-promo").innerHTML = `<b>−${P.porcentaje}%</b><span>reservando por la web</span><small>hasta el ${S.fechaLarga(P.hasta)}</small>`;
+    $("#sello-promo").innerHTML = `<b>−${P.porcentaje}%</b><span>eventos de noviembre</span><small>reservando por la web</small>`;
     $("#sello-promo").hidden = false;
     $("#hero-cta").textContent = `Ver servicios con −${P.porcentaje}%`;
-    $("#como-3").textContent = `Se abre WhatsApp con el detalle, el total con tu ${P.porcentaje}% de descuento y el código ${P.codigo}.`;
+    $("#como-3").textContent = `Se abre WhatsApp con el detalle y el total. Si tu evento es en noviembre, ya va con el ${P.porcentaje}% de descuento y el código ${P.codigo}.`;
     $("#promo-nota").textContent = P.condiciones || "";
     $("#promo-nota").hidden = !P.condiciones;
   }

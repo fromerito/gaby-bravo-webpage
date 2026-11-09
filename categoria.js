@@ -14,7 +14,7 @@
   const d = S.desde(c);
   if (d) $("#cat-desde").innerHTML = `Desde ${S.precioHTML(Object.assign({}, c.servicios.find(s => s.precio === d.lista), { cat: c }))}`;
   if (S.enPromo(c)) {
-    $("#promo-aviso").innerHTML = `<b>−${P.porcentaje}%</b><span>Los precios ya tienen el descuento de noviembre por reservar desde esta página. Válido hasta el ${S.fechaLarga(P.hasta)}.</span>`;
+    $("#promo-aviso").innerHTML = `<b>−${P.porcentaje}%</b><span>Si tu evento es en noviembre (hasta el ${S.fechaLarga(P.eventoHasta || P.hasta)}), te descontamos el ${P.porcentaje}% del total al reservar desde esta página. Lo verás aplicado en Mi reserva al elegir la fecha.</span>`;
     $("#promo-aviso").hidden = false;
   }
 

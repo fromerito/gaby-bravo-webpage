@@ -18,7 +18,8 @@
 En `datos.js` → `promo`:
 - `activa`, `porcentaje`, `desde`, `hasta`: la promo aparece sola en esas fechas (hora de Venezuela) y desaparece al día siguiente de `hasta`. Para apagarla antes: `activa: false`.
 - `codigo`: viaja en el mensaje de WhatsApp para que Gaby reconozca las reservas de la web.
-- `excluir`: categorías sin descuento (por defecto, los complementos y traslados).
+- `eventoDesde`, `eventoHasta`: el descuento solo se aplica si la **fecha del evento** que elige la clienta cae en ese rango.
+- El porcentaje se descuenta del **total en conjunto** (no servicio por servicio). Los precios de cada servicio se muestran siempre a precio de lista; el descuento aparece en Mi reserva al elegir una fecha válida.
 - `cinta`, `condiciones`: textos que ve la clienta.
 
 ## Anuncios

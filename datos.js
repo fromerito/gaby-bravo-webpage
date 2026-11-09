@@ -41,10 +41,11 @@ window.GB = {
     desde: "2026-11-01",
     hasta: "2026-11-30",
     codigo: "WEB10",
-    cinta: "Noviembre: 10% de descuento en todos los servicios reservando desde la web",
-    corto: "−10% reservando por la web",
-    excluir: ["extras"],                 // categorías sin descuento (traslados y complementos)
-    condiciones: "Válido para reservas enviadas desde esta web hasta el 30 de noviembre de 2026. El descuento aplica sobre el precio de lista de cada servicio; el traslado a domicilio u hotel no tiene descuento."
+    eventoDesde: "2026-11-01",           // la FECHA DEL EVENTO debe estar entre estas dos fechas
+    eventoHasta: "2026-11-30",
+    cinta: "Noviembre: 10% de descuento sobre el total para eventos de noviembre, reservando desde la web",
+    corto: "−10% en eventos de noviembre",
+    condiciones: "Válido para eventos con fecha hasta el 30 de noviembre de 2026, reservados desde esta web. El 10% se descuenta del total de todos los servicios elegidos. El traslado a domicilio u hotel lo confirma Gaby aparte."
   },
 
   notaPrecio: "Bolívares a tasa BCV del día. Pagando en divisas, Zelle o Binance tienes precio especial.",

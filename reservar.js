@@ -5,7 +5,7 @@
   const ESTUDIO = C.coordenadas || [10.16093, -64.69238];
 
   if (S.promo) {
-    $("#promo-aviso").innerHTML = `<b>−${P.porcentaje}%</b><span>Tu descuento de noviembre ya está aplicado. Llega a Gaby en el mensaje con el código <strong>${esc(P.codigo)}</strong>.</span>`;
+    $("#promo-aviso").innerHTML = `<b>−${P.porcentaje}%</b><span>Si tu evento es entre hoy y el ${S.fechaLarga(P.eventoHasta || P.hasta)}, te descontamos el ${P.porcentaje}% del total. Se aplica solo al elegir la fecha y llega a Gaby con el código <strong>${esc(P.codigo)}</strong>.</span>`;
     $("#promo-aviso").hidden = false;
   }
   $("#res-cats").innerHTML = S.cats.map(S.tarjeta).join("");
@@ -28,15 +28,22 @@
     }
     sel.forEach(x => {
       const s = S.catalogo[x.cod], li = $(`.res-item[data-cod="${x.cod}"]`); if (!li) return;
-      const lista = s.precio * x.cant, fin = S.precioFinal(s) * x.cant;
-      $(".res-pr", li).innerHTML = s.precio == null ? `<span class="pr consultar">Consultar</span>` : S.conDesc(s) ? `<span class="pr"><s>${dinero(lista)}</s><b>${dinero(fin)}</b></span>` : `<span class="pr"><b>${dinero(lista)}</b></span>`;
+      $(".res-pr", li).innerHTML = s.precio == null ? `<span class="pr consultar">Consultar</span>` : `<span class="pr"><b>${dinero(s.precio * x.cant)}</b></span>`;
     });
     S.pintarBotones();
-    const t = S.totales();
-    $("#res-tot").innerHTML = (t.ahorro > 0 ? `<dt>Precio de lista</dt><dd>${dinero(t.lista)}</dd><dt class="desc">Descuento web ${P.porcentaje}%</dt><dd class="desc">−${dinero(t.ahorro)}</dd>` : "")
-      + `<dt class="tot-l">Total${t.consultar ? " (sin lo que es a consultar)" : ""}</dt><dd class="tot">${dinero(t.final)}</dd>`
-      + (t.final ? `<dt class="abono">Abono para apartar (50%)</dt><dd class="abono">${dinero(t.final / 2)}</dd>` : "");
     actualizar();
+  }
+  function pintarTotales() {
+    const fecha = $("#f-fecha").value, t = S.totales(fecha);
+    let aviso = "";
+    if (S.promo && t.lista) {
+      if (!fecha) aviso = `Elige la fecha de tu evento: si es en noviembre, se descuenta el ${P.porcentaje}% del total.`;
+      else if (!t.promo) aviso = `Tu fecha queda fuera de la promo (solo eventos hasta el ${S.fechaLarga(P.eventoHasta || P.hasta)}).`;
+    }
+    $("#res-tot").innerHTML = (t.promo ? `<dt>Subtotal</dt><dd>${dinero(t.lista)}</dd><dt class="desc">Promo noviembre −${P.porcentaje}%</dt><dd class="desc">−${dinero(t.ahorro)}</dd>` : "")
+      + `<dt class="tot-l">Total${t.consultar ? " (sin lo que es a consultar)" : ""}</dt><dd class="tot">${dinero(t.final)}</dd>`
+      + (t.final ? `<dt class="abono">Abono para apartar (50%)</dt><dd class="abono">${dinero(t.final / 2)}</dd>` : "")
+      + (aviso ? `<dt class="tot-aviso">${esc(aviso)}</dt>` : "");
   }
 
   // Formulario y mensaje
@@ -44,21 +51,20 @@
   const fechaLarga = v => { if (!v) return ""; const t = new Date(v + "T12:00:00").toLocaleDateString("es-VE", { weekday: "long", day: "numeric", month: "long", year: "numeric" }); return t.charAt(0).toUpperCase() + t.slice(1); };
   const horaTxt = v => { if (!v) return ""; const [h, m] = v.split(":").map(Number); return new Date(2000, 0, 1, h, m).toLocaleTimeString("es-VE", { hour: "numeric", minute: "2-digit" }); };
   function mensaje() {
-    const sel = S.sel(), t = S.totales();
+    const sel = S.sel(), t = S.totales($("#f-fecha").value);
     const nombre = $("#f-nombre").value.trim();
     const lugar = document.querySelector("input[name=lugar]:checked").value;
     const dir = $("#f-zona").value.trim();
     const m = [`Hola Gaby${nombre ? ", soy " + nombre : ""}. Quiero reservar desde la web:`];
-    if (S.promo && t.ahorro > 0) m.push(`Promo de noviembre ${P.codigo} (−${P.porcentaje}%)`);
+    if (t.promo) m.push(`Promo de noviembre ${P.codigo} (−${P.porcentaje}% sobre el total, evento en noviembre)`);
     m.push("");
     sel.forEach(x => {
       const s = S.catalogo[x.cod], q = x.cant > 1 ? `${x.cant} × ` : "";
       if (s.precio == null) m.push(`• ${q}${s.nombre}: precio a consultar`);
-      else if (S.conDesc(s)) m.push(`• ${q}${s.nombre}: ${dinero(s.precio * x.cant)} → ${dinero(S.precioFinal(s) * x.cant)}`);
       else m.push(`• ${q}${s.nombre}: ${dinero(s.precio * x.cant)}`);
     });
     m.push("");
-    if (t.ahorro > 0) { m.push(`Precio de lista: ${dinero(t.lista)}`); m.push(`Descuento web ${P.porcentaje}%: −${dinero(t.ahorro)}`); }
+    if (t.promo) { m.push(`Subtotal: ${dinero(t.lista)}`); m.push(`Descuento ${P.porcentaje}% (${P.codigo}): −${dinero(t.ahorro)}`); }
     if (t.final) { m.push(`*Total: ${dinero(t.final)}* (bolívares a tasa BCV)`); m.push(`Abono del 50% para apartar: ${dinero(t.final / 2)}`); }
     m.push("");
     if ($("#f-fecha").value) m.push(`Fecha: ${fechaLarga($("#f-fecha").value)}`);
@@ -75,6 +81,7 @@
   let pulso;
   function actualizar() {
     const hay = S.sel().length;
+    if (hay) pintarTotales();
     const txt = mensaje();
     $("#vista-msj").textContent = hay ? txt : "Elige al menos un servicio para armar tu mensaje.";
     $("#vista-hora").textContent = new Date().toLocaleTimeString("es-VE", { hour: "numeric", minute: "2-digit" });
@@ -87,6 +94,7 @@
     $("#f-ayuda").innerHTML = faltan.length ? `Para que Gaby te responda más rápido, agrega <b>${faltan.join(", ").replace(/, ([^,]*)$/, " y $1")}</b>.` : "Se abre WhatsApp con tu mensaje listo. Solo tienes que tocar enviar.";
     clearTimeout(pulso); burbuja.classList.add("late"); pulso = setTimeout(() => burbuja.classList.remove("late"), 450);
   }
+  { const d = new Date(Date.now() - 4 * 3600e3).toISOString().slice(0, 10); $("#f-fecha").min = d; }
   form.addEventListener("input", actualizar);
   form.addEventListener("change", actualizar);
   form.addEventListener("submit", e => e.preventDefault());
