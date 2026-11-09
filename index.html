@@ -107,6 +107,9 @@ h1, h2, h3 { font-weight: 400; margin: 0; text-wrap: balance; }
 .hoja nav a { font-family: var(--f-display); font-size: clamp(32px, 9vw, 44px); line-height: 1.25; text-decoration: none; color: var(--sobre-vino); padding: 6px 0; border-bottom: 1px solid rgba(245,235,225,.12); transform: translateY(12px); opacity: 0; transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s; }
 .hoja.abierta nav a { transform: none; opacity: 1; }
 .hoja.abierta nav a:nth-child(2) { transition-delay: .04s; } .hoja.abierta nav a:nth-child(3) { transition-delay: .08s; } .hoja.abierta nav a:nth-child(4) { transition-delay: .12s; } .hoja.abierta nav a:nth-child(5) { transition-delay: .16s; } .hoja.abierta nav a:nth-child(6) { transition-delay: .2s; }
+.hoja .atajos { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 0 12px; border-bottom: 1px solid rgba(245,235,225,.12); transform: translateY(12px); opacity: 0; transition: transform .45s cubic-bezier(.2,.8,.2,1) .06s, opacity .45s .06s; }
+.hoja.abierta .atajos { transform: none; opacity: 1; }
+.hoja .atajos a { font: 400 14px var(--f-texto); padding: 8px 14px; border: 1px solid rgba(245,235,225,.35); border-radius: 9999px; color: var(--sobre-vino); text-decoration: none; transform: none; opacity: 1; }
 .hoja .s { font-family: var(--f-script); font-size: 54px; color: var(--sobre-vino-suave); line-height: 1; margin-bottom: 8px; }
 .hoja .pie-hoja { display: grid; gap: 10px; }
 .hoja .pie-hoja .btn { background: var(--hueso); color: var(--vino-hondo); min-height: 54px; }
@@ -147,6 +150,18 @@ body.sin-scroll { overflow: hidden; }
 /* Servicios */
 .cat { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
 .cat + .cat { margin-top: clamp(72px, 10vw, 130px); }
+/* Pestañas de categorías: se ve una categoría a la vez */
+.pestanas { position: sticky; top: 84px; z-index: 20; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 calc(var(--gutter) * -1) clamp(28px, 4vw, 44px); padding: 10px var(--gutter); background: linear-gradient(var(--hueso) 70%, transparent); scroll-snap-type: x proximity; }
+.pestanas::-webkit-scrollbar { display: none; }
+.pestanas button { flex: none; scroll-snap-align: start; min-height: 44px; padding: 0 18px; border: 1px solid var(--arena); border-radius: 9999px; background: var(--hueso-claro); color: var(--tinta); font: 400 15px var(--f-texto); cursor: pointer; transition: background-color .25s, color .25s, border-color .25s; }
+.pestanas button:hover { border-color: var(--vino); }
+.pestanas button[aria-selected="true"] { background: var(--vino); border-color: var(--vino); color: var(--hueso); }
+.pestanas button span { margin-left: 6px; font-size: 13px; opacity: .75; }
+.pestanas-tit { margin: 0 0 6px; }
+.cat[hidden] { display: none; }
+.cat.entra { animation: entraCat .35s ease; }
+@keyframes entraCat { from { opacity: 0; transform: translateY(10px); } }
+.pestanas ~ .cat + .cat { margin-top: 0; }
 .cat.inv .cat-foto { order: 2; }
 .cat-foto { position: sticky; top: 96px; margin: 0; }
 .cat-foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
@@ -170,9 +185,10 @@ details.incluye li { break-inside: avoid; margin-bottom: 4px; }
 .nota-precio { font-size: 14px; color: var(--tinta-suave); margin: 18px 0 0; max-width: 60ch; }
 @media (max-width: 760px) {
   .cat, .cat.inv { grid-template-columns: minmax(0, 1fr); }
-  .cat.inv .cat-foto { order: 0; }
+  .cat .cat-foto, .cat.inv .cat-foto { order: 2; }
   .cat-foto { position: static; }
-  .cat-foto img { aspect-ratio: 4 / 3.4; }
+  .cat-foto img { aspect-ratio: 16 / 10; }
+  .pestanas { top: 76px; }
 }
 
 /* Galería */
@@ -362,6 +378,7 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
   <nav aria-label="Secciones">
     <span class="s" aria-hidden="true">Menú</span>
     <a href="#servicios">Servicios y precios</a>
+    <div class="atajos" aria-label="Precios por categoría"><a href="#novias">Novias</a><a href="#quince">Quinceañeras</a><a href="#social">Eventos</a><a href="#cursos">Cursos</a></div>
     <a href="#galeria">Trabajos</a>
     <a href="#reservar">Reservar</a>
     <a href="#pagos">Pagos</a>
@@ -541,7 +558,7 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
 
 <dialog class="visor" id="visor"><button type="button" id="visor-cerrar">Cerrar</button><img id="visor-img" alt=""><p id="visor-txt"></p></dialog>
 
-<script src="datos.js?v=20261108g"></script>
+<script src="datos.js?v=20261109a"></script>
 <script>
 (function () {
   const G = window.GB, C = G.contacto;
@@ -554,8 +571,10 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
 
   // Servicios
   const cats = G.categorias.filter(c => c.web !== false);
-  $("#lista-servicios").innerHTML = cats.map((c, i) => `
-    <article class="cat${i % 2 ? " inv" : ""}" id="${c.id}">
+  const desde = c => { const p = c.servicios.map(s => s.precio).filter(x => x != null); return p.length ? "desde $" + Math.min(...p) : ""; };
+  $("#lista-servicios").innerHTML = `<h2 class="titulo pestanas-tit"><span class="s">Servicios</span><span class="c">Y precios</span></h2>
+    <div class="pestanas" role="tablist" aria-label="Categorías de servicios">${cats.map((c, i) => `<button type="button" role="tab" id="tab-${c.id}" aria-controls="${c.id}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}">${esc(c.nombre)}<span>${desde(c)}</span></button>`).join("")}</div>` + cats.map((c, i) => `
+    <article class="cat" id="${c.id}" role="tabpanel" aria-labelledby="tab-${c.id}"${i ? " hidden" : ""}>
       <figure class="cat-foto"><img src="${c.foto}" alt="${esc(c.fotoAlt)}" loading="lazy"></figure>
       <div class="cat-texto">
         <h2 class="titulo"><span class="s">${esc(c.script)}</span><span class="c">${esc(c.titulo2 || c.nombre)}</span></h2>
@@ -573,6 +592,19 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
         ${c.id !== "cursos" ? `<p class="nota-precio">${esc(G.notaPrecio)} El traslado a domicilio u hotel tiene costo adicional según la zona.</p>` : ""}
       </div>
     </article>`).join("");
+
+  const tabs = [...document.querySelectorAll(".pestanas [role=tab]")];
+  function verCat(id, mover) {
+    const t = tabs.find(x => x.getAttribute("aria-controls") === id); if (!t) return false;
+    tabs.forEach(x => { const si = x === t; x.setAttribute("aria-selected", si); x.tabIndex = si ? 0 : -1; const p = document.getElementById(x.getAttribute("aria-controls")); if (si && p.hidden) { p.hidden = false; p.classList.remove("entra"); void p.offsetWidth; p.classList.add("entra"); } else if (!si) p.hidden = true; });
+    t.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    if (mover) { const y = $("#servicios").getBoundingClientRect().top + scrollY - 70; if (scrollY > y + 10 || mover === "forzar") scrollTo({ top: y, behavior: "smooth" }); }
+    return true;
+  }
+  $(".pestanas").addEventListener("click", e => { const t = e.target.closest("[role=tab]"); if (t) { verCat(t.getAttribute("aria-controls"), true); history.replaceState(null, "", "#" + t.getAttribute("aria-controls")); } });
+  $(".pestanas").addEventListener("keydown", e => { const i = tabs.indexOf(document.activeElement); if (i < 0) return; const n = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : null; if (n == null) return; e.preventDefault(); const t = tabs[(n + tabs.length) % tabs.length]; t.focus(); verCat(t.getAttribute("aria-controls"), false); });
+  const porHash = () => { const id = location.hash.slice(1); if (cats.some(c => c.id === id)) { verCat(id, "forzar"); } };
+  addEventListener("hashchange", porHash); if (location.hash) setTimeout(porHash, 60);
 
   // Galería
   const ig = `https://instagram.com/${C.instagram}`;
@@ -742,7 +774,7 @@ h3.sub { font-family: var(--f-display); font-size: 24px; margin-top: 30px; }
   const abrirMenu = si => { hoja.classList.toggle("abierta", si); hoja.inert = !si; document.body.classList.toggle("sin-scroll", si); $("#menu-abrir").setAttribute("aria-expanded", si); if (si) $("#menu-cerrar").focus(); else $("#menu-abrir").focus(); };
   $("#menu-abrir").addEventListener("click", () => abrirMenu(true));
   $("#menu-cerrar").addEventListener("click", () => abrirMenu(false));
-  hoja.querySelectorAll("nav a, .pie-hoja a").forEach(a => a.addEventListener("click", () => { hoja.classList.remove("abierta"); hoja.inert = true; document.body.classList.remove("sin-scroll"); $("#menu-abrir").setAttribute("aria-expanded", "false"); }));
+  hoja.querySelectorAll("nav a, .pie-hoja a, .atajos a").forEach(a => a.addEventListener("click", () => { hoja.classList.remove("abierta"); hoja.inert = true; document.body.classList.remove("sin-scroll"); $("#menu-abrir").setAttribute("aria-expanded", "false"); }));
   addEventListener("keydown", e => { if (e.key === "Escape" && hoja.classList.contains("abierta")) abrirMenu(false); });
 })();
 </script>
