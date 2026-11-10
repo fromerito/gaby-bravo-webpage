@@ -5,7 +5,7 @@ import shutil, os, json, subprocess, re
 # Versión para el repo: este archivo vive en _fuente/ y escribe las páginas en la raíz del repo.
 R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src')
-V = '20261109d'   # súbelo cuando cambies estilos o JS, para que los teléfonos no usen la versión vieja
+V = '20261109e'   # súbelo cuando cambies estilos o JS, para que los teléfonos no usen la versión vieja
 SITIO = 'https://gabybravoartist.com'
 G = json.loads(subprocess.check_output(['node', '-e', 'global.window={};require("./datos.js");process.stdout.write(JSON.stringify(window.GB))'], cwd=R))
 src = lambda f: open(f'{SRC}/{f}').read()

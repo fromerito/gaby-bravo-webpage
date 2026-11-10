@@ -34,41 +34,75 @@ a { color: inherit; }
 .titulo { display: grid; justify-items: center; text-align: center; margin: 30px 0 6px; line-height: 1; }
 .titulo .s { font-family: var(--f-script); font-size: 76px; color: var(--vino); line-height: .9; }
 .titulo .c { font-family: var(--f-display); font-size: 34px; text-transform: uppercase; margin-top: -4px; text-wrap: balance; }
-.datos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; margin: 26px 0 0; padding: 18px 0; border-block: 1px solid var(--tinta); }
-.datos div { min-width: 0; }
+.ico { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.bloque { margin-top: 26px; }
+.bloque-cab { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--tinta); }
+.bloque-cab .ico { width: 22px; height: 22px; color: var(--vino); }
+.bloque-cab h2 { margin: 0; font: 400 22px/1.2 var(--f-display); }
+.bloque-cab small { display: block; font: 400 13px var(--f-texto); color: var(--tinta-suave); margin-top: 2px; }
+.datos { margin: 0; padding: 4px 0 0; }
+.datos div { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--piedra); }
+.datos .ico { margin-top: 2px; color: var(--vino); }
 .datos dt { font-size: 13px; color: var(--tinta-suave); }
-.datos dd { margin: 2px 0 0; font-family: var(--f-display); font-size: 18px; line-height: 1.3; overflow-wrap: anywhere; }
+.datos dd { margin: 1px 0 0; font-family: var(--f-display); font-size: 18px; line-height: 1.3; overflow-wrap: anywhere; }
 .aviso { margin: 18px 0 0; padding: 14px 16px; background: var(--hueso-claro); border-left: 3px solid var(--vino); font-size: 15px; }
-.items { list-style: none; margin: 26px 0 0; padding: 0; }
-.items li { padding: 16px 0; border-bottom: 1px solid var(--piedra); }
+.costos { margin-top: 34px; padding: 20px 18px 22px; background: var(--hueso-claro); border-top: 3px solid var(--vino); }
+.costos .bloque-cab { border-bottom-color: var(--piedra); }
+.items { list-style: none; margin: 0; padding: 0; counter-reset: it; }
+.items li { padding: 16px 0; border-bottom: 1px dashed var(--piedra); }
 .fila { display: flex; align-items: baseline; gap: 12px; }
-.fila h2 { font: 400 20px/1.3 var(--f-display); margin: 0; min-width: 0; }
+.fila h3 { font: 400 20px/1.3 var(--f-display); margin: 0; min-width: 0; display: flex; gap: 8px; align-items: baseline; }
+.fila h3::before { counter-increment: it; content: counter(it) "."; font-size: 15px; color: var(--vino); }
 .fila .p { margin-left: auto; font: 400 20px var(--f-display); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.sub { font-size: 14px; color: var(--tinta-suave); margin: 2px 0 0; font-variant-numeric: tabular-nums; }
-details { margin-top: 8px; font-size: 14px; }
-summary { cursor: pointer; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; list-style: none; }
-summary::-webkit-details-marker { display: none; }
-details ul { margin: 8px 0 0; padding-left: 18px; color: var(--tinta-suave); }
-.total { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 22px; padding: 18px 20px; background: var(--vino); color: var(--hueso); }
-.total span { font: 400 15px var(--f-display); letter-spacing: .14em; }
-.total b { font: 400 34px var(--f-display); font-variant-numeric: tabular-nums; }
+.sub { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: var(--tinta-suave); margin: 8px 0 0; font-variant-numeric: tabular-nums; line-height: 1.45; }
+.sub .ico { width: 16px; height: 16px; margin-top: 2px; color: var(--vino); }
+.sub b { color: var(--tinta); }
+.items details { margin: 10px 0 0; font-size: 14px; }
+.items summary { cursor: pointer; font-weight: 700; color: var(--vino); list-style: none; display: inline-flex; gap: 6px; align-items: center; }
+.items summary::before { content: "+"; display: inline-grid; place-items: center; width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 50%; font-size: 13px; line-height: 1; }
+.items details[open] summary::before { content: "−"; }
+.items summary::-webkit-details-marker { display: none; }
+.items details ul { margin: 8px 0 0; padding-left: 0; list-style: none; color: var(--tinta-suave); }
+.items details li { padding: 2px 0 2px 20px; border: 0; position: relative; }
+.items details li::before { content: "✓"; position: absolute; left: 0; color: var(--vino); font-weight: 700; }
+.cuentas { margin: 16px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; font-size: 15px; }
+.cuentas dt { color: var(--tinta-suave); }
+.cuentas dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.total { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 14px; padding: 16px 18px; background: var(--vino); color: var(--hueso); }
+.total span { font: 400 15px var(--f-display); letter-spacing: .08em; }
+.total b { font: 400 32px var(--f-display); font-variant-numeric: tabular-nums; }
 .divisas { margin: 12px 0 0; display: flex; justify-content: space-between; gap: 16px; font-weight: 700; color: var(--vino); }
-.nota-bcv { font-size: 13px; color: var(--tinta-suave); margin: 8px 0 0; }
-.nota { margin: 22px 0 0; font-family: var(--f-display); font-style: italic; font-size: 18px; line-height: 1.45; }
-h3 { font: 400 22px var(--f-display); margin: 36px 0 0; }
-.metodos { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 12px 0 0; }
-.metodos li { padding: 8px 14px; border: 1px solid var(--tinta); font-size: 14px; font-weight: 700; }
-.lista { margin: 10px 0 0; padding-left: 18px; font-size: 15px; color: var(--tinta-suave); }
-.lista li { margin-bottom: 6px; }
+.abono { margin: 12px 0 0; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 12px; border-top: 1px solid var(--piedra); font-size: 15px; }
+.abono b { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.abono small { display: block; font-weight: 400; color: var(--tinta-suave); }
+.nota-bcv { font-size: 13px; color: var(--tinta-suave); margin: 10px 0 0; }
+.nota { margin: 26px 0 0; padding-left: 16px; border-left: 2px solid var(--arena); font-family: var(--f-display); font-style: italic; font-size: 18px; line-height: 1.45; }
+.pasos { list-style: none; counter-reset: p; margin: 14px 0 0; padding: 0; }
+.pasos > li { counter-increment: p; display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 8px 0; font-size: 15px; }
+.pasos > li::before { content: counter(p); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--vino); color: var(--hueso); font: 700 14px var(--f-texto); }
+.metodos { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 10px 0 0; }
+.metodos li { padding: 6px 12px; border: 1px solid var(--tinta); font-size: 13px; font-weight: 700; }
+.plegables { margin-top: 34px; border-top: 1px solid var(--tinta); }
+.plegables details { border-bottom: 1px solid var(--tinta); }
+.plegables summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; padding: 16px 0; font: 400 20px var(--f-display); }
+.plegables summary::-webkit-details-marker { display: none; }
+.plegables summary .ico { color: var(--vino); width: 20px; height: 20px; }
+.plegables summary::after { content: ""; margin-left: auto; width: 9px; height: 9px; border-right: 1.5px solid var(--tinta); border-bottom: 1.5px solid var(--tinta); transform: rotate(45deg) translateY(-3px); transition: transform .2s; }
+.plegables details[open] summary::after { transform: rotate(-135deg) translateY(-3px); }
+.plegables summary small { font: 400 13px var(--f-texto); color: var(--tinta-suave); }
+.lista { margin: 0 0 16px; padding-left: 0; list-style: none; font-size: 15px; color: var(--tinta-suave); }
+.lista li { position: relative; padding: 0 0 8px 20px; }
+.lista li::before { content: "•"; position: absolute; left: 4px; color: var(--vino); font-weight: 700; }
 .lista b { color: var(--tinta); }
+.ref { margin-top: 18px; text-align: center; font-size: 11px; color: var(--arena); letter-spacing: .04em; }
 .acciones { position: fixed; left: 0; right: 0; bottom: 0; background: var(--hueso); border-top: 1px solid var(--piedra); padding: 10px max(18px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px)); }
 .acciones div { max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 10px; }
 .btn { display: flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 14px; border-radius: 9999px; text-decoration: none; font: 700 15px var(--f-texto); background: var(--vino); color: var(--hueso); text-align: center; }
 .btn.linea { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
-.pie { text-align: center; margin-top: 44px; color: var(--tinta-suave); font-size: 14px; }
+.pie { text-align: center; margin-top: 40px; color: var(--tinta-suave); font-size: 14px; }
 .pie .s { font-family: var(--f-script); font-size: 46px; color: var(--vino); display: block; line-height: 1; }
 .vacia { text-align: center; padding: 60px 0; }
-@media (max-width: 380px) { .titulo .s { font-size: 62px; } .titulo .c { font-size: 28px; } .datos { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 380px) { .titulo .s { font-size: 62px; } .titulo .c { font-size: 28px; } .costos { padding-inline: 14px; } }
 </style>
 </head>
 <body>
@@ -80,8 +114,8 @@ h3 { font: 400 22px var(--f-display); margin: 36px 0 0; }
   <a class="btn" id="reservar" target="_blank" rel="noopener" href="#">Reservar mi fecha</a>
   <a class="btn linea" id="preguntar" target="_blank" rel="noopener" href="#">Preguntar</a>
 </div></nav>
-<script src="datos.js?v=20261109d"></script>
-<script src="cotizacion.js?v=20261109d"></script>
+<script src="datos.js?v=20261109e"></script>
+<script src="cotizacion.js?v=20261109e"></script>
 <script>
 (function () {
   const G = window.GB, Q = window.GBQ;
@@ -124,33 +158,71 @@ h3 { font: 400 22px var(--f-display); margin: 36px 0 0; }
     const vencida = q.vigencia && q.vigencia < Q.hoyISO();
     const primerNombre = (q.nombre || "ti").trim().split(/\s+/)[0];
     document.title = `Cotización para ${primerNombre} · Gaby Bravo`;
+    // Íconos de línea (mismo trazo que la web)
+    const I = {
+      cal: '<path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/>',
+      pin: '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+      vence: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>',
+      reloj: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+      info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+      cant: '<path d="M4 7h16M4 12h16M4 17h10"/>',
+      recibo: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3"/>',
+      evento: '<path d="M12 3l2.4 5 5.6.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9L9.6 8z"/>',
+      reserva: '<path d="M5 12l4 4 10-10"/>',
+      politica: '<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/>',
+      antes: '<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/>'
+    };
+    const ico = k => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
+    // Lo que aparece debajo de cada servicio: si es tiempo, se explica que es la duración
+    const detalle = (s) => {
+      const d = s && s.duracion ? s.duracion.trim() : "";
+      if (!d) return "";
+      if (/curso/i.test(s.categoria || "")) return `<p class="sub">${ico("reloj")}<span><b>Duración del curso:</b> ${esc(d)}</span></p>`;
+      if (/^\d/.test(d) && /\b(h|min|horas?)\b/i.test(d)) return `<p class="sub">${ico("reloj")}<span><b>Duración del servicio: ${esc(d)}.</b> Es el tiempo aproximado que tardo en hacerte este servicio.</span></p>`;
+      return `<p class="sub">${ico("info")}<span>${esc(d)}</span></p>`;
+    };
+    const abono = tot / 2;
     box.innerHTML = `
       <h1 class="titulo"><span class="s">Cotización</span><span class="c">Para ${esc(primerNombre)}</span></h1>
-      <dl class="datos">
-        ${q.evento ? `<div><dt>Fecha del evento</dt><dd>${Q.fechaLarga(q.evento)}</dd></div>` : ""}
-        ${q.lugar ? `<div><dt>Lugar</dt><dd>${esc(q.lugar)}</dd></div>` : ""}
-        <div><dt>Cotización</dt><dd>${folio}</dd></div>
-        ${q.vigencia ? `<div><dt>Válida hasta</dt><dd>${Q.fechaLarga(q.vigencia)}</dd></div>` : ""}
-      </dl>
+      <section class="bloque" aria-labelledby="t-evento">
+        <div class="bloque-cab">${ico("evento")}<div><h2 id="t-evento">Datos de tu evento</h2></div></div>
+        <dl class="datos">
+          ${q.evento ? `<div>${ico("cal")}<span><dt>Fecha del evento</dt><dd>${Q.fechaLarga(q.evento)}</dd></span></div>` : ""}
+          ${q.lugar ? `<div>${ico("pin")}<span><dt>Lugar</dt><dd>${esc(q.lugar)}</dd></span></div>` : ""}
+          ${q.vigencia ? `<div>${ico("vence")}<span><dt>Precios válidos hasta</dt><dd>${Q.fechaLarga(q.vigencia)}</dd></span></div>` : ""}
+        </dl>
+      </section>
       ${vencida ? `<p class="aviso">Esta cotización venció el ${Q.fechaLarga(q.vigencia)}. Escríbeme y te la actualizo.</p>` : ""}
-      <ul class="items">${q.items.map(it => {
-        const s = Q.catalogo[it.cod];
-        const inc = s && s.incluye && s.incluye.length ? `<details><summary>Qué incluye</summary><ul>${s.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : "";
-        return `<li><div class="fila"><h2>${esc(it.nombre)}</h2><span class="p">${Q.dinero(it.cant * it.precio)}</span></div>
-          ${it.cant > 1 ? `<p class="sub">${it.cant} × ${Q.dinero(it.precio)}</p>` : ""}${s && s.duracion ? `<p class="sub">${esc(s.duracion)}</p>` : ""}${inc}</li>`;
-      }).join("")}</ul>
-      <div class="total"><span>TOTAL</span><b>${Q.dinero(tot)}</b></div>
-      ${q.divisas ? `<p class="divisas"><span>Pagando en divisas, Zelle o Binance</span><span>${Q.dinero(q.divisas)}</span></p>` : ""}
-      <p class="nota-bcv">Bolívares a tasa BCV del día.</p>
+      <section class="costos" aria-labelledby="t-costos">
+        <div class="bloque-cab">${ico("recibo")}<div><h2 id="t-costos">Desglose de servicios y costos</h2><small>Cada servicio con su precio. Toca "Qué incluye" para ver el detalle.</small></div></div>
+        <ul class="items">${q.items.map(it => {
+          const s = Q.catalogo[it.cod];
+          const inc = s && s.incluye && s.incluye.length ? `<details><summary>Qué incluye</summary><ul>${s.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : "";
+          return `<li><div class="fila"><h3>${esc(it.nombre)}</h3><span class="p">${Q.dinero(it.cant * it.precio)}</span></div>
+            ${it.cant > 1 ? `<p class="sub">${ico("cant")}<span><b>Cantidad: ${it.cant}</b> × ${Q.dinero(it.precio)} cada uno</span></p>` : ""}${detalle(s)}${inc}</li>`;
+        }).join("")}</ul>
+        <div class="total"><span>Total a pagar</span><b>${Q.dinero(tot)}</b></div>
+        ${q.divisas ? `<p class="divisas"><span>Pagando en divisas, Zelle o Binance</span><span>${Q.dinero(q.divisas)}</span></p>` : ""}
+        <p class="abono"><span>Abono para apartar (50%)</span><b>${Q.dinero(abono)}${q.divisas ? `<small>${Q.dinero(q.divisas / 2)} en divisas</small>` : ""}</b></p>
+        <p class="nota-bcv">El total en bolívares se calcula a la tasa BCV del día del pago.</p>
+      </section>
       ${q.nota ? `<p class="nota">${esc(q.nota)}</p>` : ""}
-      <h3>Para reservar</h3>
-      <p style="margin:8px 0 0">${esc(G.pagos.abono)}</p>
-      <ul class="metodos">${G.pagos.metodos.map(m => `<li>${esc(m)}</li>`).join("")}</ul>
-      <h3>Políticas de servicio</h3>
-      <ul class="lista">${G.politicas.map(p => `<li><b>${esc(p.t)}.</b> ${esc(p.d)}</li>`).join("")}</ul>
-      <h3>Antes de tu cita</h3>
-      <ul class="lista">${G.indicaciones.rostro.slice(0, 2).concat(G.indicaciones.cabello.slice(0, 2)).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-      <p class="pie"><span class="s">Gracias</span>por preferir mis servicios.<br>Gabriela Bravo · @${esc(G.contacto.instagram)}</p>`;
+      <section class="bloque" aria-labelledby="t-reservar">
+        <div class="bloque-cab">${ico("reserva")}<div><h2 id="t-reservar">Cómo reservar</h2></div></div>
+        <ol class="pasos">
+          <li><span>Toca <b>Reservar mi fecha</b> y escríbeme por WhatsApp.</span></li>
+          <li><span>Haz el abono del 50% (${Q.dinero(abono)}) con cualquiera de estos métodos:<ul class="metodos">${G.pagos.metodos.map(m => `<li>${esc(m)}</li>`).join("")}</ul></span></li>
+          <li><span>Envíame el comprobante y tu fecha queda apartada. El resto se paga el día de la cita.</span></li>
+        </ol>
+      </section>
+      <div class="plegables">
+        <details><summary>${ico("politica")}<span>Políticas del servicio<br><small>Reserva, reembolsos y cambios</small></span></summary>
+          <ul class="lista">${G.politicas.map(p => `<li><b>${esc(p.t)}.</b> ${esc(p.d)}</li>`).join("")}</ul></details>
+        <details><summary>${ico("antes")}<span>Antes de tu cita<br><small>Cómo llegar preparada</small></span></summary>
+          <ul class="lista">${G.indicaciones.rostro.concat(G.indicaciones.cabello).map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>
+      </div>
+      <p class="pie"><span class="s">Gracias</span>por preferir mis servicios.<br>Gabriela Bravo · @${esc(G.contacto.instagram)}</p>
+      <p class="ref">Ref. ${folio}</p>`;
     const n = G.contacto.whatsapp;
     document.getElementById("reservar").href = Q.wa(mensajeReserva(q, folio, tot), n);
     document.getElementById("preguntar").href = Q.wa(`Hola Gaby, tengo una pregunta sobre la cotización ${folio}.`, n);
