@@ -177,8 +177,7 @@ a { color: inherit; }
     const detalle = (s) => {
       const d = s && s.duracion ? s.duracion.trim() : "";
       if (!d) return "";
-      if (/curso/i.test(s.categoria || "")) return `<p class="sub">${ico("reloj")}<span><b>Duración del curso:</b> ${esc(d)}</span></p>`;
-      if (/^\d/.test(d) && /\b(h|min|horas?)\b/i.test(d)) return `<p class="sub">${ico("reloj")}<span><b>Duración del servicio: ${esc(d)}.</b> Es el tiempo aproximado que tardo en hacerte este servicio.</span></p>`;
+      if (/curso/i.test(s.categoria || "") || (/^\d/.test(d) && /\b(h|min|horas?)\b/i.test(d))) return "";  // la duración no se muestra
       return `<p class="sub">${ico("info")}<span>${esc(d)}</span></p>`;
     };
     const abono = tot / 2;
@@ -194,7 +193,7 @@ a { color: inherit; }
       </section>
       ${vencida ? `<p class="aviso">Esta cotización venció el ${Q.fechaLarga(q.vigencia)}. Escríbeme y te la actualizo.</p>` : ""}
       <section class="costos" aria-labelledby="t-costos">
-        <div class="bloque-cab">${ico("recibo")}<div><h2 id="t-costos">Desglose de servicios y costos</h2><small>Cada servicio con su precio. Toca "Qué incluye" para ver el detalle.</small></div></div>
+        <div class="bloque-cab">${ico("recibo")}<div><h2 id="t-costos">Desglose de servicios y costos</h2></div></div>
         <ul class="items">${q.items.map(it => {
           const s = Q.catalogo[it.cod];
           const inc = s && s.incluye && s.incluye.length ? `<details><summary>Qué incluye</summary><ul>${s.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : "";
