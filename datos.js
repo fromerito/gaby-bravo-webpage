@@ -35,6 +35,19 @@ window.GB = {
 
   /* Promoción vigente. Se muestra sola entre "desde" y "hasta" (hora de Venezuela)
      y desaparece al terminar. Para apagarla antes: activa: false. */
+  // Peinados para acompañantes: si la clienta agrega peinado de novia o de quinceañera,
+  // cada peinado extra (mamá, damas, cortejo) tiene este descuento sobre el precio de "base".
+  acompanantes: {
+    activa: true,
+    porcentaje: 5,
+    base: "PSOC",                        // servicio del que sale el precio (Peinado social)
+    con: ["PNOV", "PQUI"],               // se ofrece cuando está alguno de estos
+    cod: "PACO",
+    nombre: "Peinado para mamá o cortejo",
+    titulo: "¿Peinamos también a tu mamá o a tu cortejo?",
+    texto: "Cada peinado extra que agregues junto al tuyo tiene 5% de descuento."
+  },
+
   promo: {
     activa: true,
     porcentaje: 10,

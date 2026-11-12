@@ -28,8 +28,11 @@
         ${s.incluye && s.incluye.length ? `<details class="incluye"><summary>Qué incluye</summary><ul>${s.incluye.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : "<span></span>"}
         ${S.botonAgregar(s)}
       </div>
-    </li>`;
+    </li>${S.A && S.A.con.includes(s.cod) ? `<li class="serv-acomp" data-ancla="${s.cod}" hidden>${S.ofertaAcomp()}</li>` : ""}`;
   }).join("");
+  // El recuadro de acompañantes aparece debajo del peinado de novia/quinceañera cuando está agregado
+  const verAcomp = () => document.querySelectorAll(".serv-acomp").forEach(li => li.hidden = !S.cant(li.dataset.ancla));
+  S.alCambiar(verAcomp); verAcomp();
   $("#nota-precio").textContent = c.id === "cursos" ? "" : `${G.notaPrecio} El traslado a domicilio u hotel tiene costo adicional según la zona.`;
 
   const fotos = (c.fotos || []).map(src => { const g = G.galeria.find(x => x.src === src) || {}; return `<figure><img src="${S.chica(src)}" alt="${esc(g.alt || "")}" loading="lazy"><figcaption>${esc(g.texto || "")}</figcaption></figure>`; });

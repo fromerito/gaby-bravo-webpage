@@ -475,7 +475,8 @@ body.con-bolsa { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); 
 @media (min-width: 761px) { .bolsa { left: 50%; right: auto; width: min(640px, calc(100vw - 32px)); bottom: 16px; transform: translateX(-50%); border: 1px solid var(--piedra); padding-bottom: 10px; box-shadow: 0 22px 44px -26px rgba(58,15,22,.55); } .bolsa.vacia { transform: translate(-50%, 140%); } body.con-bolsa:has(.bolsa.vacia) { padding-bottom: 0; } }
 
 /* Aviso al agregar */
-.toast { position: fixed; z-index: 45; left: 50%; top: calc(84px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -16px); opacity: 0; pointer-events: none; display: flex; gap: 14px; align-items: center; max-width: calc(100vw - 32px); padding: 12px 18px; border-radius: 9999px; background: var(--tinta); color: var(--hueso); font-size: 14px; box-shadow: 0 14px 30px -14px rgba(0,0,0,.6); transition: opacity .25s, transform .25s; }
+.toast { position: fixed; z-index: 45; left: 50%; top: calc(84px + env(safe-area-inset-top, 0px)); transform: translate(-50%, -16px); opacity: 0; pointer-events: none; display: flex; gap: 14px; align-items: center; width: max-content; max-width: min(520px, calc(100vw - 32px)); padding: 12px 18px; border-radius: 22px; background: var(--tinta); line-height: 1.4; color: var(--hueso); font-size: 14px; box-shadow: 0 14px 30px -14px rgba(0,0,0,.6); transition: opacity .25s, transform .25s; }
+.toast span { min-width: 0; }
 .toast.ver { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 .toast a { color: var(--sobre-vino-suave); font-weight: 700; white-space: nowrap; }
 
@@ -511,3 +512,20 @@ body.con-bolsa { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); 
   .res-sel { position: static; }
   .res-form.reserva { margin-inline: calc(-1 * var(--gutter)) calc(-1 * var(--gutter-r)); padding-inline: var(--gutter) var(--gutter-r); }
 }
+
+/* Peinados para acompañantes */
+.serv-acomp { list-style: none; margin-top: -4px; }
+.acomp { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 16px; padding: 16px 18px; background: var(--vino); color: var(--hueso); animation: acomp-entra .35s ease-out; }
+.acomp-txt { display: grid; gap: 4px; min-width: 0; flex: 1 1 220px; }
+.acomp-txt b { font: 400 20px/1.2 var(--f-display); }
+.acomp-txt span { font-size: 14px; opacity: .9; }
+.acomp .pr { margin-top: 4px; }
+.acomp .pr s { color: var(--piedra); }
+.acomp .pr b { color: var(--hueso); }
+.acomp .pr em { background: var(--hueso); color: var(--vino); }
+.acomp .ag-btn { background: var(--hueso); color: var(--vino); }
+.res-acomp { margin-top: 12px; }
+@keyframes acomp-entra { from { opacity: 0; transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .acomp { animation: none; } }
+.acomp .ag-paso { background: var(--hueso); color: var(--vino); }
+.acomp .ag-paso button:hover { background: rgba(79,22,30,.08); }

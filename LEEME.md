@@ -22,6 +22,10 @@ En `datos.js` → `promo`:
 - El porcentaje se descuenta del **total en conjunto** (no servicio por servicio). Los precios de cada servicio se muestran siempre a precio de lista; el descuento aparece en Mi reserva al elegir una fecha válida.
 - `cinta`, `condiciones`: textos que ve la clienta.
 
+## Peinados para acompañantes (mamá, cortejo)
+
+En `datos.js`, bloque `acompanantes`: cuando la clienta agrega **Peinado de novia** o **Peinado de quinceañera**, aparece justo debajo una oferta de "Peinado para mamá o cortejo" con `porcentaje` de descuento (5%) sobre el precio del servicio `base` (Peinado social). Si después quita su peinado de novia o quinceañera, esos peinados pasan solos a Peinado social a precio normal. Para apagar la oferta: `activa: false`.
+
 ## Anuncios
 
 Enlaza cada anuncio a su página y agrega etiquetas UTM, por ejemplo:

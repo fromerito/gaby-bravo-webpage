@@ -20,12 +20,20 @@
   const cats = G.categorias.filter(c => c.web !== false);
   const catalogo = {};
   G.categorias.forEach(c => c.servicios.forEach(s => { catalogo[s.cod] = Object.assign({}, s, { cat: c }); }));
+  // Peinado para acompañantes: precio del servicio base con descuento, solo junto a novia o quinceañera
+  const A = G.acompanantes && G.acompanantes.activa && catalogo[G.acompanantes.base] ? G.acompanantes : null;
+  if (A) {
+    const b = catalogo[A.base];
+    catalogo[A.cod] = Object.assign({}, b, { cod: A.cod, nombre: A.nombre, precio: Math.round(b.precio * (100 - A.porcentaje)) / 100, precioLista: b.precio, acomp: true, detalle: "", duracion: "", cat: Object.assign({}, b.cat, { nombre: "Acompañantes" }) });
+  }
   // El descuento NO va por servicio: se aplica al total, y solo si la fecha del evento cae en el rango.
   const eventoEnPromo = fecha => !!(promo && fecha && fecha >= (P.eventoDesde || P.desde) && fecha <= (P.eventoHasta || P.hasta));
   const conDesc = () => false;
   const precioFinal = s => s.precio;
   const desde = c => { const v = c.servicios.filter(s => s.precio != null); if (!v.length) return null; const s = v.reduce((a, b) => (b.precio < a.precio ? b : a)); return { lista: s.precio, final: s.precio }; };
-  const precioHTML = s => s.precio == null ? `<span class="pr consultar">Consultar</span>` : `<span class="pr"><b>${dinero(s.precio)}</b></span>`;
+  const precioHTML = (s, n) => s.precio == null ? `<span class="pr consultar">Consultar</span>`
+    : s.precioLista ? `<span class="pr"><s>${dinero(s.precioLista * (n || 1))}</s><b>${dinero(s.precio * (n || 1))}</b><em>−${A.porcentaje}%</em></span>`
+    : `<span class="pr"><b>${dinero(s.precio * (n || 1))}</b></span>`;
 
   // Selección (varias páginas, varios servicios)
   let sel = LS.get("gb-seleccion", []).filter(x => catalogo[x.cod] && x.cant > 0);
@@ -38,8 +46,16 @@
     n = Math.max(0, Math.min(20, n));
     if (!n) { if (i >= 0) sel.splice(i, 1); }
     else if (i >= 0) sel[i].cant = n; else sel.push({ cod, cant: n });
+    // Sin novia ni quinceañera, los peinados de acompañantes pasan a precio normal
+    if (A && cant(A.cod) && !conAcomp()) { const k = cant(A.cod); sel = sel.filter(x => x.cod !== A.cod); const j = sel.findIndex(x => x.cod === A.base); if (j >= 0) sel[j].cant += k; else sel.push({ cod: A.base, cant: k }); }
     guardar();
   };
+  const conAcomp = () => !!A && A.con.some(c => cant(c) > 0);
+  // Recuadro que ofrece los peinados de acompañantes
+  const ofertaAcomp = () => !A ? "" : `<div class="acomp">
+      <div class="acomp-txt"><b>${esc(A.titulo)}</b><span>${esc(A.texto)}</span>${precioHTML(catalogo[A.cod])}</div>
+      ${botonAgregar(catalogo[A.cod])}
+    </div>`;
   const vaciar = () => { sel = []; guardar(); };
   // totales(fecha): con la fecha del evento dentro de la promo, descuenta el % del total en conjunto
   const totales = fecha => {
@@ -75,12 +91,12 @@
   const toast = (txt, conEnlace) => {
     let t = $("#toast"); if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
     t.innerHTML = `<span>${esc(txt)}</span>${conEnlace ? '<a href="reservar.html">Ver mi selección</a>' : ""}`;
-    t.classList.add("ver"); clearTimeout(tToast); tToast = setTimeout(() => t.classList.remove("ver"), 2600);
+    t.classList.add("ver"); clearTimeout(tToast); tToast = setTimeout(() => t.classList.remove("ver"), txt.length > 50 ? 4200 : 2600);
   };
   document.addEventListener("click", e => {
     const b = e.target.closest("[data-ag]"); if (!b) return;
     const el = b.closest(".agregar"), cod = el.dataset.cod, s = catalogo[cod], n = cant(cod);
-    if (b.dataset.ag === "add") { fijar(cod, 1); toast(`Agregado: ${s.nombre}`, !document.body.dataset.pagina.startsWith("reservar")); }
+    if (b.dataset.ag === "add") { fijar(cod, 1); toast(A && A.con.includes(cod) && !cant(A.cod) ? `Agregado: ${s.nombre}. Si peinamos a tu mamá o cortejo, tienen ${A.porcentaje}% de descuento.` : `Agregado: ${s.nombre}`, !document.body.dataset.pagina.startsWith("reservar")); }
     else fijar(cod, n + (+b.dataset.ag));
     const o = $("output", el); o.classList.remove("salta"); void o.offsetWidth; o.classList.add("salta");
   });
@@ -133,7 +149,7 @@
       ${enPromo(c) && d ? `<span class="tcat-sello">−${P.porcentaje}%</span>` : ""}</a>`;
   };
   const anio = $("#anio"); if (anio) anio.textContent = new Date().getFullYear();
-  window.GBS = { G, C, P, $, $$, esc, dinero, wa, LS, promo, fechaLarga, chica, enPromo, tarjeta, cats, catalogo, conDesc, precioFinal, precioHTML, eventoEnPromo, desde, cant, fijar, vaciar, totales, sel: () => sel, alCambiar: f => subs.push(f), avisar, botonAgregar, pintarBotones, toast, origen };
+  window.GBS = { G, C, P, $, $$, esc, dinero, wa, LS, promo, fechaLarga, chica, enPromo, tarjeta, cats, catalogo, conDesc, precioFinal, precioHTML, eventoEnPromo, desde, cant, fijar, vaciar, totales, sel: () => sel, alCambiar: f => subs.push(f), avisar, botonAgregar, pintarBotones, toast, origen, A, conAcomp, ofertaAcomp };
   document.addEventListener("DOMContentLoaded", avisar);
   if (document.readyState !== "loading") setTimeout(avisar);
 })();

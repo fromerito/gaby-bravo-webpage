@@ -9,6 +9,7 @@
     $("#promo-aviso").hidden = false;
   }
   $("#res-cats").innerHTML = S.cats.map(S.tarjeta).join("");
+  $("#res-mas").insertAdjacentHTML("beforebegin", '<div class="res-acomp" id="res-acomp" hidden></div>');
   $("#res-mas").innerHTML = `Agregar más: ${S.cats.map(c => `<a href="${c.pagina}">${esc(c.nombre)}</a>`).join("")}`;
   $("#res-nota").textContent = `${G.notaPrecio} El traslado a domicilio u hotel se suma según la zona y te lo confirma Gaby.`;
 
@@ -28,8 +29,12 @@
     }
     sel.forEach(x => {
       const s = S.catalogo[x.cod], li = $(`.res-item[data-cod="${x.cod}"]`); if (!li) return;
-      $(".res-pr", li).innerHTML = s.precio == null ? `<span class="pr consultar">Consultar</span>` : `<span class="pr"><b>${dinero(s.precio * x.cant)}</b></span>`;
+      $(".res-pr", li).innerHTML = S.precioHTML(s, x.cant);
     });
+    // Oferta de peinados para acompañantes (si hay novia o quinceañera y aún no los agregó)
+    const ac = $("#res-acomp");
+    ac.hidden = !(S.conAcomp() && !S.cant(S.A.cod));
+    if (!ac.hidden && !ac.innerHTML) ac.innerHTML = S.ofertaAcomp();
     S.pintarBotones();
     actualizar();
   }
@@ -61,6 +66,7 @@
     sel.forEach(x => {
       const s = S.catalogo[x.cod], q = x.cant > 1 ? `${x.cant} × ` : "";
       if (s.precio == null) m.push(`• ${q}${s.nombre}: precio a consultar`);
+      else if (s.precioLista) m.push(`• ${q}${s.nombre} (−${S.A.porcentaje}% c/u: ${dinero(s.precioLista)} → ${dinero(s.precio)}): ${dinero(s.precio * x.cant)}`);
       else m.push(`• ${q}${s.nombre}: ${dinero(s.precio * x.cant)}`);
     });
     m.push("");
