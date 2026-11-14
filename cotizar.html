@@ -87,6 +87,15 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 9999px; border: 0; font: 700 15px var(--f-texto); cursor: pointer; text-decoration: none; background: var(--vino); color: var(--hueso); }
 .btn:hover { background: var(--vino-hondo); }
 .btn.linea { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
+.extra { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--piedra); }
+.extra-t { margin: 0; font: 400 19px var(--f-display); color: var(--tinta); }
+.x-aviso { margin: 0; padding: 8px 12px; border-left: 3px solid var(--vino); background: var(--hueso-claro, #FBF6F0); color: var(--vino); font-size: 14px; font-weight: 700; }
+.extras-caja { display: grid; gap: 8px; padding: 14px; background: #fff; border: 1px solid var(--vino); }
+.extras-lista { list-style: none; margin: 0; padding: 0; }
+.extras-lista li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--piedra); }
+.extras-lista li:last-child { border-bottom: 0; }
+.extras-lista b { font: 400 18px var(--f-display); font-variant-numeric: tabular-nums; }
+.extras-lista .quitar { width: 36px; height: 36px; border: 1px solid var(--arena); background: transparent; border-radius: 50%; font-size: 18px; cursor: pointer; color: var(--tinta); }
 .btn.chico { min-height: 40px; padding: 0 14px; font-size: 14px; }
 .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
 .resultado { position: sticky; top: calc(16px + env(safe-area-inset-top, 0px)); display: grid; gap: 14px; }
@@ -210,11 +219,28 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
   <section class="bloque etapa" data-paso="2" aria-labelledby="h-serv" hidden>
       <h2 id="h-serv" tabindex="-1">Servicios <small>Toca para agregar; ajusta con − y +</small></h2>
       <div id="catalogo" class="grupo"></div>
-      <div class="grid2">
-        <div class="campo"><label for="x-nombre">Otro concepto</label><input id="x-nombre" placeholder="Ej.: Maquillaje por Antonietta Yanez"></div>
-        <div class="campo"><label for="x-precio">Precio ($)</label><input id="x-precio" type="number" min="0" step="1" inputmode="decimal" placeholder="60"></div>
+      <div class="extra">
+        <h3 class="extra-t">Domicilio u hotel</h3>
+        <div class="grid2">
+          <div class="campo"><label for="d-zona">Zona o dirección</label><input id="d-zona" autocomplete="off" placeholder="Ej.: Hotel Venetur, Puerto La Cruz"></div>
+          <div class="campo"><label for="d-precio">Precio del traslado ($)</label><input id="d-precio" type="number" min="0" step="1" inputmode="decimal" placeholder="30"></div>
+        </div>
+        <p class="x-aviso" id="d-aviso" hidden></p>
+        <div><button class="btn linea chico" type="button" id="d-agregar">Agregar domicilio</button></div>
       </div>
-      <div><button class="btn linea chico" type="button" id="x-agregar">Agregar concepto</button></div>
+      <div class="extra">
+        <h3 class="extra-t">Otro concepto</h3>
+        <div class="grid2">
+          <div class="campo"><label for="x-nombre">Qué es</label><input id="x-nombre" autocomplete="off" placeholder="Ej.: Maquillaje por Antonietta Yanez"></div>
+          <div class="campo"><label for="x-precio">Precio ($)</label><input id="x-precio" type="number" min="0" step="1" inputmode="decimal" placeholder="60"></div>
+        </div>
+        <p class="x-aviso" id="x-aviso" hidden></p>
+        <div><button class="btn linea chico" type="button" id="x-agregar">Agregar concepto</button></div>
+      </div>
+      <div class="extras-caja" id="extras-caja" hidden>
+        <h3 class="extra-t">Agregados aparte</h3>
+        <ul class="extras-lista" id="extras-lista"></ul>
+      </div>
       <p class="aviso-paso" id="aviso-serv" hidden>Agrega al menos un servicio para seguir.</p>
     </section>
 
@@ -298,13 +324,38 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
     salir(); pintar();
     const o = chip.querySelector("output"); o.classList.remove("salta"); void o.offsetWidth; o.classList.add("salta");
   });
-  $("#x-agregar").addEventListener("click", () => {
+  // Domicilio y otros conceptos: líneas libres con nombre propio (la clienta ve el nombre y el precio)
+  const avisoX = (id, txt) => { $(id).textContent = txt || ""; $(id).hidden = !txt; };
+  const agregarLibre = (nombre, precio) => { q.items.push({ cod: "", nombre, cant: 1, precio }); salir(); pintar(); };
+  // Devuelve "ok" si agregó, "" si no había nada escrito, "falta" si quedó a medias
+  function tomarDomicilio() {
+    const z = $("#d-zona").value.trim(), p = parseFloat($("#d-precio").value);
+    if (!z && isNaN(p)) { avisoX("#d-aviso"); return ""; }
+    if (isNaN(p)) { avisoX("#d-aviso", "Falta el precio del traslado."); $("#d-precio").focus(); return "falta"; }
+    agregarLibre("Domicilio u hotel" + (z ? ": " + z : ""), p);
+    $("#d-zona").value = ""; $("#d-precio").value = ""; avisoX("#d-aviso"); return "ok";
+  }
+  function tomarConcepto() {
     const n = $("#x-nombre").value.trim(), p = parseFloat($("#x-precio").value);
-    if (!n || isNaN(p)) { $("#x-nombre").focus(); return; }
-    q.items.push({ cod: "", nombre: n, cant: 1, precio: p });
-    $("#x-nombre").value = ""; $("#x-precio").value = "";
-    salir(); pintar();
+    if (!n && isNaN(p)) { avisoX("#x-aviso"); return ""; }
+    if (!n) { avisoX("#x-aviso", "Escribe qué es: sin nombre, la clienta solo vería el monto."); $("#x-nombre").focus(); return "falta"; }
+    if (isNaN(p)) { avisoX("#x-aviso", "Falta el precio."); $("#x-precio").focus(); return "falta"; }
+    agregarLibre(n, p);
+    $("#x-nombre").value = ""; $("#x-precio").value = ""; avisoX("#x-aviso"); return "ok";
+  }
+  $("#d-agregar").addEventListener("click", tomarDomicilio);
+  $("#x-agregar").addEventListener("click", tomarConcepto);
+  [["#d-zona", tomarDomicilio], ["#d-precio", tomarDomicilio], ["#x-nombre", tomarConcepto], ["#x-precio", tomarConcepto]].forEach(([s, f]) =>
+    $(s).addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); f(); } }));
+  $("#extras-lista").addEventListener("click", e => {
+    const b = e.target.closest("[data-quitar]"); if (!b) return;
+    q.items.splice(+b.dataset.quitar, 1); pintar();
   });
+  function pintarExtras() {
+    const libres = q.items.map((it, i) => ({ it, i })).filter(x => !x.it.cod);
+    $("#extras-caja").hidden = !libres.length;
+    $("#extras-lista").innerHTML = libres.map(({ it, i }) => `<li><span>${it.cant > 1 ? it.cant + " × " : ""}${esc(it.nombre)}</span><b>${Q.dinero(it.cant * it.precio)}</b><button type="button" class="quitar" data-quitar="${i}" aria-label="Quitar ${esc(it.nombre)}">×</button></li>`).join("");
+  }
   $("#lineas").addEventListener("click", e => {
     const li = e.target.closest("li[data-i]"); if (!li) return; const it = q.items[+li.dataset.i];
     if (e.target.matches("[data-mas]")) it.cant++;
@@ -400,7 +451,7 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
   });
   function pintar() {
     Object.entries(campos).forEach(([sel, k]) => { if (document.activeElement !== $(sel)) $(sel).value = q[k] == null ? "" : q[k]; });
-    pintarLineas(); resultado();
+    pintarLineas(); pintarExtras(); resultado();
   }
 
   // Historial local
@@ -463,6 +514,11 @@ input:focus, textarea:focus { outline: 2px solid var(--tinta); outline-offset: 0
   // Pasos: una pantalla a la vez
   let paso = 1;
   function irA(n) {
+    // Al salir de Servicios, lo escrito en domicilio u otro concepto se agrega solo; si quedó a medias, se avisa y no avanza
+    if (paso === 2 && n > 2) {
+      const r = [tomarDomicilio(), tomarConcepto()];
+      if (r.includes("falta")) return;
+    }
     if (n > 2 && !q.items.length) { n = 2; $("#aviso-serv").hidden = false; }
     paso = Math.max(1, Math.min(4, n));
     document.querySelectorAll("[data-paso]").forEach(sec => sec.hidden = +sec.dataset.paso !== paso);
