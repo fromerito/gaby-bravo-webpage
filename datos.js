@@ -89,6 +89,15 @@ window.GB = {
       ]
     },
     {
+      id: "civil",
+      nombre: "Civil",
+      web: false,                          // por ahora solo en el cotizador; para mostrarlo en la web hace falta página y fotos
+      servicios: [
+        { cod: "PCIV", nombre: "Peinado civil", precio: 100, incluye: [] },
+        { cod: "MCIV", nombre: "Maquillaje civil", precio: 100, incluye: [] }
+      ]
+    },
+    {
       id: "quince",
       tarjeta: "fotos/quince-ondas.webp",   // foto de la tarjeta en la portada
       portada: "fotos/quince-ondas.webp",   // foto grande de su página
