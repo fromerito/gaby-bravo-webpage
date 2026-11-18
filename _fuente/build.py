@@ -29,6 +29,7 @@ def head(titulo, desc, ruta, img, extra=''):
 <link rel="canonical" href="{url}">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icono-192.png">
 <link rel="apple-touch-icon" href="img/icono-180.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#F5EBE1">
@@ -64,4 +65,12 @@ for f in ['c.html', 'cotizar.html']:
     t = open(f'{R}/{f}').read(); open(f'{R}/{f}', 'w').write(re.sub(r'\?v=\d{8}[a-z]?"', f'?v={V}"', t))
 
 for n, html in paginas.items(): open(f'{R}/{n}.html', 'w').write(html)
+
+# Sitemap y robots.txt para Google: solo las páginas públicas (sin reservar, cotizar ni c.html, que llevan noindex)
+import datetime
+hoy = datetime.date.today().isoformat()
+urls = [f'{SITIO}/' if n == 'index' else f'{SITIO}/{n}.html' for n in paginas if n != 'reservar']
+open(f'{R}/sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + ''.join(f'  <url><loc>{u}</loc><lastmod>{hoy}</lastmod></url>\n' for u in urls) + '</urlset>\n')
+open(f'{R}/robots.txt', 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITIO}/sitemap.xml\n')
 print('ok:', ', '.join(f'{n}.html' for n in paginas))
