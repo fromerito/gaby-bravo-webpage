@@ -72,6 +72,8 @@ window.GB = {
       tarjeta: "fotos/novia-espalda-mar.webp",   // foto de la tarjeta en la portada
       portada: "fotos/novia-perfil-laca.webp",   // foto grande de su página
       pagina: "novias.html",
+      seoTitulo: "Peinado y maquillaje de novia en Lechería y Barcelona · Gaby Bravo",   // título que muestra Google
+      seoDesc: "Peinado de alta durabilidad y maquillaje de novia en Lechería, Barcelona y Puerto La Cruz, en el estudio o a domicilio. Con cita de asesoría y prueba antes de la boda.",
       fotos: ["fotos/novia-espalda-mar.webp", "fotos/novia-perfil-laca.webp", "fotos/novia-tocado-detalle.webp", "fotos/gaby-colocando-tocado.webp", "fotos/novia-espejo.webp", "fotos/novia-bata-tiara.webp", "fotos/novia-recogido-trenza.webp"],
       nombre: "Novias",
       script: "Novias",
@@ -102,6 +104,8 @@ window.GB = {
       tarjeta: "fotos/quince-ondas.webp",   // foto de la tarjeta en la portada
       portada: "fotos/quince-ondas.webp",   // foto grande de su página
       pagina: "quinceaneras.html",
+      seoTitulo: "Peinado y maquillaje de quinceañera en Lechería y Barcelona · Gaby Bravo",   // título que muestra Google
+      seoDesc: "Peinado y maquillaje para quinceañeras en Lechería, Barcelona y Puerto La Cruz, pensados para durar toda la fiesta y lucir en las fotos. En el estudio o a domicilio.",
       fotos: ["fotos/quince-ondas.webp", "fotos/trenza-rosa.webp", "fotos/ondas-retro.webp"],
       nombre: "Quinceañeras",
       script: "Quince",
@@ -122,6 +126,8 @@ window.GB = {
       tarjeta: "fotos/maquillaje-glam.webp",   // foto de la tarjeta en la portada
       portada: "fotos/maquillaje-glam.webp",   // foto grande de su página
       pagina: "eventos.html",
+      seoTitulo: "Peinado y maquillaje para eventos en Lechería y Barcelona · Gaby Bravo",   // título que muestra Google
+      seoDesc: "Peinado social, ondas y maquillaje para invitadas, graduaciones y sesiones de fotos en Lechería, Barcelona y Puerto La Cruz. En el estudio o a domicilio.",
       fotos: ["fotos/maquillaje-glam.webp", "fotos/ondas-retro.webp", "fotos/trenza-rosa.webp", "fotos/gaby-peinando.webp"],
       nombre: "Eventos",
       script: "Social",
@@ -146,6 +152,8 @@ window.GB = {
       tarjeta: "fotos/gaby-peinando.webp",   // foto de la tarjeta en la portada
       portada: "fotos/gaby-colocando-tocado.webp",   // foto grande de su página
       pagina: "cursos.html",
+      seoTitulo: "Cursos de peinado en Barcelona y Lechería · Gaby Bravo",   // título que muestra Google
+      seoDesc: "Curso Profesional de Estilismo Social: aprende peinado de alta resistencia con Gaby Bravo en Barcelona, Anzoátegui. Clases personalizadas, práctica con modelo y certificado.",
       fotos: ["fotos/gaby-peinando.webp", "fotos/novia-tiara-proceso.webp", "fotos/gaby-colocando-tocado.webp"],
       nombre: "Cursos",
       script: "Cursos",

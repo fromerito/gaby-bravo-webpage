@@ -55,7 +55,7 @@ for c in G['categorias']:
     nombre = c['pagina'][:-5]
     cuerpo = (src('categoria.html').replace('{{PORTADA}}', c.get('portada') or c['foto']).replace('{{PORTADA_ALT}}', c.get('fotoAlt', ''))
               .replace('{{NOMBRE}}', c['nombre']).replace('{{SCRIPT}}', c['script']).replace('{{TITULO2}}', c.get('titulo2') or c['nombre']))
-    paginas[nombre] = pagina(nombre, f"{c['nombre']} · Gaby Bravo", c.get('intro', ''), c.get('portada') or c['foto'], cuerpo, 'categoria.js', cat=c['id'],
+    paginas[nombre] = pagina(nombre, c.get('seoTitulo') or f"{c['nombre']} · Gaby Bravo", c.get('seoDesc') or c.get('intro', ''), c.get('portada') or c['foto'], cuerpo, 'categoria.js', cat=c['id'],
                              extra=f'<link rel="preload" as="image" href="{c.get("portada") or c["foto"]}">\n')
 paginas['reservar'] = pagina('reservar', 'Mi reserva · Gaby Bravo', 'Revisa tus servicios, elige fecha y lugar, y envía tu reserva por WhatsApp.',
                              'img/og.jpg', src('reservar.html'), 'reservar.js', extra='<meta name="robots" content="noindex">\n')
