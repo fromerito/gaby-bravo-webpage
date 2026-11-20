@@ -50,13 +50,49 @@ def pagina(nombre, titulo, desc, img, cuerpo, js, cat='', bolsa=('0', 'reservar.
 paginas = {'index': pagina('index', 'Gaby Bravo · Peinado y maquillaje en Barcelona y Lechería',
                            'Maquilladora profesional y especialista en peinado. Novias, quinceañeras y eventos, en el estudio o a domicilio. Reserva desde la web.',
                            'img/og.jpg', src('inicio.html'), 'inicio.js', bolsa=('1', '#servicios', 'Ver servicios'), extra=LDJSON + '\n')}
+# Contenido escrito en el HTML (Google lo lee sin ejecutar JavaScript; al abrir, categoria.js lo reemplaza igual)
+from html import escape as E
+def dinero(n):
+    n = round(float(n), 2)
+    return '$' + (f'{n:,.0f}'.replace(',', '.') if n == int(n) else f'{n:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.'))
+def precio_html(s):
+    return '<span class="pr consultar">Consultar</span>' if s.get('precio') is None else f'<span class="pr"><b>{dinero(s["precio"])}</b></span>'
+def fijo(c):
+    con = [s for s in c['servicios'] if s.get('precio') is not None]
+    desde = f'Desde {precio_html(min(con, key=lambda s: s["precio"]))}' if con else ''
+    servs = ''
+    for s in c['servicios']:
+        meta = ' · '.join(E(x) for x in [s.get('detalle', ''), s.get('duracion', '')] if x)
+        inc = ''.join(f'<li>{E(x)}</li>' for x in s.get('incluye') or [])
+        servs += (f'<li class="serv"><div class="serv-cab"><h3>{E(s["nombre"])}</h3>{precio_html(s)}</div>'
+                  + (f'<p class="serv-meta">{meta}</p>' if meta else '')
+                  + (f'<div class="serv-pie"><details class="incluye"><summary>Qué incluye</summary><ul>{inc}</ul></details></div>' if inc else '') + '</li>\n')
+    nota = '' if c['id'] == 'cursos' else f"{G['notaPrecio']} El traslado a domicilio u hotel tiene costo adicional según la zona."
+    gal = {g['src']: g for g in G.get('galeria', [])}
+    tira = ''.join(f'<figure><img src="{x.replace("fotos/", "fotos/sm/")}" alt="{E(gal.get(x, {}).get("alt", ""))}" loading="lazy"><figcaption>{E(gal.get(x, {}).get("texto", ""))}</figcaption></figure>' for x in c.get('fotos') or [])
+    otras = ''.join(f'<a class="tcat" href="{o["pagina"]}"><span class="tcat-txt"><span class="tcat-s">{E(o["script"])}</span><span class="tcat-n">{E(o.get("titulo2") or o["nombre"])}</span></span></a>'
+                    for o in G['categorias'] if o is not c and o.get('web') is not False and o.get('pagina'))
+    ld = {"@context": "https://schema.org", "@type": "OfferCatalog", "name": f"{c['nombre']} · Gaby Bravo", "url": f"{SITIO}/{c['pagina']}",
+          "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": s['nombre'], "description": '. '.join(s.get('incluye') or []) or s.get('detalle', ''),
+                               "provider": {"@type": "BeautySalon", "name": "Gaby Bravo", "url": SITIO}},
+                               **({"price": s['precio'], "priceCurrency": "USD"} if s.get('precio') is not None else {})} for s in c['servicios']]}
+    return {'intro': E(c.get('intro', '')), 'desde': desde, 'servs': servs, 'nota': E(nota), 'tira': tira, 'otras': otras,
+            'ld': '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>\n'}
+
 for c in G['categorias']:
     if c.get('web') is False or not c.get('pagina'): continue
     nombre = c['pagina'][:-5]
     cuerpo = (src('categoria.html').replace('{{PORTADA}}', c.get('portada') or c['foto']).replace('{{PORTADA_ALT}}', c.get('fotoAlt', ''))
               .replace('{{NOMBRE}}', c['nombre']).replace('{{SCRIPT}}', c['script']).replace('{{TITULO2}}', c.get('titulo2') or c['nombre']))
+    F = fijo(c)
+    cuerpo = (cuerpo.replace('<p class="lead" id="cat-intro"></p>', f'<p class="lead" id="cat-intro">{F["intro"]}</p>')
+              .replace('<p class="pcat-desde" id="cat-desde"></p>', f'<p class="pcat-desde" id="cat-desde">{F["desde"]}</p>')
+              .replace('<ul class="servs" id="servs"></ul>', f'<ul class="servs" id="servs">\n{F["servs"]}</ul>')
+              .replace('<p class="nota-precio" id="nota-precio"></p>', f'<p class="nota-precio" id="nota-precio">{F["nota"]}</p>')
+              .replace('<div class="tira" id="tira"></div>', f'<div class="tira" id="tira">{F["tira"]}</div>')
+              .replace('<div class="tarjetas-cat chicas" id="otras"></div>', f'<div class="tarjetas-cat chicas" id="otras">{F["otras"]}</div>'))
     paginas[nombre] = pagina(nombre, c.get('seoTitulo') or f"{c['nombre']} · Gaby Bravo", c.get('seoDesc') or c.get('intro', ''), c.get('portada') or c['foto'], cuerpo, 'categoria.js', cat=c['id'],
-                             extra=f'<link rel="preload" as="image" href="{c.get("portada") or c["foto"]}">\n')
+                             extra=f'<link rel="preload" as="image" href="{c.get("portada") or c["foto"]}">\n' + F['ld'])
 paginas['reservar'] = pagina('reservar', 'Mi reserva · Gaby Bravo', 'Revisa tus servicios, elige fecha y lugar, y envía tu reserva por WhatsApp.',
                              'img/og.jpg', src('reservar.html'), 'reservar.js', extra='<meta name="robots" content="noindex">\n')
 
